@@ -1,4 +1,5 @@
 ﻿using Budgethold.Domain.Common.Errors;
+using Budgethold.Domain.Exceptions;
 
 namespace Budgethold.Domain.Common
 {
@@ -38,7 +39,7 @@ namespace Budgethold.Domain.Common
             {
                 if (_error != default)
                 {
-                    throw new Exception(string.Empty); // TODO: Update exception
+                    throw new UnhandledErrorResultException($"Unhandled error result: {_error.Message}");
                 }
 
                 return _value!;

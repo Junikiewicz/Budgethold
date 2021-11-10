@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Budgethold.ValidationExtensions;
+using FluentValidation;
 
 namespace Budgethold.Security.Commands.SignUp
 {
@@ -6,8 +7,16 @@ namespace Budgethold.Security.Commands.SignUp
     {
         public SignUpCommandValidator()
         {
-            RuleFor(x => x.Email).NotEmpty();
-            RuleFor(x => x.Password).NotEmpty();
+            RuleFor(x => x.Email)
+             .NotEmpty()
+             .EmailAddress();
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .MinimumLength(6)
+                .OneOrMoreCapitalLetters()
+                .OneOrMoreLowercaseLetters()
+                .OneOrMoreDigit()
+                .OneOrMoreSpecialCharaceters();
         }
     }
 }

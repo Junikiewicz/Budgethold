@@ -1,8 +1,10 @@
 ﻿using Budgethold.API.Common.Validation;
 using Budgethold.Persistance;
 using Budgethold.Persistance.Extensions;
+using Budgethold.Security.Commands.SignIn;
 using Budgethold.Security.Commands.SignUp;
 using Budgethold.Security.Extensions;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +26,7 @@ namespace Budgethold.API
             services.AddCookieAuthentication();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            //AssemblyScanner.FindValidatorsInAssembly(typeof(AddRewardCommandValidator).Assembly).ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+            AssemblyScanner.FindValidatorsInAssembly(typeof(SignInCommandValidator).Assembly).ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
 
             services.AddMediatR(typeof(SignUpCommand));
 

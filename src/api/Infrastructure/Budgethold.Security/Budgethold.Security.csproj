@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Budgethold.Domain\Budgethold.Domain.csproj" />
+	<ProjectReference Include="..\..\Common\Budgethold.ValidationExtensions\Budgethold.ValidationExtensions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,23 @@
 ﻿using Budgethold.Security.Commands.SignUp;
+using Budgethold.ValidationExtensions;
 using FluentValidation;
 
 namespace Budgethold.Security.Commands.SignIn
 {
-    internal class SignInCommandValidator : AbstractValidator<SignUpCommand>
+    public class SignInCommandValidator : AbstractValidator<SignUpCommand>
     {
         public SignInCommandValidator()
         {
-            RuleFor(x => x.Email).NotEmpty();
-            RuleFor(x => x.Password).NotEmpty();
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress();
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .MinimumLength(6)
+                .OneOrMoreCapitalLetters()
+                .OneOrMoreLowercaseLetters()
+                .OneOrMoreDigit()
+                .OneOrMoreSpecialCharaceters();
         }
     }
 }

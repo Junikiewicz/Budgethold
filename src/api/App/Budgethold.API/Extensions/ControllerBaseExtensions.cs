@@ -1,4 +1,5 @@
-﻿using Budgethold.Domain.Common;
+﻿using Budgethold.API.Common.Validation;
+using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
 using Budgethold.Security.Common.Errors;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,8 @@ namespace Budgethold.API.Extensions
             {
                 NotFoundError e => controllerBase.BadRequest(e.Message),
                 AuthError e => controllerBase.BadRequest(e.Message),
-                _ => throw new NotSupportedException($"No supported error type: {result.Error}")
+                ValidationError e => controllerBase.BadRequest(e.Message),
+                _ => throw new NotSupportedException($"Not supported error type: {result.Error}")
             };
         }
     }

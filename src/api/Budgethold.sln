@@ -34,8 +34,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgethold.Persistance", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgethold.Security", "Infrastructure\Budgethold.Security\Budgethold.Security.csproj", "{E875FBD6-2281-4C25-B89F-5330132C2F22}"
 	ProjectSection(ProjectDependencies) = postProject
+		{62078C0A-C2D7-496C-ADB3-F53F47B3433C} = {62078C0A-C2D7-496C-ADB3-F53F47B3433C}
 		{D41B4480-EB63-4679-8E3B-000E74A7D601} = {D41B4480-EB63-4679-8E3B-000E74A7D601}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B87910F3-C37C-42D8-82D2-07B88B21569B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgethold.ValidationExtensions", "Common\Budgethold.ValidationExtensions\Budgethold.ValidationExtensions.csproj", "{62078C0A-C2D7-496C-ADB3-F53F47B3433C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgethold.Common", "Common\Budgethold.Common\Budgethold.Common\Budgethold.Common.csproj", "{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +70,14 @@ Global
 		{E875FBD6-2281-4C25-B89F-5330132C2F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E875FBD6-2281-4C25-B89F-5330132C2F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E875FBD6-2281-4C25-B89F-5330132C2F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62078C0A-C2D7-496C-ADB3-F53F47B3433C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62078C0A-C2D7-496C-ADB3-F53F47B3433C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62078C0A-C2D7-496C-ADB3-F53F47B3433C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62078C0A-C2D7-496C-ADB3-F53F47B3433C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +88,8 @@ Global
 		{B6016019-5472-4676-AEF0-25EA64294A03} = {786CE4D2-EF6D-4A54-9F30-3F9976D8A53C}
 		{6F1D8C31-901E-4316-BB98-87D2122E411D} = {31E2965C-FFE1-49E2-9669-28A9597F2908}
 		{E875FBD6-2281-4C25-B89F-5330132C2F22} = {31E2965C-FFE1-49E2-9669-28A9597F2908}
+		{62078C0A-C2D7-496C-ADB3-F53F47B3433C} = {B87910F3-C37C-42D8-82D2-07B88B21569B}
+		{94241AE0-05D9-4C32-9C3E-135C4F04EEAA} = {B87910F3-C37C-42D8-82D2-07B88B21569B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A8FB4F7-935D-4C29-A846-A96D548D8DF9}

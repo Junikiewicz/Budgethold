@@ -1,0 +1,14 @@
+﻿set xact_abort on
+BEGIN TRANSACTION
+---------------------------------------------------------
+DELETE FROM AspNetUsers
+DBCC CHECKIDENT ('Taskwind.dbo.AspNetUsers',RESEED, 0)
+---------------------------------------------------------
+SET IDENTITY_INSERT AspNetUsers ON
+INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) VALUES
+	(1, 'mjunikiewicz@gmail.com', 'MJUNIKIEWICZ@GMAIL.COM', 'mjunikiewicz@gmail.com', 'MJUNIKIEWICZ@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEN0LajPx5bRH21W2ZOKEWwmJNwQQ9YFMuTdlSljFr8tjveRK7iMQi1zgXffFH3JQMA==','AODIGBH63ZYVP7VO5Y3Z37NSLAUX2UJ4', 'bfc83952-3f75-453a-a6fa-97360ce5c590', NULL, 0, 0, NULL, 1, 0),
+	(2, 'jankowalski@gmail.com', 'JANKOWALSKI@GMAIL.COM', 'jankowalski@gmail.com', 'JANKOWALSKI@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEPoXKUaZPxv5zmWvul6X4h4EqWvJClYFmxdMh5cpl+4Wkw3FwjGiGIbGfA8W6nbfsg==','OKLRQPKULQJ42SOIXZ6W2KVZURDUJGGO', '5918ae2e-e7e9-491d-ada8-598f117ef47d', NULL, 0, 0, NULL, 1, 0),
+	(3, 'piotrnowak@gmail.com', 'PIOTRNOWAK@GMAIL.COM', 'piotrnowak@gmail.com', 'PIOTRNOWAK@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEBTKshhP5/nwnf03mbtwKc1De3fuciNKi7vI1GG+gYIvRPdSA5WZRk2AK5BRNtMiug==','LYN2TPBNE6KEATCB3HGAS637UA6MJMLG', 'f0b5d9e5-7c90-4a86-9d9d-b054f9475ae3', NULL, 0, 0, NULL, 1, 0);
+SET IDENTITY_INSERT AspNetUsers OFF
+---------------------------------------------------------
+set xact_abort off

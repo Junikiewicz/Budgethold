@@ -1,4 +1,5 @@
-﻿using Budgethold.Security.Models;
+﻿using Budgethold.Domain.Models;
+using Budgethold.Security.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,8 +9,15 @@ namespace Budgethold.Persistance.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable($"{nameof(AspNetUser)}s");
+
             builder.Property(x => x.IsDeleted)
-                .HasDefaultValue(false);
+                .HasDefaultValue(false)
+                .HasColumnName(nameof(User.IsDeleted));
+
+            builder.Property(e => e.Name)
+                .HasMaxLength(256)
+                .IsRequired(true);
         }
     }
 }

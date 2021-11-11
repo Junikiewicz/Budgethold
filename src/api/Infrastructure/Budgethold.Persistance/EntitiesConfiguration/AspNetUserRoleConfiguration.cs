@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Budgethold.Persistance.EntitiesConfiguration
 {
-    internal class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
+    internal class AspNetUserRoleConfiguration : IEntityTypeConfiguration<AspNetUserRole>
     {
-        public void Configure(EntityTypeBuilder<UserRole> builder)
+        public void Configure(EntityTypeBuilder<AspNetUserRole> builder)
         {
             builder.Property(x => x.IsDeleted)
                 .HasDefaultValue(false);

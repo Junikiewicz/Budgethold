@@ -1,6 +1,8 @@
-﻿namespace Budgethold.Application.Contracts.Persistance.Repositories
+﻿using Budgethold.Domain.Common;
+
+namespace Budgethold.Application.Contracts.Persistance.Repositories
 {
-    public interface IGenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);

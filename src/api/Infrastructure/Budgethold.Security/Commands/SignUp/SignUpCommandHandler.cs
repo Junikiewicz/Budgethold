@@ -8,17 +8,17 @@ namespace Budgethold.Security.Commands.SignUp
 {
     internal class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result>
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<AspNetUser> _userManager;
 
-        public SignUpCommandHandler(UserManager<User> userManager)
+        public SignUpCommandHandler(UserManager<AspNetUser> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<Result> Handle(SignUpCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(SignUpCommand command, CancellationToken cancellationToken)
         {
-            var user = new User(request.Email);
-            var identityResult = await _userManager.CreateAsync(user, request.Password);
+            var user = new AspNetUser(command.Email, command.Name);
+            var identityResult = await _userManager.CreateAsync(user, command.Password);
 
             if (!identityResult.Succeeded) return identityResult.ToResult();
 

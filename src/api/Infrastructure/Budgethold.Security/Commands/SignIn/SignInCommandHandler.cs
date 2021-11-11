@@ -11,10 +11,10 @@ namespace Budgethold.Security.Commands.SignIn
 {
     internal class SignInCommandHandler : IRequestHandler<SignInCommand, Result>
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<AspNetUser> _userManager;
+        private readonly SignInManager<AspNetUser> _signInManager;
 
-        public SignInCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager)
+        public SignInCommandHandler(UserManager<AspNetUser> userManager, SignInManager<AspNetUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

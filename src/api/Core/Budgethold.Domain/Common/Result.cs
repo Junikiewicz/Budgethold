@@ -1,5 +1,5 @@
 ﻿using Budgethold.Domain.Common.Errors;
-using Budgethold.Domain.Exceptions;
+using Budgethold.Domain.Common.Exceptions;
 
 namespace Budgethold.Domain.Common
 {

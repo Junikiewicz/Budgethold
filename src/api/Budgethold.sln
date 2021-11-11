@@ -42,7 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B87910
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgethold.ValidationExtensions", "Common\Budgethold.ValidationExtensions\Budgethold.ValidationExtensions.csproj", "{62078C0A-C2D7-496C-ADB3-F53F47B3433C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgethold.Common", "Common\Budgethold.Common\Budgethold.Common\Budgethold.Common.csproj", "{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgethold.Common", "Common\Budgethold.Common\Budgethold.Common.csproj", "{94241AE0-05D9-4C32-9C3E-135C4F04EEAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

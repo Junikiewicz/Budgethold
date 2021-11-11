@@ -1,4 +1,4 @@
-﻿namespace Budgethold.Domain.Exceptions
+﻿namespace Budgethold.Domain.Common.Exceptions
 {
     internal class UnhandledErrorResultException : Exception
     {

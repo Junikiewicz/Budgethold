@@ -8,9 +8,9 @@ namespace Budgethold.Security.Commands.SignOut
 {
     internal class SignOutCommandHandler : IRequestHandler<SignOutCommand, Result>
     {
-        private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<AspNetUser> _signInManager;
 
-        public SignOutCommandHandler(SignInManager<User> signInManager)
+        public SignOutCommandHandler(SignInManager<AspNetUser> signInManager)
         {
             _signInManager = signInManager;
         }

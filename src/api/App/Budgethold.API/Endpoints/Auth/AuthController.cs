@@ -23,7 +23,7 @@ namespace Budgethold.API.Endpoints.Auth
         [HttpPost("sign-up")]
         public async Task<IActionResult> SignUp(SignUpRequest request, CancellationToken cancellationToken)
         {
-            var command = new SignUpCommand(request.Email, request.Password);
+            var command = new SignUpCommand(request.Email, request.Password, request.Name);
 
             var result = await _mediator.Send(command, cancellationToken);
 

@@ -16,12 +16,12 @@ namespace Budgethold.Persistance.Extensions
 
         public static void AddIdentityStores(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<User>();
-            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+            var builder = services.AddIdentityCore<AspNetUser>();
+            builder = new IdentityBuilder(builder.UserType, typeof(AspNetRole), builder.Services);
             builder.AddEntityFrameworkStores<DataContext>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<User>>();
+            builder.AddRoleValidator<RoleValidator<AspNetRole>>();
+            builder.AddRoleManager<RoleManager<AspNetRole>>();
+            builder.AddSignInManager<SignInManager<AspNetUser>>();
             builder.AddDefaultTokenProviders();
         }
     }

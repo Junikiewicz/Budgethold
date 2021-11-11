@@ -1,8 +1,9 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
+using Budgethold.Domain.Common;
 
 namespace Budgethold.Persistance.Repositories
 {
-    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         protected DataContext _context;
         public GenericRepository(DataContext context)
@@ -10,22 +11,22 @@ namespace Budgethold.Persistance.Repositories
             _context = context;
         }
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public virtual void AddRange(IEnumerable<TEntity> entities)
         {
             _context.Set<TEntity>().AddRange(entities);
         }
 
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             _context.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entity)
+        public virtual void RemoveRange(IEnumerable<TEntity> entity)
         {
             _context.Set<TEntity>().RemoveRange(entity);
         }

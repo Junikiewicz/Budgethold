@@ -16,11 +16,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Budgethold.Application\Budgethold.Application.csproj" />
-    <ProjectReference Include="..\..\Core\Budgethold.Domain\Budgethold.Domain.csproj" />
+	  <ProjectReference Include="..\..\Common\Budgethold.Common\Budgethold.Common.csproj" />
+	  <ProjectReference Include="..\..\Core\Budgethold.Domain\Budgethold.Domain.csproj" />
     <ProjectReference Include="..\Budgethold.Security\Budgethold.Security.csproj" />
   </ItemGroup>
 

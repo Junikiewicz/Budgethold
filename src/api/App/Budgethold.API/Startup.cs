@@ -1,4 +1,5 @@
 ﻿using Budgethold.API.Extensions;
+using Budgethold.Application.Commands.Wallet.AddWalletCommand;
 using Budgethold.Persistance;
 using Budgethold.Persistance.Extensions;
 using Budgethold.Security.Commands.SignUp;
@@ -25,7 +26,7 @@ namespace Budgethold.API
 
             services.AddValidation();
 
-            services.AddMediatR(typeof(SignUpCommand));
+            services.AddMediatR(typeof(SignUpCommand), typeof(AddWalletCommand));
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();

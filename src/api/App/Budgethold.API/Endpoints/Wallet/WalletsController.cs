@@ -3,11 +3,13 @@ using Budgethold.API.Extensions;
 using Budgethold.Application.Commands.Wallet.AddWalletCommand;
 using Budgethold.Application.Queries.Wallet.GetUserWalletsQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Budgethold.API.Endpoints.Wallet
 {
     [Route("api/wallets")]
+    [Authorize]
     [ApiController]
     public class WalletsController : ControllerBase
     {

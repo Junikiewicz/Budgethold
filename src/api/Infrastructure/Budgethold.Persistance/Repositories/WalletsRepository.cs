@@ -14,7 +14,14 @@ namespace Budgethold.Persistance.Repositories
 
         public override void Add(Wallet entity)
         {
-            _context.Wallets!.Add(entity);
+            _context.Wallets.Add(entity);
+
+            entity.Users.ForEach(x => _context.Attach(x));
+        }
+
+        public override void Update(Wallet entity)
+        {
+            _context.Wallets.Update(entity);
 
             entity.Users.ForEach(x => _context.Attach(x));
         }

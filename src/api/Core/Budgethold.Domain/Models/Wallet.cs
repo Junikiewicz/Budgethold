@@ -40,12 +40,12 @@ namespace Budgethold.Domain.Models
         public virtual HashSet<User> Users { get; private set; }
         public virtual HashSet<Category> Categories { get; private set; }
 
-        public void Update(string name, int? newOwner, decimal? startingValue, params int[] userIds)
+        public void Update(string name, int newOwner, decimal startingValue, params int[] userIds)
         {
-            if (!(name is null)) UpdateName(name);
-            if (newOwner.HasValue) UpdateOwner(newOwner.Value);
-            if (startingValue.HasValue) UpdateStartingValue(startingValue.Value);
-            if (userIds.Any()) UpdateUsers(userIds);
+            UpdateName(name);
+            UpdateOwner(newOwner);
+            UpdateStartingValue(startingValue);
+            UpdateUsers(userIds);
 
         }
         public void UpdateName(string name)

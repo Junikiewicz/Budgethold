@@ -9,6 +9,7 @@ namespace Budgethold.Persistance
     {
         private readonly DataContext _context;
         private IWalletsRepository? _walletsRepository;
+        private ICategoriesRepository? _categoriesRepository;
 
         public UnitOfWork(DataContext context)
         {
@@ -25,6 +26,19 @@ namespace Budgethold.Persistance
                 }
 
                 return _walletsRepository;
+            }
+        }
+
+        public ICategoriesRepository CategoriesRepository
+        {
+            get
+            {
+                if (_categoriesRepository == null)
+                {
+                    _categoriesRepository = new CategoriesRepository(_context);
+                }
+
+                return _categoriesRepository;
             }
         }
 

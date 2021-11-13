@@ -11,13 +11,12 @@ namespace Budgethold.Persistance
 {
     public class DataContext : IdentityDbContext<AspNetUser, AspNetRole, int, IdentityUserClaim<int>, AspNetUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public DbSet<User>? AppUsers { get; set; }
-        public DbSet<Wallet>? Wallets { get; set; }
+        public DbSet<User> DomainUsers => Set<User>();
+        public DbSet<Wallet> Wallets => Set<Wallet>();
+        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<TransactionType> TransactionTypes => Set<TransactionType>();
 
-        public DataContext(DbContextOptions<DataContext> contextOptions) : base(contextOptions)
-        {
-
-        }
+        public DataContext(DbContextOptions<DataContext> contextOptions) : base(contextOptions) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

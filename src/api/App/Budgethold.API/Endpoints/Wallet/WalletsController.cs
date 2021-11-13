@@ -1,7 +1,7 @@
 ﻿using Budgethold.API.Endpoints.Wallet.Dtos;
 using Budgethold.API.Extensions;
-using Budgethold.Application.Commands.Wallet.AddWalletCommand;
-using Budgethold.Application.Queries.Wallet.GetUserWalletsQuery;
+using Budgethold.Application.Commands.Wallet.AddWallet;
+using Budgethold.Application.Queries.Wallet.GetUserWallets;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

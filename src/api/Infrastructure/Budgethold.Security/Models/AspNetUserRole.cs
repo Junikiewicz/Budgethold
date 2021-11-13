@@ -9,5 +9,10 @@ namespace Budgethold.Security.Models
 
         public virtual AspNetUser? User { get; private set; }
         public virtual AspNetRole? Role { get; private set; }
+
+        public void SetIsDeleted()
+        {
+            IsDeleted = true;
+        }
     }
 }

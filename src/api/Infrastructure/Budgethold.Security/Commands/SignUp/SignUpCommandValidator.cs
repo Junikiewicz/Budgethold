@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Budgethold.Security.Commands.SignUp
 {
-    internal class SignUpCommandValidator : AbstractValidator<SignUpCommand>
+    public class SignUpCommandValidator : AbstractValidator<SignUpCommand>
     {
         public SignUpCommandValidator()
         {
@@ -15,8 +15,8 @@ namespace Budgethold.Security.Commands.SignUp
                 .MinimumLength(6)
                 .OneOrMoreCapitalLetters()
                 .OneOrMoreLowercaseLetters()
-                .OneOrMoreDigit()
-                .OneOrMoreSpecialCharaceters();
+                .OneOrMoreDigits()
+                .OneOrMoreSpecialCharacters();
         }
     }
 }

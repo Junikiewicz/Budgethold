@@ -3,7 +3,7 @@ using Budgethold.Domain.Common;
 using MediatR;
 using DomainModel = Budgethold.Domain.Models;
 
-namespace Budgethold.Application.Commands.Wallet.AddWalletCommand
+namespace Budgethold.Application.Commands.Wallet.AddWallet
 {
     internal class AddWalletCommandHandler : IRequestHandler<AddWalletCommand, Result>
     {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Budgethold.API.Common.Validation
 {
-    public class ValidationError : Error
+    internal record ValidationError : Error
     {
         public ValidationError(IEnumerable<ValidationFailure> failures) : base(GetErrorMessage(failures)) { }
 

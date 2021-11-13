@@ -1,6 +1,6 @@
 ﻿namespace Budgethold.API.Endpoints.Auth.Dtos
 {
-    public class SignInRequest
+    public record SignInRequest
     {
         public SignInRequest()
         {

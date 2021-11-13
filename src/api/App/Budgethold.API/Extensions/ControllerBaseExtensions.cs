@@ -29,6 +29,7 @@ namespace Budgethold.API.Extensions
                 NotFoundError e => controllerBase.BadRequest(e.Message),
                 AuthError e => controllerBase.BadRequest(e.Message),
                 ValidationError e => controllerBase.BadRequest(e.Message),
+                InvalidOperationError e => controllerBase.BadRequest(e.Message),
                 _ => throw new NotSupportedException($"Not supported error type: {result.Error}")
             };
         }

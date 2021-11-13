@@ -26,6 +26,7 @@ namespace Budgethold.Domain.Models
         public int Id { get; private set; }
         public string Name { get; private set; }
 
+        public virtual HashSet<Wallet> OwnedWallets { get; private set; }
         public virtual HashSet<Wallet> Wallets { get; private set; }
     }
 }

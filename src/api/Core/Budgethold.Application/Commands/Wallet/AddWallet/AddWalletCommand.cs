@@ -12,8 +12,8 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
             StartingValue = startingValue;
             OwnerId = ownerId;
         }
-
-        public int UserId { get; init; }
+        public int OwnerId { get; init; }
+        public int[] Users { get; init; }
         public string Name { get; init; }
         public decimal StartingValue { get; init; }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Budgethold.Application.Queries.Wallet.GetUserWalletQuery
 {
-    public class GetUserWalletQuery : IRequest<Result<WalletResponse>>
+    public class GetUserWalletQuery : IRequest<Result<SingleWalletResponse>>
     {
         public GetUserWalletQuery(int walletId, int userId)
         {

@@ -1,4 +1,5 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
+using Budgethold.Common.Extensions;
 using Budgethold.Domain.Common;
 
 namespace Budgethold.Persistance.Repositories
@@ -23,12 +24,17 @@ namespace Budgethold.Persistance.Repositories
 
         public virtual void Remove(TEntity entity)
         {
-            _context.Remove(entity);
+            entity.SetIsDeleted();
         }
 
-        public virtual void RemoveRange(IEnumerable<TEntity> entity)
+        public virtual void RemoveRange(IEnumerable<TEntity> entites)
         {
-            _context.Set<TEntity>().RemoveRange(entity);
+            entites.ForEach(x => Remove(x));
+        }
+
+        public virtual void Update(TEntity entity)
+        {
+            _context.Set<TEntity>().Update(entity);
         }
 
         public virtual void Update(TEntity entity)

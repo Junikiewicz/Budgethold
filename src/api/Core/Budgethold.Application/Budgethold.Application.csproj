@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Budgethold.Common\Budgethold.Common.csproj" />
+    <ProjectReference Include="..\..\Common\Budgethold.ValidationExtensions\Budgethold.ValidationExtensions.csproj" />
     <ProjectReference Include="..\Budgethold.Domain\Budgethold.Domain.csproj" />
   </ItemGroup>
 

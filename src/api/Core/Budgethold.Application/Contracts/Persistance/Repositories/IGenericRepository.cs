@@ -9,6 +9,5 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entity);
         void Update(TEntity entity);
-
     }
 }

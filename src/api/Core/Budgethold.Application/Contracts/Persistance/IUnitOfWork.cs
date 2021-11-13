@@ -6,6 +6,7 @@ namespace Budgethold.Application.Contracts.Persistance
     public interface IUnitOfWork
     {
         IWalletsRepository WalletsRepository { get; }
+        ICategoriesRepository CategoriesRepository { get; }
 
         public Task<Result> SaveChangesAsync(CancellationToken cancellationToken);
     }

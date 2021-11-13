@@ -1,6 +1,6 @@
 ﻿namespace Budgethold.API.Endpoints.Auth.Dtos
 {
-    public class SignUpRequest
+    public record SignUpRequest
     {
         public SignUpRequest()
         {
@@ -9,8 +9,8 @@
             Name = null!;
         }
 
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Name { get; init; }
+        public string Email { get; init; }
+        public string Password { get; init; }
     }
 }

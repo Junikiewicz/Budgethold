@@ -3,5 +3,7 @@
     public interface IEntity
     {
         public bool IsDeleted { get; }
+
+        void SetIsDeleted();
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Budgethold.Domain.Common;
 using MediatR;
 
-namespace Budgethold.Application.Commands.Wallet.AddWalletCommand
+namespace Budgethold.Application.Commands.Wallet.AddWallet
 {
-    public class AddWalletCommand : IRequest<Result>
+    public record AddWalletCommand : IRequest<Result>
     {
         public AddWalletCommand(int[] users, string name, decimal startingValue, int ownerId)
         {
@@ -13,9 +13,8 @@ namespace Budgethold.Application.Commands.Wallet.AddWalletCommand
             OwnerId = ownerId;
         }
 
-        public int[] Users { get; set; }
-        public string Name { get; set; }
-        public decimal StartingValue { get; set; }
-        public int OwnerId { get; set; }
+        public int UserId { get; init; }
+        public string Name { get; init; }
+        public decimal StartingValue { get; init; }
     }
 }

@@ -2,12 +2,19 @@
 
 namespace Budgethold.Domain.Models
 {
-    public class User : IEntity
+    public class User : Entity
     {
         public User()
         {
             Name = null!;
-            Wallets = new();
+            Wallets = null!;
+        }
+
+        public User(int id)
+        {
+            Id = id;
+            Name = null!;
+            Wallets = null!;
         }
 
         public User(string name)
@@ -16,10 +23,9 @@ namespace Budgethold.Domain.Models
             Wallets = new();
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsDeleted { get; set; }
-        public HashSet<Wallet> OwnedWallets { get; set; }
-        public HashSet<Wallet> Wallets { get; set; }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+
+        public virtual HashSet<Wallet> Wallets { get; private set; }
     }
 }

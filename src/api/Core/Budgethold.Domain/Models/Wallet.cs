@@ -2,30 +2,30 @@
 
 namespace Budgethold.Domain.Models
 {
-    public class Wallet : IEntity
+    public class Wallet : Entity
     {
         public Wallet()
         {
             Users = null!;
             Name = null!;
+            Categories = null!;
         }
 
-        public Wallet(string name, decimal startingValue, int ownerId, params int[] users)
+        public Wallet(string name, decimal startingValue, params int[] userIds)
         {
             Name = name;
             StartingValue = startingValue;
             CurrentValue = startingValue;
-            Users = new HashSet<User>(users.Select(x => new User { Id = x }));
-            OwningUserId = ownerId;
+            Users = new HashSet<User>(userIds.Select(x => new User(x)));
+            Categories = new();
         }
 
-        public int Id { get; set; }
-        public int OwningUserId { get; set; }
-        public decimal StartingValue { get; set; }
-        public decimal CurrentValue { get; set; }
-        public string Name { get; set; }
-        public bool IsDeleted { get; set; }
-        public HashSet<User> Users { get; set; }
-        public User OwningUser { get; set; }
+        public int Id { get; private set; }
+        public decimal StartingValue { get; private set; }
+        public decimal CurrentValue { get; private set; }
+        public string Name { get; private set; }
+
+        public virtual HashSet<User> Users { get; private set; }
+        public virtual HashSet<Category> Categories { get; private set; }
     }
 }

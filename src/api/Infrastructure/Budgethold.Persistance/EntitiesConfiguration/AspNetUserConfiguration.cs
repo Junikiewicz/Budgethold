@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Budgethold.Persistance.EntitiesConfiguration
 {
-    internal class ApsNetUserConfiguration : IEntityTypeConfiguration<AspNetUser>
+    internal class AspNetUserConfiguration : IEntityTypeConfiguration<AspNetUser>
     {
         public void Configure(EntityTypeBuilder<AspNetUser> builder)
         {

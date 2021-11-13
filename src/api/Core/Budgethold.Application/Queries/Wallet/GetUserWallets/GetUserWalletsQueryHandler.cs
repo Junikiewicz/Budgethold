@@ -2,7 +2,7 @@
 using Budgethold.Domain.Common;
 using MediatR;
 
-namespace Budgethold.Application.Queries.Wallet.GetUserWalletsQuery
+namespace Budgethold.Application.Queries.Wallet.GetUserWallets
 {
     internal class GetUserWalletsQueryHandler : IRequestHandler<GetUserWalletsQuery, Result<IEnumerable<WalletResponse>>>
     {

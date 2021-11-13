@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace Budgethold.API.Extensions
 {
-    public static class ClaimsPrincipalExtensions
+    internal static class ClaimsPrincipalExtensions
     {
         public static int GetUserId(this ClaimsPrincipal claimsPrincipal)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Budgethold.Domain.Common.Errors
 {
-    public abstract class Error
+    public abstract record Error
     {
         public Error(string message)
         {

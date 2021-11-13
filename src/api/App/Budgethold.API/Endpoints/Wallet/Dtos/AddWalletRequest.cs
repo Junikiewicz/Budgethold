@@ -1,6 +1,6 @@
 ﻿namespace Budgethold.API.Endpoints.Wallet.Dtos
 {
-    public class AddWalletRequest
+    public record AddWalletRequest
     {
         public AddWalletRequest()
         {

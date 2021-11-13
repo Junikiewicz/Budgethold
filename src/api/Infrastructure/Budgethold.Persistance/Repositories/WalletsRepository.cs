@@ -1,5 +1,5 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
-using Budgethold.Application.Queries.Wallet.GetUserWalletsQuery;
+using Budgethold.Application.Queries.Wallet.GetUserWallets;
 using Budgethold.Common.Extensions;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +8,7 @@ namespace Budgethold.Persistance.Repositories
 {
     internal class WalletsRepository : GenericRepository<Wallet>, IWalletsRepository
     {
-        public WalletsRepository(DataContext context) : base(context)
-        {
-        }
+        public WalletsRepository(DataContext context) : base(context) { }
 
         public override void Add(Wallet entity)
         {
@@ -21,7 +19,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets!
+            return await _context.Wallets
                 .Where(x => x.Users.Any(y => y.Id == userId))
                 .Select(x => new WalletResponse
                 {
@@ -35,6 +33,14 @@ namespace Budgethold.Persistance.Repositories
                         Name = y.Name
                     })
                 }).ToListAsync(cancellationToken);
+        }
+
+        public async Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
+        {
+            return await _context.Wallets
+                .Where(x => x.Id == walletId)
+                .SelectMany(x => x.Users.Select(y => y.Id))
+                .ContainsAsync(userId, cancellationToken);
         }
     }
 }

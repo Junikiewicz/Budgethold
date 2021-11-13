@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Budgethold.Application.Commands.Wallet.AddWalletCommand
+namespace Budgethold.Application.Commands.Wallet.AddWallet
 {
     internal class AddWalletCommandValidator : AbstractValidator<AddWalletCommand>
     {

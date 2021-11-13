@@ -2,7 +2,7 @@
 
 namespace Budgethold.Security.Common.Errors
 {
-    public class AuthError : Error
+    public record AuthError : Error
     {
         public AuthError(string message) : base(message) { }
     }

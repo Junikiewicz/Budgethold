@@ -1,5 +1,5 @@
 ﻿using Budgethold.API.Extensions;
-using Budgethold.Application.Commands.Wallet.AddWalletCommand;
+using Budgethold.Application.Commands.Wallet.AddWallet;
 using Budgethold.Persistance;
 using Budgethold.Persistance.Extensions;
 using Budgethold.Security.Commands.SignUp;

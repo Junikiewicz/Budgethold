@@ -16,8 +16,8 @@ namespace Budgethold.Security.Commands.SignIn
                 .MinimumLength(6)
                 .OneOrMoreCapitalLetters()
                 .OneOrMoreLowercaseLetters()
-                .OneOrMoreDigit()
-                .OneOrMoreSpecialCharaceters();
+                .OneOrMoreDigits()
+                .OneOrMoreSpecialCharacters();
         }
     }
 }

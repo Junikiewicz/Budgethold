@@ -33,7 +33,7 @@ namespace Budgethold.API.Endpoints.Wallet
         [HttpPost]
         public async Task<IActionResult> AddWallet(AddWalletRequest request, CancellationToken cancellationToken)
         {
-            var command = new AddWalletCommand(User.GetUserId(), request.Name, request.StartingValue);
+            var command = new AddWalletCommand(request.UsersId, request.Name, request.StartingValue, User.GetUserId());
 
             var result = await _mediator.Send(command, cancellationToken);
 

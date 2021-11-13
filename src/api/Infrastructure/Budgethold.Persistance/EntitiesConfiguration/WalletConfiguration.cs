@@ -15,6 +15,10 @@ namespace Budgethold.Persistance.EntitiesConfiguration
                 .HasPrecision(19, 4);
             builder.Property(x => x.StartingValue)
                 .HasPrecision(19, 4);
+            builder.HasOne(w => w.OwningUser)
+                .WithMany(u => u.OwnedWallets)
+                .HasForeignKey(uwu => uwu.OwningUserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

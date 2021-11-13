@@ -16,7 +16,7 @@ namespace Budgethold.Application.Commands.Wallet.AddWalletCommand
 
         public async Task<Result> Handle(AddWalletCommand command, CancellationToken cancellationToken)
         {
-            var wallet = new DomainModel.Wallet(command.Name, command.StartingValue, command.UserId);
+            var wallet = new DomainModel.Wallet(command.Name, command.StartingValue, command.OwnerId, command.Users);
 
             _unitOfWork.WalletsRepository.Add(wallet);
 

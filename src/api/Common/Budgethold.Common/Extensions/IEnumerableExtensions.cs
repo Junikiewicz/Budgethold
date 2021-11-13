@@ -1,4 +1,5 @@
-﻿namespace Budgethold.Common.Extensions
+﻿
+namespace Budgethold.Common.Extensions
 {
     public static class IEnumerableExtensions
     {

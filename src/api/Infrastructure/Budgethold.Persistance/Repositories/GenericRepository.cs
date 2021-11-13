@@ -30,5 +30,10 @@ namespace Budgethold.Persistance.Repositories
         {
             _context.Set<TEntity>().RemoveRange(entity);
         }
+
+        public virtual void Update(TEntity entity)
+        {
+            _context.Update(entity);
+        }
     }
 }

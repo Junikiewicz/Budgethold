@@ -19,7 +19,7 @@ namespace Budgethold.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
-
+        public HashSet<Wallet> OwnedWallets { get; set; }
         public HashSet<Wallet> Wallets { get; set; }
     }
 }

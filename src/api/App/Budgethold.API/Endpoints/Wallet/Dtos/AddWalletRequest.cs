@@ -6,7 +6,7 @@
         {
             Name = null!;
         }
-
+        public int[] UsersId { get; init; }
         public string Name { get; init; }
         public decimal StartingValue { get; init; }
     }

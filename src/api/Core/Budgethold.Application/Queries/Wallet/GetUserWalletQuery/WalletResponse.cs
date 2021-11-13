@@ -1,4 +1,10 @@
-﻿namespace Budgethold.Application.Queries.Wallet.GetUserWalletsQuery
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Budgethold.Application.Queries.Wallet.GetUserWalletQuery
 {
     public record WalletResponse
     {
@@ -7,7 +13,7 @@
         public decimal CurrentValue { get; init; }
         public string? Name { get; init; }
         public IEnumerable<OwningUser>? OwningUsers { get; init; }
-        public OwningUser? WalletOwner { get; set; }
+        public int WalletOwnerId { get; set; }
 
         public record OwningUser
         {

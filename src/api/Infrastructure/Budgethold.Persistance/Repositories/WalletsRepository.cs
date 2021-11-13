@@ -19,6 +19,25 @@ namespace Budgethold.Persistance.Repositories
             entity.Users.ForEach(x => _context.Attach(x));
         }
 
+        public async Task<WalletResponse> GetUserWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
+        {
+            return await _context.Wallets!
+                .Where(x => x.Users.Any(y => y.Id == userId) && x.Id == walletId)
+                .Select(x => new WalletResponse
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CurrentValue = x.CurrentValue,
+                    StartingValue = x.StartingValue,
+                    OwningUsers = x.Users.Select(y => new WalletResponse.OwningUser
+                    {
+                        Id = y.Id,
+                        Name = y.Name
+                    })
+                }).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        }
+
         public async Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken)
         {
             return await _context.Wallets!
@@ -33,7 +52,7 @@ namespace Budgethold.Persistance.Repositories
                     {
                         Id = y.Id,
                         Name = y.Name
-                    })
+                    }) 
                 }).ToListAsync(cancellationToken);
         }
     }

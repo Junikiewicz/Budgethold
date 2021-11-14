@@ -23,19 +23,19 @@ namespace Budgethold.Persistance.Repositories
         {
             _context.Wallets.Update(entity);
 
-            entity.Users.ForEach(x => _context.Attach(x));
+            //entity.Users.ForEach(x => _context.Attach(x));
         }
 
         public async Task<Wallet?> GetUserWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
             return await _context.Wallets
-                .Where(x => x.Id == walletId && x.OwningUserId == userId)
+                .Where(x => x.Id == walletId && x.OwningUserId == userId).Include(i => i.Users)
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await _context.Wallets.AsNoTracking()
                 .Where(x => x.Users.Any(y => y.Id == userId))
                 .Select(x => new WalletResponse
                 {
@@ -54,7 +54,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await _context.Wallets.AsNoTracking()
                 .Where(x => x.Id == walletId)
                 .SelectMany(x => x.Users.Select(y => y.Id))
                 .ContainsAsync(userId, cancellationToken);
@@ -62,7 +62,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<SingleWalletResponse?> GetUserWalletForViewAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await _context.Wallets.AsNoTracking()
                 .Where(x => x.Id == walletId && x.OwningUserId == userId)
                 .Select(x => new SingleWalletResponse
                 {

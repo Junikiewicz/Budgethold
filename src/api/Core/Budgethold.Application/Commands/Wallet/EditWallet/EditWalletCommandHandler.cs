@@ -28,6 +28,11 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
+            foreach (var user in wallet.Users)
+            {
+                if (!(command.Users.Contains(user.Id))) wallet.Users.Remove(user);
+            }
+
             wallet.Update(command.Name, command.OwnerId, command.StartingValue, command.Users);
 
             _unitOfWork.WalletsRepository.Update(wallet);

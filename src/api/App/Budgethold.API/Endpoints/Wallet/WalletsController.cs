@@ -2,6 +2,7 @@
 using Budgethold.API.Extensions;
 using Budgethold.Application.Commands.Wallet.AddWallet;
 using Budgethold.Application.Commands.Wallet.EditWallet;
+using Budgethold.Application.Commands.Wallet.EditWalletOwner;
 using Budgethold.Application.Queries.Wallet.GetUserWalletQuery;
 using Budgethold.Application.Queries.Wallet.GetUserWallets;
 using MediatR;
@@ -53,13 +54,24 @@ namespace Budgethold.API.Endpoints.Wallet
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateWallet(EditWalletRequest request, int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditWallet(EditWalletRequest request, int id, CancellationToken cancellationToken)
         {
-            var command = new EditWalletCommand(id, request.Name, request.StartingValue, User.GetUserId(), request.NewOwner, request.Users);
+            var command = new EditWalletCommand(id, request.Name, request.StartingValue, User.GetUserId(), request.Users);
 
             var result = await _mediator.Send(command, cancellationToken);
 
             return this.GetResponseFromResult(result);
         }
+
+        [HttpPatch("newOwner/{walletId}")]
+        public async Task<IActionResult> EditWalletOwner(EditWalletOwnerRequest request, int walletId, CancellationToken cancellationToken)
+        {
+            var command = new EditWalletOwnerCommand(request.NewOner, User.GetUserId(), walletId);
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return this.GetResponseFromResult(result);
+        }
+
     }
 }

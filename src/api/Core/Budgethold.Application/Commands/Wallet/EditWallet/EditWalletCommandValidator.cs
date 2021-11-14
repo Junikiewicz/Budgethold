@@ -14,8 +14,8 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
             RuleFor(x => x.UserId).GreaterThan(0);
             RuleFor(x => x.StartingValue).NotNull();
             RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.OwnerId).GreaterThan(0);
-            RuleFor(x => x.Users).ForEach(x => x.GreaterThan(0));
+            RuleFor(x => x.Users).NotEmpty();
+            RuleForEach(x => x.Users).NotNull().NotEmpty().GreaterThan(0);
         }
     }
 }

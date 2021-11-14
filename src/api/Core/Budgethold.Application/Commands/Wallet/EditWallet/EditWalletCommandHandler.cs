@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgethold.Domain.Common.Errors;
+using Budgethold.Domain.Models;
 
 namespace Budgethold.Application.Commands.Wallet.EditWallet
 {
@@ -24,18 +25,19 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
         {
             var wallet = await _unitOfWork.WalletsRepository.GetUserWalletAsync(command.WalletId, command.UserId, cancellationToken);
 
-            if( wallet is null || !await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, wallet.OwningUserId, cancellationToken))
+            if( wallet is null || !await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, command.UserId, cancellationToken))
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
-            foreach (var user in wallet.Users)
+            wallet.Users.RemoveWhere(x => !command.Users.Contains(x.UserId));
+            var currentUsers = wallet.Users.Select(x => x.UserId);
+            var usersToAdd = command.Users.Except(currentUsers);
+            var newUsers = usersToAdd.Select(x => new UserWallet(x, wallet.Id));
+            foreach (var user in newUsers)
             {
-                if (!(command.Users.Contains(user.Id))) wallet.Users.Remove(user);
+                wallet.Users.Add(user);
             }
-
-            wallet.Update(command.Name, command.OwnerId, command.StartingValue, command.Users);
-
-            _unitOfWork.WalletsRepository.Update(wallet);
+            wallet.Update(command.Name, command.StartingValue);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

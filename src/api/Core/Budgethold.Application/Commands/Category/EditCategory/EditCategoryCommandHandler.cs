@@ -36,8 +36,6 @@ namespace Budgethold.Application.Commands.Category.EditCategory
 
             category.Update(command.ParentCategoryId, command.Name);
 
-            _unitOfWork.CategoriesRepository.Update(category);
-
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new Result();

@@ -11,5 +11,6 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
         Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken);
         Task<Wallet?> GetUserWalletAsync(int walletId, int userId, CancellationToken cancellationToken);
         Task<SingleWalletResponse?> GetUserWalletForViewAsync(int walletId, int userId, CancellationToken cancellationToken);
+        Task<bool> CheckIfUserIsWalletOwner(int walletId, int userId, CancellationToken cancellationToken);
     }
 }

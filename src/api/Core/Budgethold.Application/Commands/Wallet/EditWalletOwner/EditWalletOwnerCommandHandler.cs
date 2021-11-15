@@ -2,11 +2,6 @@
 using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
 {
@@ -27,8 +22,8 @@ namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
-            wallet.Users.SingleOrDefault(x => x.UserId == command.UserId && x.WalletId == command.WalletId).DeleteOwnership();
-            wallet.Users.SingleOrDefault(x => x.UserId == command.NewOwnerId && x.WalletId == command.WalletId).SetOwnership();
+            wallet.Users.SingleOrDefault(x => x.UserId == command.UserId && x.WalletId == command.WalletId)!.DeleteOwnership();
+            wallet.Users.SingleOrDefault(x => x.UserId == command.NewOwnerId && x.WalletId == command.WalletId)!.SetOwnership();
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

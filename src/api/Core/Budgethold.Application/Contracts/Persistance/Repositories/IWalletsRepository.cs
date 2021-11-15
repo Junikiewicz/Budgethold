@@ -1,5 +1,4 @@
 ﻿using Budgethold.Application.Queries.Wallet.GetUserWalletQuery;
-using Budgethold.Application.Queries.Wallet.GetUserWallets;
 using Budgethold.Domain.Models;
 using WalletResponse = Budgethold.Application.Queries.Wallet.GetUserWallets.WalletResponse;
 

@@ -29,10 +29,5 @@ namespace Budgethold.ValidationExtensions
         {
             return ruleBuilder.Must(x => Enum.IsDefined(enumType, x)).WithMessage("'{PropertyName}' value outside of valid range.");
         }
-
-        public static IRuleBuilderOptions<T, string> NotEmptyOrWhitespace<T>(this IRuleBuilder<T, string> ruleBuilder)
-        {
-            return ruleBuilder.Must(u => !string.IsNullOrWhiteSpace(u)).WithMessage("'{PropertyName}' cannot be null or whitespace");
-        }
     }
 }

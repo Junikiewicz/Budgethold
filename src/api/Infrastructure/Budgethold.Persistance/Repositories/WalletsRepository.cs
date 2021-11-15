@@ -1,7 +1,5 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
-using Budgethold.Application.Queries.Wallet.GetUserWalletQuery;
-using Budgethold.Application.Queries.Wallet.GetUserWallets;
-using Budgethold.Common.Extensions;
+using Budgethold.Application.Queries.Wallet.GetSingleWalletQuery;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using WalletResponse = Budgethold.Application.Queries.Wallet.GetUserWallets.WalletResponse;
@@ -12,73 +10,53 @@ namespace Budgethold.Persistance.Repositories
     {
         public WalletsRepository(DataContext context) : base(context) { }
 
-        public override void Add(Wallet entity)
-        {
-            _context.Wallets.Add(entity);
-
-            //entity.Users.ForEach(x => _context.Attach(x));
-        }
-
-        public override void Update(Wallet entity)
-        {
-            _context.Wallets.Update(entity);
-
-            //entity.Users.ForEach(x => _context.Attach(x));
-        }
-
         public async Task<Wallet?> GetUserWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
             return await _context.Wallets
-                .Where(x => x.Id == walletId).Include(i => i.Users)
+                .Where(x => x.Id == walletId).Include(i => i.UserWallets)
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets.AsNoTracking()
-                .Where(x => x.Users.Any(y => y.UserId == userId))
+            return await _context.Wallets
+                .Where(x => x.UserWallets.Any(y => y.UserId == userId))
                 .Select(x => new WalletResponse
                 {
                     Id = x.Id,
                     Name = x.Name,
                     CurrentValue = x.CurrentValue,
                     StartingValue = x.StartingValue,
-                    OwningUsers = x.Users.Select(y => new WalletResponse.OwningUser
+                    OwningUsers = x.UserWallets.Select(y => new WalletResponse.OwningUser
                     {
                         Id = y.UserId,
-                    }) 
+                        Name = y.User.Name
+                    })
                 }).ToListAsync(cancellationToken);
         }
 
         public async Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets.AsNoTracking()
+            return await _context.Wallets
                 .Where(x => x.Id == walletId)
-                .SelectMany(x => x.Users.Select(y => y.UserId))
+                .SelectMany(x => x.UserWallets.Select(y => y.UserId))
                 .ContainsAsync(userId, cancellationToken);
-        }
-
-        public async Task<bool> CheckIfUserIsWalletOwner(int walletId, int userId, CancellationToken cancellationToken)
-        {
-            var query = await _context.Wallets.AsNoTracking().Include(u => u.Users).SingleOrDefaultAsync(x => x.Id == walletId, cancellationToken);
-            var owner = query.Users.SingleOrDefault(x => x.UserId == userId);
-            return owner.IsOwner;
         }
 
         public async Task<SingleWalletResponse?> GetUserWalletForViewAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets.AsNoTracking()
-                .Where(x => x.Id == walletId).Include(uw => uw.Users)
+            return await _context.Wallets
+                .Where(x => x.Id == walletId)
                 .Select(x => new SingleWalletResponse
                 {
                     Id = x.Id,
                     Name = x.Name,
                     CurrentValue = x.CurrentValue,
                     StartingValue = x.StartingValue,
-                    OwningUsers = x.Users.Select(y => new SingleWalletResponse.OwningUser
+                    OwningUsers = x.UserWallets.Select(y => new SingleWalletResponse.OwningUser
                     {
                         Id = y.UserId,
-                        
+                        Name = y.User.Name
                     })
                 }).SingleOrDefaultAsync(cancellationToken);
         }

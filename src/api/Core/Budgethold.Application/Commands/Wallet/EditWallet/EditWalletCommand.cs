@@ -3,21 +3,21 @@ using MediatR;
 
 namespace Budgethold.Application.Commands.Wallet.EditWallet
 {
-    public class EditWalletCommand : IRequest<Result>
+    public record EditWalletCommand : IRequest<Result>
     {
-        public EditWalletCommand(int walletId, string name, decimal startingValue, int userId, int[] users)
+        public EditWalletCommand(int walletId, string name, decimal startingValue, int userId, IEnumerable<int> usersId)
         {
             WalletId = walletId;
-            Users = users;
+            UsersId = usersId;
             Name = name;
             StartingValue = startingValue;
             UserId = userId;
         }
-        public int UserId { get; set; }
-        public int WalletId { get; set; }
-        public int[] Users { get; set; }
-        public string Name { get; set; }
-        public decimal StartingValue { get; set; }
+        public int UserId { get; init; }
+        public int WalletId { get; init; }
+        public IEnumerable<int> UsersId { get; init; }
+        public string Name { get; init; }
+        public decimal StartingValue { get; init; }
     }
 }
 

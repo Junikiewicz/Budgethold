@@ -18,12 +18,13 @@ namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
         {
             var wallet = await _unitOfWork.WalletsRepository.GetUserWalletAsync(command.WalletId, command.UserId, cancellationToken);
             if (wallet is null || !await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, command.NewOwnerId, cancellationToken)
-               || !await _unitOfWork.WalletsRepository.CheckIfUserIsWalletOwner(wallet.Id, command.UserId, cancellationToken))
+               || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsWalletOwnerAsync(wallet.Id, command.UserId, cancellationToken))
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
-            wallet.Users.SingleOrDefault(x => x.UserId == command.UserId && x.WalletId == command.WalletId)!.DeleteOwnership();
-            wallet.Users.SingleOrDefault(x => x.UserId == command.NewOwnerId && x.WalletId == command.WalletId)!.SetOwnership();
+            //wallet.UserWallets.SingleOrDefault(x => x.UserId == command.UserId && x.WalletId == command.WalletId)!.DeleteOwnership();
+            //wallet.UserWallets.SingleOrDefault(x => x.UserId == command.NewOwnerId && x.WalletId == command.WalletId)!.SetOwnership();
+            wallet.RemoveWalletOwner(command.NewOwnerId);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

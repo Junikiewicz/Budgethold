@@ -23,13 +23,13 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
-            wallet.Users.RemoveWhere(x => !command.Users.Contains(x.UserId));
-            var currentUsers = wallet.Users.Select(x => x.UserId);
-            var usersToAdd = command.Users.Except(currentUsers);
+            wallet.UserWallets.RemoveWhere(x => !command.UsersId.Contains(x.UserId));
+            var currentUsersIdList = wallet.UserWallets.Select(x => x.UserId);
+            var usersToAdd = command.UsersId.Except(currentUsersIdList);
             var newUsers = usersToAdd.Select(x => new UserWallet(x, wallet.Id));
             foreach (var user in newUsers)
             {
-                wallet.Users.Add(user);
+                wallet.UserWallets.Add(user);
             }
             wallet.Update(command.Name, command.StartingValue);
 

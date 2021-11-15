@@ -3,7 +3,7 @@ using Budgethold.API.Extensions;
 using Budgethold.Application.Commands.Wallet.AddWallet;
 using Budgethold.Application.Commands.Wallet.EditWallet;
 using Budgethold.Application.Commands.Wallet.EditWalletOwner;
-using Budgethold.Application.Queries.Wallet.GetUserWalletQuery;
+using Budgethold.Application.Queries.Wallet.GetSingleWalletQuery;
 using Budgethold.Application.Queries.Wallet.GetUserWallets;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -34,9 +34,9 @@ namespace Budgethold.API.Endpoints.Wallet
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserWallet(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetSingleWallet(int id, CancellationToken cancellationToken)
         {
-            var query = new GetUserWalletQuery(id, User.GetUserId());
+            var query = new GetSingleWalletQuery(id, User.GetUserId());
 
             var result = await _mediator.Send(query, cancellationToken);
 
@@ -56,17 +56,17 @@ namespace Budgethold.API.Endpoints.Wallet
         [HttpPatch("{id}")]
         public async Task<IActionResult> EditWallet(EditWalletRequest request, int id, CancellationToken cancellationToken)
         {
-            var command = new EditWalletCommand(id, request.Name, request.StartingValue, User.GetUserId(), request.Users);
+            var command = new EditWalletCommand(id, request.Name, request.StartingValue, User.GetUserId(), request.UsersId);
 
             var result = await _mediator.Send(command, cancellationToken);
 
             return this.GetResponseFromResult(result);
         }
 
-        [HttpPatch("newOwner/{walletId}")]
-        public async Task<IActionResult> EditWalletOwner(EditWalletOwnerRequest request, int walletId, CancellationToken cancellationToken)
+        [HttpPatch("{id}/owner")]
+        public async Task<IActionResult> EditWalletOwner(EditWalletOwnerRequest request, int id, CancellationToken cancellationToken)
         {
-            var command = new EditWalletOwnerCommand(request.NewOner, User.GetUserId(), walletId);
+            var command = new EditWalletOwnerCommand(request.NewOwnerId, User.GetUserId(), id);
 
             var result = await _mediator.Send(command, cancellationToken);
 

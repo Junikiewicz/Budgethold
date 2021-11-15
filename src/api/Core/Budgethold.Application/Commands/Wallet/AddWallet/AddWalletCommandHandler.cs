@@ -16,10 +16,10 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
 
         public async Task<Result> Handle(AddWalletCommand command, CancellationToken cancellationToken)
         {
-            var wallet = new DomainModel.Wallet(command.Name, command.StartingValue, command.OwnerId, command.Users);
+            var wallet = new DomainModel.Wallet(command.Name, command.StartingValue, command.OwnerId, command.Ids);
 
             _unitOfWork.WalletsRepository.Add(wallet);
-            if(wallet.Users.Any()) wallet.Users.SingleOrDefault(x => x.UserId == command.OwnerId).SetOwnership();
+            wallet.UserWallets.SingleOrDefault(x => x.UserId == command.OwnerId)!.SetOwnership();
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

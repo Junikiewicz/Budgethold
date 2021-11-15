@@ -5,6 +5,7 @@
         public WalletResponse()
         {
             Name = null!;
+            OwningUsers = null!;
         }
 
         public int Id { get; init; }
@@ -15,6 +16,7 @@
         public record OwningUser
         {
             public int Id { get; init; }
+            public string? Name { get; init; }
         }
     }
 }

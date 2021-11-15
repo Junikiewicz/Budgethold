@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
 {
-    public class EditWalletOwnerCommand : IRequest<Result>
+    public record EditWalletOwnerCommand : IRequest<Result>
     {
         public EditWalletOwnerCommand(int newOwnerId, int userId, int walletId)
         {
@@ -12,8 +12,8 @@ namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
             UserId = userId;
         }
 
-        public int NewOwnerId { get; set; }
-        public int UserId { get; set; }
-        public int WalletId { get; set; }
+        public int NewOwnerId { get; init; }
+        public int UserId { get; init; }
+        public int WalletId { get; init; }
     }
 }

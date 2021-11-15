@@ -2,11 +2,6 @@
 {
     public record EditWalletOwnerRequest
     {
-        public EditWalletOwnerRequest()
-        {
-        }
-
-        public int NewOner { get; init; }
-
+        public int NewOwnerId { get; init; }
     }
 }

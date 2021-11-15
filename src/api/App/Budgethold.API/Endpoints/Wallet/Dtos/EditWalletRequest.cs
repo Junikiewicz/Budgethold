@@ -5,9 +5,10 @@
         public EditWalletRequest()
         {
             Name = null!;
+            UsersId = null!;
         }
 
-        public int[] Users { get; init; }
+        public IEnumerable<int> UsersId { get; init; }
         public string Name { get; init; }
         public decimal StartingValue { get; init; }
     }

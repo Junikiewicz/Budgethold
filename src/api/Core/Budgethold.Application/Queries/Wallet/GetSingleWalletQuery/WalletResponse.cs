@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Budgethold.Application.Queries.Wallet.GetUserWalletQuery
+﻿namespace Budgethold.Application.Queries.Wallet.GetSingleWalletQuery
 {
     public record SingleWalletResponse
     {
         public SingleWalletResponse()
         {
             Name = null!;
+            OwningUsers = null!;
         }
 
         public int Id { get; init; }
@@ -21,6 +16,7 @@ namespace Budgethold.Application.Queries.Wallet.GetUserWalletQuery
         public record OwningUser
         {
             public int Id { get; init; }
+            public string? Name { get; init; }
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
             var wallet = new DomainModel.Wallet(command.Name, command.StartingValue, command.OwnerId, command.Ids);
 
             _unitOfWork.WalletsRepository.Add(wallet);
-            wallet.UserWallets.SingleOrDefault(x => x.UserId == command.OwnerId)!.SetOwnership();
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

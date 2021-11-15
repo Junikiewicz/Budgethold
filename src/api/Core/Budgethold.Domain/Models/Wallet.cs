@@ -37,10 +37,12 @@ namespace Budgethold.Domain.Models
         public virtual HashSet<UserWallet> UserWallets { get; private set; }
         public virtual HashSet<Category> Categories { get; private set; }
 
-        public void Update(string name, decimal startingValue)
+        public void Update(string name, decimal startingValue, IEnumerable<int> users)
         {
             UpdateName(name);
             UpdateStartingValue(startingValue);
+            RemoveOldUsers(users);
+            AddNewUsers(users);
         }
         public void UpdateName(string name)
         {
@@ -51,11 +53,26 @@ namespace Budgethold.Domain.Models
             CurrentValue = CurrentValue - StartingValue + startingValue;
             StartingValue = startingValue;
         }
+        public void RemoveOldUsers(IEnumerable<int> oldUsers)
+        {
+            UserWallets.RemoveWhere(x => !oldUsers.Contains(x.UserId) && !x.IsOwner);
+        }
+        public void AddNewUsers(IEnumerable<int> newUsers)
+        {
+            var currentUsersId = UserWallets.Select(x => x.UserId);
+            var newUsersId = newUsers.Except(currentUsersId);
+            var usersToAdd = newUsersId.Select(x => new UserWallet(x, Id));
+
+            foreach (var users in usersToAdd)
+            {
+                UserWallets.Add(users);
+            }
+        }
         public void SetWalletOwner(int newOwnerId)
         {
             UserWallets.SingleOrDefault(x => x.UserId == newOwnerId)!.SetOwnership();
         }
-        public void RemoveWalletOwner(int newOwnerId)
+        public void ChangeWalletOwner(int newOwnerId)
         {
 
             UserWallets.SingleOrDefault(x => x.IsOwner == true)!.DeleteOwnership();

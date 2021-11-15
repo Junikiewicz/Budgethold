@@ -1,8 +1,7 @@
 ﻿using Budgethold.Application.Contracts.Persistance;
 using Budgethold.Domain.Common;
-using MediatR;
 using Budgethold.Domain.Common.Errors;
-using Budgethold.Domain.Models;
+using MediatR;
 
 namespace Budgethold.Application.Commands.Wallet.EditWallet
 {

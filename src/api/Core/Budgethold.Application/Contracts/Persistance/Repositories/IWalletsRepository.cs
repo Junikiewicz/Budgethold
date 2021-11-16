@@ -6,9 +6,8 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
 {
     public interface IWalletsRepository : IGenericRepository<Wallet>
     {
-        Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken);
         Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken);
-        Task<Wallet?> GetUserWalletAsync(int walletId, int userId, CancellationToken cancellationToken);
-        Task<SingleWalletResponse?> GetUserWalletForViewAsync(int walletId, int userId, CancellationToken cancellationToken);
+        Task<Wallet?> GetWalletWithUserWalletsAsync(int walletId, CancellationToken cancellationToken);
+        Task<SingleWalletResponse?> GetWalletForViewAsync(int walletId, CancellationToken cancellationToken);
     }
 }

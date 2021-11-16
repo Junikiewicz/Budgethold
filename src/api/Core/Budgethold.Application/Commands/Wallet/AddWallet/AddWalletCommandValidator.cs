@@ -8,8 +8,8 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
         {
             RuleFor(x => x.Name)
                 .NotEmpty();
-            RuleFor(x => x.Ids).NotEmpty();
-            RuleForEach(x => x.Ids).NotNull().NotEmpty().GreaterThan(0);
+            RuleFor(x => x.UserIds).NotEmpty();
+            RuleForEach(x => x.UserIds).GreaterThan(0);
         }
     }
 }

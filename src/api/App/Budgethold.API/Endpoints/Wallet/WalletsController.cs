@@ -46,7 +46,7 @@ namespace Budgethold.API.Endpoints.Wallet
         [HttpPost]
         public async Task<IActionResult> AddWallet(AddWalletRequest request, CancellationToken cancellationToken)
         {
-            var command = new AddWalletCommand(request.UsersId, request.Name, request.StartingValue, User.GetUserId());
+            var command = new AddWalletCommand(request.UserIds, request.Name, request.StartingValue, User.GetUserId());
 
             var result = await _mediator.Send(command, cancellationToken);
 

@@ -18,7 +18,7 @@ namespace Budgethold.Application.Commands.Category.EditCategory
         {
             var category = await _unitOfWork.CategoriesRepository.GetCategoryOrDefaultAsync(command.CategoryId, cancellationToken);
 
-            if (category is null || !await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(category.WalletId, command.UserId, cancellationToken))
+            if (category is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(category.WalletId, command.UserId, cancellationToken))
             {
                 return new Result(new NotFoundError("Specified category doesn't exist or this user doesn't have access to it."));
             }

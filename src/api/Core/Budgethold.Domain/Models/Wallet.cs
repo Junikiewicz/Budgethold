@@ -1,4 +1,5 @@
-﻿using Budgethold.Domain.Common;
+﻿using Budgethold.Common.Extensions;
+using Budgethold.Domain.Common;
 
 namespace Budgethold.Domain.Models
 {
@@ -11,22 +12,14 @@ namespace Budgethold.Domain.Models
             Categories = null!;
         }
 
-        public Wallet(string name, decimal startingValue, IEnumerable<int> usersId)
+        public Wallet(string name, decimal startingValue, int userId, IEnumerable<int> userIds)
         {
             Name = name;
             StartingValue = startingValue;
             CurrentValue = startingValue;
-            UserWallets = new HashSet<UserWallet>(usersId.Select(x => new UserWallet(x)));
-            Categories = new();
-        }
-
-        public Wallet(string name, decimal startingValue, int userId, IEnumerable<int> usersId)
-        {
-            Name = name;
-            StartingValue = startingValue;
-            CurrentValue = startingValue;
-            UserWallets = new HashSet<UserWallet>(usersId.Select(x => new UserWallet(x)));
-            SetWalletOwner(userId);
+            UserWallets = new HashSet<UserWallet>(userIds.Select(x => new UserWallet(x)));
+            CheckIfOwnerBelongsToWallet(userId);
+            ChangeWalletOwner(userId);
             Categories = new();
         }
 
@@ -37,46 +30,42 @@ namespace Budgethold.Domain.Models
         public virtual HashSet<UserWallet> UserWallets { get; private set; }
         public virtual HashSet<Category> Categories { get; private set; }
 
-        public void Update(string name, decimal startingValue, IEnumerable<int> users)
-        {
-            UpdateName(name);
-            UpdateStartingValue(startingValue);
-            RemoveOldUsers(users);
-            AddNewUsers(users);
-        }
-        public void UpdateName(string name)
+
+        public void Update(string name, decimal startingValue, IEnumerable<int> userIds)
         {
             Name = name;
-        }
-        public void UpdateStartingValue(decimal startingValue)
-        {
             CurrentValue = CurrentValue - StartingValue + startingValue;
             StartingValue = startingValue;
+            UpdateUsers(userIds);
         }
-        public void RemoveOldUsers(IEnumerable<int> oldUsers)
-        {
-            UserWallets.RemoveWhere(x => !oldUsers.Contains(x.UserId) && !x.IsOwner);
-        }
-        public void AddNewUsers(IEnumerable<int> newUsers)
+
+        public void UpdateUsers(IEnumerable<int> userIds)
         {
             var currentUsersId = UserWallets.Select(x => x.UserId);
-            var newUsersId = newUsers.Except(currentUsersId);
+            var newUsersId = userIds.Except(currentUsersId);
             var usersToAdd = newUsersId.Select(x => new UserWallet(x, Id));
 
-            foreach (var users in usersToAdd)
-            {
-                UserWallets.Add(users);
-            }
+            UserWallets.RemoveWhere(x => !userIds.Contains(x.UserId) && !x.IsOwner);
+            UserWallets.AddRange(usersToAdd);
         }
-        public void SetWalletOwner(int newOwnerId)
-        {
-            UserWallets.SingleOrDefault(x => x.UserId == newOwnerId)!.SetOwnership();
-        }
+
         public void ChangeWalletOwner(int newOwnerId)
         {
+            foreach (var userWallet in UserWallets)
+            {
+                userWallet.SetOwnership(userWallet.UserId == newOwnerId);
+            }
+        }
 
-            UserWallets.SingleOrDefault(x => x.IsOwner == true)!.DeleteOwnership();
-            SetWalletOwner(newOwnerId);
+        public void CheckIfOwnerBelongsToWallet(int userId)
+        {
+            if (!UserWallets.Select(x => x.UserId).Contains(userId)) UserWallets.Add(new UserWallet(userId, Id));
+        }
+
+        public bool CheckIfUserIsWalletOwnerAsync(int userId)
+        {
+            var user = UserWallets.Single(x => x.UserId == userId);
+            return user is null ? false : user.IsOwner;
         }
     }
 }

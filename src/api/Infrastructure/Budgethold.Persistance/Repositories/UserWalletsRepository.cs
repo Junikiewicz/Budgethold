@@ -8,11 +8,10 @@ namespace Budgethold.Persistance.Repositories
     {
         public UserWalletsRepository(DataContext context) : base(context) { }
 
-
-        public async Task<bool> CheckIfUserIsWalletOwnerAsync(int walletId, int userId, CancellationToken cancellationToken)
+        public async Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
-            var userWallet = await _context.UserWallets.SingleOrDefaultAsync(x => x.WalletId == walletId && x.UserId == userId, cancellationToken);
-            return userWallet is null ? false : userWallet.IsOwner;
+            return await _context.UserWallets.Where(x => x.WalletId == walletId)
+                .Select(x => x.UserId).ContainsAsync(userId, cancellationToken);
         }
     }
 }

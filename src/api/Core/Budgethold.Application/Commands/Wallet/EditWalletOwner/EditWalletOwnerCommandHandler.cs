@@ -16,9 +16,9 @@ namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
 
         public async Task<Result> Handle(EditWalletOwnerCommand command, CancellationToken cancellationToken)
         {
-            var wallet = await _unitOfWork.WalletsRepository.GetUserWalletAsync(command.WalletId, command.UserId, cancellationToken);
-            if (wallet is null || !await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, command.NewOwnerId, cancellationToken)
-               || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsWalletOwnerAsync(wallet.Id, command.UserId, cancellationToken))
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletWithUserWalletsAsync(command.WalletId, cancellationToken);
+            if (wallet is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, command.NewOwnerId, cancellationToken)
+               || !wallet.CheckIfUserIsWalletOwnerAsync(command.UserId))
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist, this user doesn't have access to it or new User doesnt belong to this wallet"));
             }

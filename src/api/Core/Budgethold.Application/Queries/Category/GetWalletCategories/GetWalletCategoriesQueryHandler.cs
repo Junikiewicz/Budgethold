@@ -17,7 +17,7 @@ namespace Budgethold.Application.Queries.Category.GetWalletCategories
 
         public async Task<Result<IEnumerable<CategoryTreeResponse>>> Handle(GetWalletCategoriesQuery query, CancellationToken cancellationToken)
         {
-            if (!await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(query.WalletId, query.UserId, cancellationToken))
+            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(query.WalletId, query.UserId, cancellationToken))
             {
                 return new Result<IEnumerable<CategoryTreeResponse>>(new NotFoundError("Specified wallet doesn't exist or is not assigned to this user."));
             }

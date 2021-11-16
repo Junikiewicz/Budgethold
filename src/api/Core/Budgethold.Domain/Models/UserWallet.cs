@@ -25,13 +25,9 @@ namespace Budgethold.Domain.Models
         public virtual Wallet Wallet { get; private set; }
         public virtual User User { get; private set; }
 
-        public void SetOwnership()
+        public void SetOwnership(bool isOwner)
         {
-            IsOwner = true;
-        }
-        public void DeleteOwnership()
-        {
-            IsOwner = false;
+            IsOwner = isOwner;
         }
     }
 }

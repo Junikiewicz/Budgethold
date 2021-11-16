@@ -10,7 +10,7 @@ namespace Budgethold.Persistance.Repositories
     {
         public WalletsRepository(DataContext context) : base(context) { }
 
-        public async Task<Wallet?> GetUserWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
+        public async Task<Wallet?> GetWalletWithUserWalletsAsync(int walletId, CancellationToken cancellationToken)
         {
             return await _context.Wallets
                 .Where(x => x.Id == walletId).Include(i => i.UserWallets)
@@ -35,15 +35,7 @@ namespace Budgethold.Persistance.Repositories
                 }).ToListAsync(cancellationToken);
         }
 
-        public async Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
-        {
-            return await _context.Wallets
-                .Where(x => x.Id == walletId)
-                .SelectMany(x => x.UserWallets.Select(y => y.UserId))
-                .ContainsAsync(userId, cancellationToken);
-        }
-
-        public async Task<SingleWalletResponse?> GetUserWalletForViewAsync(int walletId, int userId, CancellationToken cancellationToken)
+        public async Task<SingleWalletResponse?> GetWalletForViewAsync(int walletId, CancellationToken cancellationToken)
         {
             return await _context.Wallets
                 .Where(x => x.Id == walletId)

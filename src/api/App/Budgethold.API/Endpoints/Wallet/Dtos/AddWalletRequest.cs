@@ -5,9 +5,9 @@
         public AddWalletRequest()
         {
             Name = null!;
-            UsersId = null!;
+            UserIds = null!;
         }
-        public IEnumerable<int> UsersId { get; init; }
+        public IEnumerable<int> UserIds { get; init; }
         public string Name { get; init; }
         public decimal StartingValue { get; init; }
     }

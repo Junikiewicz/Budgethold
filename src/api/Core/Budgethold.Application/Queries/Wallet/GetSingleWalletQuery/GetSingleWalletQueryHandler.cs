@@ -16,13 +16,13 @@ namespace Budgethold.Application.Queries.Wallet.GetSingleWalletQuery
 
         public async Task<Result<SingleWalletResponse>> Handle(GetSingleWalletQuery query, CancellationToken cancellationToken)
         {
-            var wallet = await _unitOfWork.WalletsRepository.GetUserWalletForViewAsync(query.WalletId, query.UserId, cancellationToken);
-            if (wallet is null || !await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(query.WalletId, query.UserId, cancellationToken))
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletForViewAsync(query.WalletId, cancellationToken);
+            if (wallet is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(query.WalletId, query.UserId, cancellationToken))
             {
                 return new Result<SingleWalletResponse>(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
 
-            return new Result<SingleWalletResponse>(wallet!);
+            return new Result<SingleWalletResponse>(wallet);
         }
     }
 }

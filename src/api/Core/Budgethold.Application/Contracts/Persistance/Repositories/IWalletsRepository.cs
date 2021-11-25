@@ -7,7 +7,7 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
     public interface IWalletsRepository : IGenericRepository<Wallet>
     {
         Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken);
-        Task<Wallet?> GetWalletWithUserWalletsAsync(int walletId, CancellationToken cancellationToken);
-        Task<SingleWalletResponse?> GetWalletForViewAsync(int walletId, CancellationToken cancellationToken);
+        Task<Wallet?> GetWalletWithUserWalletsOrDefaultAsync(int walletId, CancellationToken cancellationToken);
+        Task<SingleWalletResponse?> GetWalletForViewOrDefaultAsync(int walletId, CancellationToken cancellationToken);
     }
 }

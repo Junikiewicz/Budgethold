@@ -14,7 +14,7 @@ namespace Budgethold.Persistance.EntitiesConfiguration
             builder.HasKey(uw => new { uw.WalletId, uw.UserId });
 
             builder.HasOne(uw => uw.User)
-                .WithMany(u => u.Wallets)
+                .WithMany(u => u.UserWallets)
                 .HasForeignKey(uw => uw.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 

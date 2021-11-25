@@ -16,7 +16,7 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
 
         public async Task<Result> Handle(EditWalletCommand command, CancellationToken cancellationToken)
         {
-            var wallet = await _unitOfWork.WalletsRepository.GetWalletWithUserWalletsAsync(command.WalletId, cancellationToken);
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletWithUserWalletsOrDefaultAsync(command.WalletId, cancellationToken);
 
             if (wallet is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, command.UserId, cancellationToken))
             {

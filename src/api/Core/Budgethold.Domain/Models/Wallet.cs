@@ -18,7 +18,7 @@ namespace Budgethold.Domain.Models
             StartingValue = startingValue;
             CurrentValue = startingValue;
             UserWallets = new HashSet<UserWallet>(userIds.Select(x => new UserWallet(x)));
-            CheckIfOwnerBelongsToWallet(userId);
+            CheckIfOwnerBelongsToNewUserListAndAddItIfNot(userId);
             ChangeWalletOwner(userId);
             Categories = new();
         }
@@ -29,7 +29,6 @@ namespace Budgethold.Domain.Models
         public string Name { get; private set; }
         public virtual HashSet<UserWallet> UserWallets { get; private set; }
         public virtual HashSet<Category> Categories { get; private set; }
-
 
         public void Update(string name, decimal startingValue, IEnumerable<int> userIds)
         {
@@ -57,14 +56,14 @@ namespace Budgethold.Domain.Models
             }
         }
 
-        public void CheckIfOwnerBelongsToWallet(int userId)
+        public void CheckIfOwnerBelongsToNewUserListAndAddItIfNot(int userId)
         {
             if (!UserWallets.Select(x => x.UserId).Contains(userId)) UserWallets.Add(new UserWallet(userId, Id));
         }
 
         public bool CheckIfUserIsWalletOwnerAsync(int userId)
         {
-            var user = UserWallets.Single(x => x.UserId == userId);
+            var user = UserWallets.SingleOrDefault(x => x.UserId == userId);
             return user is null ? false : user.IsOwner;
         }
     }

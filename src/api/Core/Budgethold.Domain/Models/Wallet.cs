@@ -12,14 +12,14 @@ namespace Budgethold.Domain.Models
             Categories = null!;
         }
 
-        public Wallet(string name, decimal startingValue, int userId, IEnumerable<int> userIds)
+        public Wallet(string name, decimal startingValue, int creatingUserId, IEnumerable<int> userIds)
         {
             Name = name;
             StartingValue = startingValue;
             CurrentValue = startingValue;
             UserWallets = new HashSet<UserWallet>(userIds.Select(x => new UserWallet(x)));
-            AddUserToWallet(userId);
-            ChangeWalletOwner(userId);
+            AddUserToWallet(creatingUserId);
+            ChangeWalletOwner(creatingUserId);
             Categories = new();
         }
 
@@ -61,7 +61,7 @@ namespace Budgethold.Domain.Models
             if (!UserWallets.Select(x => x.UserId).Contains(userId)) UserWallets.Add(new UserWallet(userId, Id));
         }
 
-        public bool CheckIfUserIsWalletOwnerAsync(int userId)
+        public bool CheckIfUserIsWalletOwner(int userId)
         {
             var user = UserWallets.SingleOrDefault(x => x.UserId == userId);
             return user is null ? false : user.IsOwner;

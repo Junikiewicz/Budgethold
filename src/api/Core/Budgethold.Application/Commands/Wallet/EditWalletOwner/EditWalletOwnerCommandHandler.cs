@@ -18,7 +18,7 @@ namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
         {
             var wallet = await _unitOfWork.WalletsRepository.GetWalletWithUserWalletsOrDefaultAsync(command.WalletId, cancellationToken);
             if (wallet is null || !wallet.UserWallets.Select(x => x.UserId).Contains(command.NewOwnerId)
-               || !wallet.CheckIfUserIsWalletOwnerAsync(command.UserId))
+               || !wallet.CheckIfUserIsWalletOwner(command.UserId))
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist, this user doesn't have access to it or new owner doesnt belong to this wallet"));
             }

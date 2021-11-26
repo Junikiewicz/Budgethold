@@ -17,7 +17,7 @@ namespace Budgethold.Application.Commands.Category.AddCategory
 
         public async Task<Result> Handle(AddCategoryCommand command, CancellationToken cancellationToken)
         {
-            if (!await _unitOfWork.WalletsRepository.CheckIfUserIsAssignedToWalletAsync(command.WalletId, command.UserId, cancellationToken))
+            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(command.WalletId, command.UserId, cancellationToken))
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or is not assigned to this user."));
             }

@@ -5,9 +5,9 @@ namespace Budgethold.Security.Commands.SignUp
 {
     public class SignUpCommand : IRequest<Result>
     {
-        public SignUpCommand(string emial, string password, string name)
+        public SignUpCommand(string email, string password, string name)
         {
-            Email = emial;
+            Email = email;
             Password = password;
             Name = name;
         }

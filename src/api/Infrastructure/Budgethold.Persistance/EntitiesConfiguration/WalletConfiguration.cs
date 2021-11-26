@@ -13,6 +13,7 @@ namespace Budgethold.Persistance.EntitiesConfiguration
 
             builder.Property(x => x.CurrentValue)
                 .HasPrecision(19, 4);
+
             builder.Property(x => x.StartingValue)
                 .HasPrecision(19, 4);
         }

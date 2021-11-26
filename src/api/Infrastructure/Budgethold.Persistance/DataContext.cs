@@ -14,6 +14,7 @@ namespace Budgethold.Persistance
         public DbSet<User> DomainUsers => Set<User>();
         public DbSet<Wallet> Wallets => Set<Wallet>();
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<UserWallet> UserWallets => Set<UserWallet>();
         public DbSet<TransactionType> TransactionTypes => Set<TransactionType>();
 
         public DataContext(DbContextOptions<DataContext> contextOptions) : base(contextOptions) { }

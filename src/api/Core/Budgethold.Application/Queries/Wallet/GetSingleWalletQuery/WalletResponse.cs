@@ -1,8 +1,8 @@
-﻿namespace Budgethold.Application.Queries.Wallet.GetUserWallets
+﻿namespace Budgethold.Application.Queries.Wallet.GetSingleWalletQuery
 {
-    public record WalletResponse
+    public record SingleWalletResponse
     {
-        public WalletResponse()
+        public SingleWalletResponse()
         {
             Name = null!;
             OwningUsers = null!;
@@ -13,11 +13,10 @@
         public decimal CurrentValue { get; init; }
         public string Name { get; init; }
         public IEnumerable<OwningUser> OwningUsers { get; init; }
-
         public record OwningUser
         {
             public int Id { get; init; }
-            public string? Name { get; init; }
+            public string Name { get; init; } = null!;
         }
     }
 }

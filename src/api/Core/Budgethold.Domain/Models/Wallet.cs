@@ -18,7 +18,7 @@ namespace Budgethold.Domain.Models
             StartingValue = startingValue;
             CurrentValue = startingValue;
             UserWallets = new HashSet<UserWallet>(userIds.Select(x => new UserWallet(x)));
-            CheckIfOwnerBelongsToNewUserListAndAddItIfNot(userId);
+            AddUserToWallet(userId);
             ChangeWalletOwner(userId);
             Categories = new();
         }
@@ -56,7 +56,7 @@ namespace Budgethold.Domain.Models
             }
         }
 
-        public void CheckIfOwnerBelongsToNewUserListAndAddItIfNot(int userId)
+        public void AddUserToWallet(int userId)
         {
             if (!UserWallets.Select(x => x.UserId).Contains(userId)) UserWallets.Add(new UserWallet(userId, Id));
         }

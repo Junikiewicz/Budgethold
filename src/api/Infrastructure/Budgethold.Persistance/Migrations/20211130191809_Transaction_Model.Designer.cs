@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Budgethold.Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211129110035_Transaction_Model")]
+    [Migration("20211130191809_Transaction_Model")]
     partial class Transaction_Model
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -450,7 +450,7 @@ namespace Budgethold.Persistance.Migrations
                     b.HasOne("Budgethold.Domain.Models.Wallet", "Wallet")
                         .WithMany("Categories")
                         .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ParentCategory");
@@ -463,15 +463,15 @@ namespace Budgethold.Persistance.Migrations
             modelBuilder.Entity("Budgethold.Domain.Models.Transaction", b =>
                 {
                     b.HasOne("Budgethold.Domain.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Budgethold.Domain.Models.Wallet", "Wallet")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -565,6 +565,8 @@ namespace Budgethold.Persistance.Migrations
             modelBuilder.Entity("Budgethold.Domain.Models.Category", b =>
                 {
                     b.Navigation("ChildCategories");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("Budgethold.Domain.Models.TransactionType", b =>
@@ -580,6 +582,8 @@ namespace Budgethold.Persistance.Migrations
             modelBuilder.Entity("Budgethold.Domain.Models.Wallet", b =>
                 {
                     b.Navigation("Categories");
+
+                    b.Navigation("Transactions");
 
                     b.Navigation("UserWallets");
                 });

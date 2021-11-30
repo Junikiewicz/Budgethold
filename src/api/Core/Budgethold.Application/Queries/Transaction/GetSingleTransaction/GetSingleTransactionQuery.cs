@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Budgethold.Domain.Common;
+using MediatR;
 
 namespace Budgethold.Application.Queries.Transaction.GetSingleTransaction
 {
-    internal class GetSingleTransactionQuery
+    public record GetSingleTransactionQuery : IRequest<Result<TransactionResponse>>
     {
+        public GetSingleTransactionQuery(int userId, int transactionId)
+        {
+            UserId = userId;
+            TransactionId = transactionId;
+        }
+
+        public int UserId { get; init; }
+        public int TransactionId { get; init; }
     }
 }

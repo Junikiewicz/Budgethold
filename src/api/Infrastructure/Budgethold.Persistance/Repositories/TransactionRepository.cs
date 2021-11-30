@@ -1,7 +1,6 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
 using Budgethold.Application.Queries.Transaction.GetSingleTransaction;
-using Budgethold.Application.Queries.Transaction.GetUserTransactions;
-using Budgethold.Domain.Common;
+using Budgethold.Application.Queries.Transaction.GetWalletTransactions;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,10 +33,17 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<TransactionsListResponse> GetWalletTransactionsList(int walletId, CancellationToken cancellationToken)
         {
-            return await _context.Transactions.Where(x => x.WalletId == walletId).Select(x => new TransactionsListResponse
+            var transactionList = await _context.Transactions.Where(x => x.WalletId == walletId).Select(x => new TransactionResponse
             {
-
-            })
+                Amount = x.Amount,
+                Description = x.Description,
+                Name = x.Name,
+                CategoryId = x.CategoryId,
+                Date = x.Date,
+                Id = x.Id,
+                WalletId = x.WalletId
+            }).ToListAsync(cancellationToken);
+            return new TransactionsListResponse(transactionList);
         }
     }
 }

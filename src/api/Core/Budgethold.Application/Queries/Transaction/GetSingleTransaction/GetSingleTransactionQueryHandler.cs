@@ -1,12 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Budgethold.Application.Contracts.Persistance;
+using Budgethold.Domain.Common;
+using Budgethold.Domain.Common.Errors;
+using MediatR;
 
 namespace Budgethold.Application.Queries.Transaction.GetSingleTransaction
 {
-    internal class GetSingleTransactionQueryHandler
+    internal class GetSingleTransactionQueryHandler : IRequestHandler<GetSingleTransactionQuery, Result<TransactionResponse>>
     {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public GetSingleTransactionQueryHandler(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        public async Task<Result<TransactionResponse>> Handle(GetSingleTransactionQuery request, CancellationToken cancellationToken)
+        {
+            var transaction = await _unitOfWork.TransactionRepository.GetSingleTransaction(request.TransactionId, cancellationToken);
+
+            if (transaction is null
+                || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
+                return new Result<TransactionResponse>(new NotFoundError("Transaction doesn't exist or user dont have access to it"));
+
+            return new Result<TransactionResponse>(transaction);
+        }
     }
 }

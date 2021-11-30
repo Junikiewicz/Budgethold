@@ -19,8 +19,7 @@ namespace Budgethold.Application.Commands.Transaction.DeleteTransaction
             var transaction = await _unitOfWork.TransactionRepository.GetTransaction(request.TransactionId, cancellationToken);
 
             if (transaction is null
-                || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken)
-                || transaction.WalletId != request.WalletId)
+                || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
                 return new Result(new NotFoundError("Specified transaction doesn't exist or wallet is not assigned to this user."));
 
             _unitOfWork.TransactionRepository.Remove(transaction);

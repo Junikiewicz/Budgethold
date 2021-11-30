@@ -10,6 +10,7 @@ namespace Budgethold.Domain.Models
             Wallet = null!;
             ChildCategories = null!;
             Name = null!;
+            Transactions = null!;
         }
 
         public Category(string name, int? parentCategoryId, int transactionTypeId, int walletId)
@@ -21,6 +22,7 @@ namespace Budgethold.Domain.Models
             ChildCategories = new();
             Wallet = null!;
             TransactionType = null!;
+            Transactions = null!;
         }
 
         public int Id { get; private set; }
@@ -33,6 +35,7 @@ namespace Budgethold.Domain.Models
         public virtual Wallet Wallet { get; private set; }
         public virtual TransactionType TransactionType { get; private set; }
         public virtual HashSet<Category> ChildCategories { get; private set; }
+        public virtual HashSet<Transaction> Transactions { get; private set; }
 
         public void Update(int? parentCategoryId, string name)
         {

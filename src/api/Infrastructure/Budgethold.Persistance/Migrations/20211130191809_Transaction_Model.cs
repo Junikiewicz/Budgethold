@@ -9,6 +9,10 @@ namespace Budgethold.Persistance.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Categories_Wallets_WalletId",
+                table: "Categories");
+
             migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
@@ -31,13 +35,13 @@ namespace Budgethold.Persistance.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transactions_Wallets_WalletId",
                         column: x => x.WalletId,
                         principalTable: "Wallets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -49,12 +53,32 @@ namespace Budgethold.Persistance.Migrations
                 name: "IX_Transactions_WalletId",
                 table: "Transactions",
                 column: "WalletId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Categories_Wallets_WalletId",
+                table: "Categories",
+                column: "WalletId",
+                principalTable: "Wallets",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Categories_Wallets_WalletId",
+                table: "Categories");
+
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Categories_Wallets_WalletId",
+                table: "Categories",
+                column: "WalletId",
+                principalTable: "Wallets",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

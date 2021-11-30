@@ -9,6 +9,12 @@ namespace Budgethold.Persistance.Repositories
     {
         public CategoriesRepository(DataContext context) : base(context) { }
 
+        public async Task<bool> CheckIfCategoryBelongsToWallet(int categoryId, int walletId, CancellationToken cancellationToken)
+        {
+            var category = await _context.Categories.Where(x => x.Id == categoryId).SingleOrDefaultAsync(cancellationToken);
+            return category is null ? false : category.WalletId == walletId;
+        }
+
         public async Task<CategoryForOwnershipVerificationModel?> GetCategoryForOwnershipVerificationAsync(int categoryId, CancellationToken cancellationToken)
         {
             return await _context.Categories

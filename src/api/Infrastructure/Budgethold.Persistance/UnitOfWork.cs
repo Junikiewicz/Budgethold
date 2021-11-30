@@ -11,12 +11,26 @@ namespace Budgethold.Persistance
         private IWalletsRepository? _walletsRepository;
         private IUserWalletsRepository? _userWalletsRepository;
         private ICategoriesRepository? _categoriesRepository;
+        private ITransactionRepository? _transactionRepository;
 
         public UnitOfWork(DataContext context)
         {
             _context = context;
         }
 
+
+        public ITransactionRepository TransactionRepository
+        {
+            get
+            {
+                if (_transactionRepository == null)
+                {
+                    _transactionRepository = new TransactionRepository(_context);
+                }
+
+                return _transactionRepository;
+            }
+        }
         public IWalletsRepository WalletsRepository
         {
             get

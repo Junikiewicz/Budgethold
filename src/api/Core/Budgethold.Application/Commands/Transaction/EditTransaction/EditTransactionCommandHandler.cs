@@ -33,8 +33,8 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
             var oldCategoryTransactionType = await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(transaction.CategoryId, cancellationToken);
 
-            var newCategoryTransactionType = await _unitOfWork.CategoriesRepository
-                .GetCategoryTransactionTypeAsync(request.CategoryId, cancellationToken);
+            var newCategoryTransactionType = request.CategoryId != transaction.CategoryId ? await _unitOfWork.CategoriesRepository
+                .GetCategoryTransactionTypeAsync(request.CategoryId, cancellationToken) : oldCategoryTransactionType;
 
             decimal oldTransactionAmount = AmountSign.SetAmountSign(oldCategoryTransactionType, transaction.Amount);
 

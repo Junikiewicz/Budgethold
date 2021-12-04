@@ -41,6 +41,16 @@ namespace Budgethold.Domain.Models
             UpdateUsers(userIds);
         }
 
+        public void EditTransactionValue(decimal oldTransactionValue, decimal newTransactionValue)
+        {
+            CurrentValue = CurrentValue - oldTransactionValue + newTransactionValue;
+        }
+
+        public void AddTransactionValue(decimal transactionValue)
+        {
+            CurrentValue = CurrentValue + transactionValue;
+        }
+
         public void UpdateUsers(IEnumerable<int> userIds)
         {
             var currentUsersId = UserWallets.Select(x => x.UserId);

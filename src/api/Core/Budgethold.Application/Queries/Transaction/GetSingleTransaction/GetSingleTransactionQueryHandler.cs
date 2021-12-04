@@ -15,11 +15,11 @@ namespace Budgethold.Application.Queries.Transaction.GetSingleTransaction
         }
         public async Task<Result<TransactionResponse>> Handle(GetSingleTransactionQuery request, CancellationToken cancellationToken)
         {
-            var transaction = await _unitOfWork.TransactionRepository.GetSingleTransaction(request.TransactionId, cancellationToken);
+            var transaction = await _unitOfWork.TransactionRepository.GetSingleTransactionResponseAsync(request.TransactionId, cancellationToken);
 
             if (transaction is null
                 || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
-                return new Result<TransactionResponse>(new NotFoundError("This transaction doesn't belong to this user wallet"));
+                return new Result<TransactionResponse>(new NotFoundError("This transaction doesn't belong to this wallet or doesnt exist"));
 
             return new Result<TransactionResponse>(transaction);
         }

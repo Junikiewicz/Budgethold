@@ -1,6 +1,4 @@
-﻿
-
-using Budgethold.Domain.Models;
+﻿using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

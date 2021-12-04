@@ -16,7 +16,7 @@ namespace Budgethold.Application.Commands.Transaction.DeleteTransaction
 
         public async Task<Result> Handle(DeleteTransactionCommand request, CancellationToken cancellationToken)
         {
-            var transaction = await _unitOfWork.TransactionRepository.GetTransaction(request.TransactionId, cancellationToken);
+            var transaction = await _unitOfWork.TransactionRepository.GetTransactionAsync(request.TransactionId, cancellationToken);
 
             if (transaction is null
                 || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))

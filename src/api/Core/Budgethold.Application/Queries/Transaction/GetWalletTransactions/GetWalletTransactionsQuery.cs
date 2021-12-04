@@ -1,9 +1,10 @@
-﻿using Budgethold.Domain.Common;
+﻿using Budgethold.Application.Queries.Transaction.GetSingleTransaction;
+using Budgethold.Domain.Common;
 using MediatR;
 
 namespace Budgethold.Application.Queries.Transaction.GetWalletTransactions
 {
-    public record GetWalletTransactionsQuery : IRequest<Result<TransactionsListResponse>>
+    public record GetWalletTransactionsQuery : IRequest<Result<IEnumerable<TransactionResponse>>>
     {
         public GetWalletTransactionsQuery(int walletId, int userId)
         {

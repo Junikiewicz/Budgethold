@@ -34,7 +34,6 @@ namespace Budgethold.Domain.Models
         public Wallet Wallet { get; private set; }
         public Category Category { get; private set; }
 
-
         public void EditTransaction(string name, string description, DateTime date, decimal amount, int categoryId)
         {
             CategoryId = categoryId;

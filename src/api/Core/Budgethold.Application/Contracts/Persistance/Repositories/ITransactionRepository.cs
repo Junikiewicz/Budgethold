@@ -6,8 +6,8 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
 {
     public interface ITransactionRepository : IGenericRepository<Transaction>
     {
-        public Task<Transaction?> GetTransaction(int transactionId, CancellationToken cancellationToken);
-        public Task<TransactionResponse?> GetSingleTransaction(int transactionId, CancellationToken cancellationToken);
-        public Task<TransactionsListResponse> GetWalletTransactionsList(int walletId, CancellationToken cancellationToken);
+        public Task<Transaction?> GetTransactionAsync(int transactionId, CancellationToken cancellationToken);
+        public Task<TransactionResponse?> GetSingleTransactionResponseAsync(int transactionId, CancellationToken cancellationToken);
+        public Task<IEnumerable<TransactionResponse>> GetWalletTransactionsResponseAsync(int walletId, CancellationToken cancellationToken);
     }
 }

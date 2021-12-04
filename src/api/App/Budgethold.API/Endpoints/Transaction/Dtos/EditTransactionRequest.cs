@@ -8,6 +8,7 @@
             Description = null!;
         }
 
+        public int WalletId { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
         public int CategoryId { get; init; }

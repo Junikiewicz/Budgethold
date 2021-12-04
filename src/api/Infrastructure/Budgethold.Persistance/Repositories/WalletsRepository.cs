@@ -52,5 +52,12 @@ namespace Budgethold.Persistance.Repositories
                     })
                 }).SingleOrDefaultAsync(cancellationToken);
         }
+
+        public async Task<Wallet?> GetWalletOrDefaultAsync(int walletId, CancellationToken cancellationToken)
+        {
+            return await _context.Wallets
+               .Where(x => x.Id == walletId)
+               .SingleOrDefaultAsync(cancellationToken);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Budgethold.API.Endpoints.Transaction.Dtos
 {
-    public class AddTransactionRequest
+    public record AddTransactionRequest
     {
         public AddTransactionRequest()
         {
@@ -8,11 +8,11 @@
             Description = null!;
         }
 
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public int WalletId { get; private set; }
-        public int CategoryId { get; private set; }
-        public decimal Amount { get; private set; }
-        public DateTime Date { get; private set; }
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public int WalletId { get; init; }
+        public int CategoryId { get; init; }
+        public decimal Amount { get; init; }
+        public DateTime Date { get; init; }
     }
 }

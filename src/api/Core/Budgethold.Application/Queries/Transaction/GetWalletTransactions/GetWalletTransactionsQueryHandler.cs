@@ -15,8 +15,8 @@ namespace Budgethold.Application.Queries.Transaction.GetWalletTransactions
         }
         public async Task<Result<TransactionsListResponse>> Handle(GetWalletTransactionsQuery request, CancellationToken cancellationToken)
         {
-            if (await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken))
-                return new Result<TransactionsListResponse>(new NotFoundError("User doesn't access to this wallet"));
+            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken))
+                return new Result<TransactionsListResponse>(new NotFoundError("This wallet doesn't belong to this user"));
 
             var transactions = await _unitOfWork.TransactionRepository.GetWalletTransactionsList(request.WalletId, cancellationToken);
 

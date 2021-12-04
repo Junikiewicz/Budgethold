@@ -23,7 +23,7 @@ namespace Budgethold.API.Endpoints.Transaction
             _mediator = mediator;
         }
 
-        [HttpGet("transactionId:int")]
+        [HttpGet("get_single_transaction{transactionId:int}")]
         public async Task<IActionResult> GetWalletTransactions(int transactionId, CancellationToken cancellationToken)
         {
             var query = new GetSingleTransactionQuery(User.GetUserId(), transactionId);
@@ -33,7 +33,7 @@ namespace Budgethold.API.Endpoints.Transaction
             return this.GetResponseFromResult(result);
         }
 
-        [HttpGet("{walletId:int}")]
+        [HttpGet("wallet_transactions{walletId:int}")]
         public async Task<IActionResult> GetSingleWallet(int walletId, CancellationToken cancellationToken)
         {
             var query = new GetWalletTransactionsQuery(walletId, User.GetUserId());

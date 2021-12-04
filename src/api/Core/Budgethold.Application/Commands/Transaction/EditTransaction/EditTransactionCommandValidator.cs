@@ -2,7 +2,7 @@
 
 namespace Budgethold.Application.Commands.Transaction.EditTransaction
 {
-    internal class EditTransactionCommandValidator : AbstractValidator<EditTransactionCommand>
+    public class EditTransactionCommandValidator : AbstractValidator<EditTransactionCommand>
     {
         public EditTransactionCommandValidator()
         {

@@ -2,7 +2,7 @@
 
 namespace Budgethold.Application.Commands.Transaction.DeleteTransaction
 {
-    internal class DeleteTransactionCommandValidator : AbstractValidator<DeleteTransactionCommand>
+    public class DeleteTransactionCommandValidator : AbstractValidator<DeleteTransactionCommand>
     {
         public DeleteTransactionCommandValidator()
         {

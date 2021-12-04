@@ -19,7 +19,7 @@ namespace Budgethold.Application.Queries.Transaction.GetSingleTransaction
 
             if (transaction is null
                 || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
-                return new Result<TransactionResponse>(new NotFoundError("Transaction doesn't exist or user dont have access to it"));
+                return new Result<TransactionResponse>(new NotFoundError("This transaction doesn't belong to this user wallet"));
 
             return new Result<TransactionResponse>(transaction);
         }

@@ -19,12 +19,16 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
         {
             if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken) ||
                 !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWallet(request.CategoryId, request.WalletId, cancellationToken))
+            {
                 return new Result(new NotFoundError("Specified category or wallet doesn't exist or is not assigned to this user."));
+            }
 
             var transaction = new DomainModel.Transaction(request.Name, request.Description, request.WalletId, request.CategoryId, request.Amount);
 
             _unitOfWork.TransactionRepository.Add(transaction);
+
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
             return new Result<int>(transaction.Id);
         }
     }

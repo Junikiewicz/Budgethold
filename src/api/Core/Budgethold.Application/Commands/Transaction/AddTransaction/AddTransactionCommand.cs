@@ -23,6 +23,5 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
         public int CategoryId { get; init; }
         public decimal Amount { get; init; }
         public DateTime Date { get; init; }
-
     }
 }

@@ -20,9 +20,10 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
 
             if (transaction is null
                 || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken)
-                || !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWallet(request.CategoryId, transaction.WalletId, cancellationToken)
-                )
+                || !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWallet(request.CategoryId, transaction.WalletId, cancellationToken))
+            {
                 return new Result(new NotFoundError("Specified transaction does not exist or is not assigned to this user."));
+            }
 
             transaction.EditTransaction(request.Name, request.Description, request.Date, request.Amount, request.CategoryId);
 

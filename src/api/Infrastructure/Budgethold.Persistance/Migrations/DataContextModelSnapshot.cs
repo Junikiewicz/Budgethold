@@ -577,6 +577,11 @@ namespace Budgethold.Persistance.Migrations
                     b.Navigation("UserWallets");
                 });
 
+            modelBuilder.Entity("Budgethold.Domain.Models.User", b =>
+                {
+                    b.Navigation("Wallets");
+                });
+
             modelBuilder.Entity("Budgethold.Domain.Models.Wallet", b =>
                 {
                     b.Navigation("Categories");

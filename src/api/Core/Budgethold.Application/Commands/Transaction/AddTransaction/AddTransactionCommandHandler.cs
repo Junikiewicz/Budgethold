@@ -20,7 +20,7 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
         public async Task<Result> Handle(AddTransactionCommand request, CancellationToken cancellationToken)
         {
             if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken)
-                || !_unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, request.WalletId, cancellationToken))
+                || !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, request.WalletId, cancellationToken))
             {
                 return new Result(new NotFoundError("Specified category or wallet doesn't exist or is not assigned to this user."));
             }

@@ -27,13 +27,13 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
             if (request.WalletId is not null)
             {
                 if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId.Value, request.UserId, cancellationToken)
-                    || request.CategoryId is not null && !_unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId.Value, request.WalletId.Value, cancellationToken))
+                    || request.CategoryId is not null && !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId.Value, request.WalletId.Value, cancellationToken))
                     return new Result(new NotFoundError("Specified category does not exist or is not assigned to this user."));
             }
             else
             {
                 if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken)
-                    || request.CategoryId is not null && !_unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId.Value, transaction.WalletId, cancellationToken))
+                    || request.CategoryId is not null && !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId.Value, transaction.WalletId, cancellationToken))
                     return new Result(new NotFoundError("Specified category does not exist or is not assigned to this user."));
             }
 

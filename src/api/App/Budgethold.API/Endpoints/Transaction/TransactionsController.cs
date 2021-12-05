@@ -33,8 +33,8 @@ namespace Budgethold.API.Endpoints.Transaction
             return this.GetResponseFromResult(result);
         }
 
-        [HttpGet("{walletId:int}/transactions")]
-        public async Task<IActionResult> GetWalletTransactionsList(int walletId, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetWalletTransactionsList([FromQuery] int walletId, CancellationToken cancellationToken)
         {
             var query = new GetWalletTransactionsQuery(walletId, User.GetUserId());
 

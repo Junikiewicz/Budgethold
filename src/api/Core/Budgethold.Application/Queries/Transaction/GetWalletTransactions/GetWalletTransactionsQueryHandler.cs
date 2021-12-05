@@ -22,8 +22,6 @@ namespace Budgethold.Application.Queries.Transaction.GetWalletTransactions
             var transactions = await _unitOfWork.TransactionRepository.GetWalletTransactionsResponseAsync(request.WalletId, cancellationToken);
 
             return new Result<IEnumerable<TransactionResponse>>(transactions);
-
-
         }
     }
 }

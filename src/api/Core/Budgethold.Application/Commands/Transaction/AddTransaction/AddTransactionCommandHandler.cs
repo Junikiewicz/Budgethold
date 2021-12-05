@@ -1,4 +1,5 @@
-﻿using Budgethold.Application.Contracts.Persistance;
+﻿using Budgethold.Application.Commands.Transaction.Helpers;
+using Budgethold.Application.Contracts.Persistance;
 using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
 using Budgethold.Domain.Enums;
@@ -18,8 +19,8 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
 
         public async Task<Result> Handle(AddTransactionCommand request, CancellationToken cancellationToken)
         {
-            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken) ||
-                !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, request.WalletId, cancellationToken))
+            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken)
+                || !_unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, request.WalletId, cancellationToken))
             {
                 return new Result(new NotFoundError("Specified category or wallet doesn't exist or is not assigned to this user."));
             }
@@ -33,9 +34,9 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
             var categoryTransactionType = await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(request.CategoryId, cancellationToken);
 
-            decimal transactionAmount = AmountSign.SetAmountSign(categoryTransactionType, transaction.Amount);
+            var transactionAmount = ITransactionHelper.SetAmountSign(categoryTransactionType, transaction.Amount);
 
-            wallet.AddTransactionValue(transactionAmount);
+            wallet.ApplyTransactionValueChange(0, transactionAmount);
 
             _unitOfWork.TransactionRepository.Add(transaction);
 

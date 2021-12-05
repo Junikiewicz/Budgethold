@@ -9,7 +9,7 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
         Task<Category?> GetCategoryOrDefaultAsync(int categoryId, CancellationToken cancellationToken);
         Task<Category?> GetCategoryWithChildrensOrDefaultAsync(int categoryId, CancellationToken cancellationToken);
         Task<IEnumerable<CategoryForTreeViewModel>> GetWalletCategoriesForTreeViewAsync(int walletId, CancellationToken cancellationToken);
-        Task<bool> CheckIfCategoryBelongsToWalletAsync(int categoryId, int walletId, CancellationToken cancellationToken);
+        bool CheckIfCategoryBelongsToWalletAsync(int categoryId, int walletId, CancellationToken cancellationToken);
         Task<int> GetCategoryTransactionTypeAsync(int categoryId, CancellationToken cancellationToken);
     }
 }

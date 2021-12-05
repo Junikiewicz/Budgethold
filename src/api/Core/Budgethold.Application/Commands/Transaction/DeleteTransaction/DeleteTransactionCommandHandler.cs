@@ -1,4 +1,5 @@
-﻿using Budgethold.Application.Contracts.Persistance;
+﻿using Budgethold.Application.Commands.Transaction.Helpers;
+using Budgethold.Application.Contracts.Persistance;
 using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
 using MediatR;
@@ -23,6 +24,17 @@ namespace Budgethold.Application.Commands.Transaction.DeleteTransaction
             {
                 return new Result(new NotFoundError("Specified transaction doesn't exist or wallet is not assigned to this user."));
             }
+
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(transaction.WalletId, cancellationToken);
+
+            if (wallet is null) return new Result(new NotFoundError("Specified wallet doesn't exist"));
+
+            var categoryTransactionType = await _unitOfWork.CategoriesRepository
+                .GetCategoryTransactionTypeAsync(transaction.CategoryId, cancellationToken);
+
+            var transactionAmount = ITransactionHelper.SetAmountSign(categoryTransactionType, transaction.Amount);
+
+            wallet.ApplyTransactionValueChange(transactionAmount, 0);
 
             _unitOfWork.TransactionRepository.Remove(transaction);
 

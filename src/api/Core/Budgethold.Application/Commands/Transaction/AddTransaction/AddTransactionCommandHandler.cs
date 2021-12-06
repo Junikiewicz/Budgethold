@@ -34,9 +34,9 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
             var categoryTransactionType = await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(request.CategoryId, cancellationToken);
 
-            var transactionAmount = ITransactionHelper.SetAmountSign(categoryTransactionType, transaction.Amount);
+            var transactionAmount = TransactionHelper.GetTransactionValue(categoryTransactionType, transaction.Amount);
 
-            wallet.ApplyTransactionValueChange(0, transactionAmount);
+            wallet.ApplyNewTransaction(transactionAmount);
 
             _unitOfWork.TransactionRepository.Add(transaction);
 

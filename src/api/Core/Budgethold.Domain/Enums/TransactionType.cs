@@ -1,6 +1,4 @@
-﻿using Budgethold.Domain.Common.Exceptions;
-
-namespace Budgethold.Domain.Enums
+﻿namespace Budgethold.Domain.Enums
 {
     public enum TransactionType
     {

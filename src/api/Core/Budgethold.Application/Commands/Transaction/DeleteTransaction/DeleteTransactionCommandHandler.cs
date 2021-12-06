@@ -32,9 +32,9 @@ namespace Budgethold.Application.Commands.Transaction.DeleteTransaction
             var categoryTransactionType = await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(transaction.CategoryId, cancellationToken);
 
-            var transactionAmount = ITransactionHelper.SetAmountSign(categoryTransactionType, transaction.Amount);
+            var transactionAmount = TransactionHelper.GetTransactionValue(categoryTransactionType, transaction.Amount);
 
-            wallet.ApplyTransactionValueChange(transactionAmount, 0);
+            wallet.RevertTransactionValueChange(transactionAmount);
 
             _unitOfWork.TransactionRepository.Remove(transaction);
 

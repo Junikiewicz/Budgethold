@@ -19,23 +19,25 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
         {
             var transaction = await _unitOfWork.TransactionRepository.GetTransactionAsync(request.TransactionId, cancellationToken);
 
-            if (transaction is null)
+            if (transaction is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
             {
-                return new Result(new NotFoundError("Specified transaction does not exist or is not assigned to this user."));
+                return new Result(new NotFoundError("Specified transaction, category or wallet does not exist or is not assigned to this user."));
             }
 
             if (request.WalletId != transaction.WalletId)
             {
-                if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken)
-                    || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken)
-                    || request.CategoryId != transaction.CategoryId && !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, request.WalletId, cancellationToken))
-                    return new Result(new NotFoundError("Specified category does not exist or is not assigned to this user."));
+                if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken))
+                {
+                    return new Result(new NotFoundError("Specified wallet does not exist or is not assigned to this user."));
+                }        
             }
-            else
+
+            if (request.CategoryId != transaction.CategoryId)
             {
-                if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken)
-                    || request.CategoryId != transaction.CategoryId && !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, transaction.WalletId, cancellationToken))
+                if (!await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, transaction.WalletId, cancellationToken))
+                {
                     return new Result(new NotFoundError("Specified category does not exist or is not assigned to this user."));
+                }        
             }
 
             var currentWallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(transaction.WalletId, cancellationToken);

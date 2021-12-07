@@ -27,7 +27,8 @@ namespace Budgethold.Persistance.EntitiesConfiguration
 
             builder.HasOne(x => x.Wallet)
                 .WithMany(x => x.Categories)
-                .HasForeignKey(x => x.WalletId);
+                .HasForeignKey(x => x.WalletId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

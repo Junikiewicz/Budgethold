@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Budgethold.Common\Budgethold.Common.csproj" />
-    <ProjectReference Include="..\..\Common\Budgethold.ValidationExtensions\Budgethold.ValidationExtensions.csproj" />
-    <ProjectReference Include="..\Budgethold.Domain\Budgethold.Domain.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Common\Budgethold.Common\Budgethold.Common.csproj" />
+		<ProjectReference Include="..\..\Common\Budgethold.ValidationExtensions\Budgethold.ValidationExtensions.csproj" />
+		<ProjectReference Include="..\Budgethold.Domain\Budgethold.Domain.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="10.3.4" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="10.3.4" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+	</ItemGroup>
 
 </Project>

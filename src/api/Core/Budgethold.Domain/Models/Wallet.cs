@@ -10,6 +10,7 @@ namespace Budgethold.Domain.Models
             UserWallets = null!;
             Name = null!;
             Categories = null!;
+            Transactions = null!;
         }
 
         public Wallet(string name, decimal startingValue, int creatingUserId, IEnumerable<int> userIds)
@@ -21,6 +22,7 @@ namespace Budgethold.Domain.Models
             AddUserToWallet(creatingUserId);
             ChangeWalletOwner(creatingUserId);
             Categories = new();
+            Transactions = null!;
         }
 
         public int Id { get; private set; }
@@ -29,6 +31,7 @@ namespace Budgethold.Domain.Models
         public string Name { get; private set; }
         public virtual HashSet<UserWallet> UserWallets { get; private set; }
         public virtual HashSet<Category> Categories { get; private set; }
+        public virtual HashSet<Transaction> Transactions { get; private set; }
 
         public void Update(string name, decimal startingValue, IEnumerable<int> userIds)
         {
@@ -36,6 +39,19 @@ namespace Budgethold.Domain.Models
             CurrentValue = CurrentValue - StartingValue + startingValue;
             StartingValue = startingValue;
             UpdateUsers(userIds);
+        }
+
+        public void ApplyNewTransaction(decimal newTransactionValue)
+        {
+            EditTransactionValueChange(0, newTransactionValue);
+        }
+        public void EditTransactionValueChange(decimal oldTransactionValue, decimal newTransactionValue)
+        {
+            CurrentValue = CurrentValue - oldTransactionValue + newTransactionValue;
+        }
+        public void RevertTransactionValueChange(decimal oldTransactionValue)
+        {
+            EditTransactionValueChange(oldTransactionValue, 0);
         }
 
         public void UpdateUsers(IEnumerable<int> userIds)

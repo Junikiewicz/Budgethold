@@ -12,6 +12,7 @@ namespace Budgethold.Persistance
     public class DataContext : IdentityDbContext<AspNetUser, AspNetRole, int, IdentityUserClaim<int>, AspNetUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DbSet<User> DomainUsers => Set<User>();
+        public DbSet<Transaction> Transactions => Set<Transaction>();
         public DbSet<Wallet> Wallets => Set<Wallet>();
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<UserWallet> UserWallets => Set<UserWallet>();

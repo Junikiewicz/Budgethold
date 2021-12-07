@@ -4,6 +4,7 @@ using Budgethold.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Budgethold.Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211130191809_Transaction_Model")]
+    partial class Transaction_Model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -575,11 +577,6 @@ namespace Budgethold.Persistance.Migrations
             modelBuilder.Entity("Budgethold.Domain.Models.User", b =>
                 {
                     b.Navigation("UserWallets");
-                });
-
-            modelBuilder.Entity("Budgethold.Domain.Models.User", b =>
-                {
-                    b.Navigation("Wallets");
                 });
 
             modelBuilder.Entity("Budgethold.Domain.Models.Wallet", b =>

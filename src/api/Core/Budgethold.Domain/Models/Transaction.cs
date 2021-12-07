@@ -34,10 +34,10 @@ namespace Budgethold.Domain.Models
         public Wallet Wallet { get; private set; }
         public Category Category { get; private set; }
 
-        public void EditTransaction(string name, string description, DateTime date, decimal amount, int? categoryId, int? walletId)
+        public void EditTransaction(string name, string description, DateTime date, decimal amount, int categoryId, int walletId)
         {
-            if (categoryId is not null) CategoryId = categoryId.Value;
-            if (walletId is not null) WalletId = walletId.Value;
+            CategoryId = categoryId;
+            WalletId = walletId;
             Amount = amount;
             Name = name;
             Description = description;

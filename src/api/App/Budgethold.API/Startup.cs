@@ -5,6 +5,7 @@ using Budgethold.Persistance.Extensions;
 using Budgethold.Security.Commands.SignUp;
 using Budgethold.Security.Extensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Budgethold.API
 {
@@ -19,7 +20,7 @@ namespace Budgethold.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDatabaseConnection("asdfasd"/*Configuration.GetSection("Database:ConnectionString").Value*/);
+            services.AddDatabaseConnection(Configuration.GetSection("Database:ConnectionString").Value);
             services.AddIdentityStores();
             services.AddCookieAuthentication();
 
@@ -34,18 +35,14 @@ namespace Budgethold.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
-            //dataContext.Database.Migrate();
+            dataContext.Database.Migrate();
 
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseHttpsRedirection();
             app.UseRouting();

@@ -32,7 +32,7 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result);
         }
 
-        [HttpPost("adsfdf")]
+        [HttpPost]
         public async Task<IActionResult> AddCategory(AddCategoryRequest request, CancellationToken cancellationToken)
         {
             var command = new AddCategoryCommand(User.GetUserId(), request.Name, request.ParentCategoryId, request.TransactionTypeId, request.WalletId);

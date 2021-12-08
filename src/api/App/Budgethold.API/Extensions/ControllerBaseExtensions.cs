@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Budgethold.API.Extensions
 {
-    internal static class ControllerBaseExtensions
+    public static class ControllerBaseExtensions
     {
         public static IActionResult GetResponseFromResult(this ControllerBase controllerBase, Result result)
         {

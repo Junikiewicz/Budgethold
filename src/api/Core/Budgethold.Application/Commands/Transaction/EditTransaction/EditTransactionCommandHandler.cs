@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Budgethold.Application.Commands.Transaction.EditTransaction
 {
-    internal class EditTransactionCommandHandler : IRequestHandler<EditTransactionCommand, Result>
+    public class EditTransactionCommandHandler : IRequestHandler<EditTransactionCommand, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
 

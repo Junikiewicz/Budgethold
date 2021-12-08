@@ -35,7 +35,7 @@ namespace Budgethold.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
-            dataContext.Database.Migrate();
+            //dataContext.Database.Migrate();
 
             if (env.IsDevelopment())
             {

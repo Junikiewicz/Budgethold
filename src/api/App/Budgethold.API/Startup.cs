@@ -5,7 +5,6 @@ using Budgethold.Persistance.Extensions;
 using Budgethold.Security.Commands.SignUp;
 using Budgethold.Security.Extensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Budgethold.API
 {
@@ -48,7 +47,7 @@ namespace Budgethold.API
             //    app.UseSwaggerUI();
             //}
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

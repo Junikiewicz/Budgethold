@@ -20,7 +20,7 @@ namespace Budgethold.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDatabaseConnection(Configuration.GetSection("Database:ConnectionString").Value);
+            services.AddDatabaseConnection("asdfasd"/*Configuration.GetSection("Database:ConnectionString").Value*/);
             services.AddIdentityStores();
             services.AddCookieAuthentication();
 

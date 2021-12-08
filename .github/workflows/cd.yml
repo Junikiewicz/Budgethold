@@ -28,8 +28,8 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-        context: src/api/
-        file: ./App/Budgethold.API/Dockerfile
+        context: ./src/api/
+        file: ./src/api/App/Budgethold.API/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/budgethold:latest
 

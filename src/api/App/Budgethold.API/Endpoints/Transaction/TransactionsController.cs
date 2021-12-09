@@ -23,7 +23,7 @@ namespace Budgethold.API.Endpoints.Transaction
             _mediator = mediator;
         }
 
-        [HttpGet("{transactionId:int}")]
+        [HttpGet("test/{transactionId:int}")]
         public async Task<IActionResult> GetTransaction(int transactionId, CancellationToken cancellationToken)
         {
             var query = new GetSingleTransactionQuery(User.GetUserId(), transactionId);

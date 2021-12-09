@@ -4,6 +4,9 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dd00fde5-29a7-4bda-a2be-431ae3f6b609</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,6 +15,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 	</ItemGroup>

@@ -2,7 +2,7 @@ name: "Frontend"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ frontend ]
     paths:
       - "src/web/**"
       - ".github/workflows/web-cd.yml"

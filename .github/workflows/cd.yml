@@ -2,7 +2,7 @@ name: "Backend"
 
 on:
   push:
-    branches: [ ci-cd ]
+    branches: [ master ]
     paths:
       - "src/api/**"
       - ".github/workflows/cd.yml"

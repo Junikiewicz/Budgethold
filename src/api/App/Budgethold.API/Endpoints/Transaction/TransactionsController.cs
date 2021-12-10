@@ -23,10 +23,10 @@ namespace Budgethold.API.Endpoints.Transaction
             _mediator = mediator;
         }
 
-        [HttpGet("{transactionId:int}")]
-        public async Task<IActionResult> GetTransaction(int transactionId, CancellationToken cancellationToken)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetTransaction(int id, CancellationToken cancellationToken)
         {
-            var query = new GetSingleTransactionQuery(User.GetUserId(), transactionId);
+            var query = new GetSingleTransactionQuery(User.GetUserId(), id);
 
             var result = await _mediator.Send(query, cancellationToken);
 
@@ -50,7 +50,7 @@ namespace Budgethold.API.Endpoints.Transaction
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result);
+            return this.GetResponseFromResult(result, "GetTransaction");
         }
 
         [HttpPut("{transactionId:int}")]

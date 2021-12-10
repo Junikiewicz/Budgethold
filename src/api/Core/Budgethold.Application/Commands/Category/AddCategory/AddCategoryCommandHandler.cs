@@ -39,7 +39,7 @@ namespace Budgethold.Application.Commands.Category.AddCategory
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return new Result<int>(category.Id);
+            return new CreatedResult<int>(category.Id);
         }
     }
 }

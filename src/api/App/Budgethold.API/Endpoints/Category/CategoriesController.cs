@@ -4,6 +4,7 @@ using Budgethold.Application.Commands.Category.AddCategory;
 using Budgethold.Application.Commands.Category.DeleteCategory;
 using Budgethold.Application.Commands.Category.EditCategory;
 using Budgethold.Application.Queries.Category.GetWalletCategories;
+using Budgethold.Application.Queries.Category.GetWalletCategory;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,16 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetSingleCategory(int id, CancellationToken cancellationToken)
+        {
+            var command = new GetWalletCategoryQuery(id, User.GetUserId());
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return this.GetResponseFromResult(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddCategory(AddCategoryRequest request, CancellationToken cancellationToken)
         {
@@ -39,10 +50,10 @@ namespace Budgethold.API.Endpoints.Category
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result);
+            return this.GetResponseFromResult(result, "GetSingleCategory");
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("{id:int}")]
         public async Task<IActionResult> UpdateCategory(int id, EditCategoryRequest request, CancellationToken cancellationToken)
         {
             var command = new EditCategoryCommand(id, User.GetUserId(), request.Name, request.ParentCategoryId);
@@ -52,7 +63,7 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteCategory(int id, CancellationToken cancellationToken)
         {
             var command = new DeleteCategoryCommand(id, User.GetUserId());

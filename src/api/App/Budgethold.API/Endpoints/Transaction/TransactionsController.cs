@@ -50,7 +50,7 @@ namespace Budgethold.API.Endpoints.Transaction
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result, "GetTransaction");
+            return this.GetResponseFromResult(result, nameof(GetTransaction));
         }
 
         [HttpPut("{transactionId:int}")]

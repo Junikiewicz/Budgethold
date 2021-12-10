@@ -50,7 +50,7 @@ namespace Budgethold.API.Endpoints.Category
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result, "GetSingleCategory");
+            return this.GetResponseFromResult(result, nameof(GetSingleCategory));
         }
 
         [HttpPatch("{id:int}")]

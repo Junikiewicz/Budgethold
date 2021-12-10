@@ -50,7 +50,7 @@ namespace Budgethold.API.Endpoints.Wallet
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result, "GetSingleWallet");
+            return this.GetResponseFromResult(result, nameof(GetSingleWallet));
         }
 
         [HttpPatch("{id}")]

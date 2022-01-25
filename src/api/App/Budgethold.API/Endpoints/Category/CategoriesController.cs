@@ -53,7 +53,7 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result, nameof(GetSingleCategory));
         }
 
-        [HttpPatch("{id:int}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateCategory(int id, EditCategoryRequest request, CancellationToken cancellationToken)
         {
             var command = new EditCategoryCommand(id, User.GetUserId(), request.Name, request.ParentCategoryId);

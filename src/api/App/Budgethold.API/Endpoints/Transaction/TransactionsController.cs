@@ -53,7 +53,7 @@ namespace Budgethold.API.Endpoints.Transaction
             return this.GetResponseFromResult(result, nameof(GetTransaction));
         }
 
-        [HttpPut("{transactionId:int}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> EditTransaction(EditTransactionRequest request, int transactionId, CancellationToken cancellationToken)
         {
             var command = new EditTransactionCommand(transactionId, User.GetUserId(), request.Name, request.Description, request.CategoryId, request.Amount, request.Date, request.WalletId);
@@ -63,7 +63,7 @@ namespace Budgethold.API.Endpoints.Transaction
             return this.GetResponseFromResult(result);
         }
 
-        [HttpDelete("{transactionId:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteTransaction(int transactionId, CancellationToken cancellationToken)
         {
             var command = new DeleteTransactionCommand(User.GetUserId(), transactionId);

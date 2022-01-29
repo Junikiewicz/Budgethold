@@ -41,7 +41,11 @@ namespace Budgethold.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Budgethold");
+                    c.RoutePrefix = "";
+                });
             }
 
             app.UseHttpsRedirection();

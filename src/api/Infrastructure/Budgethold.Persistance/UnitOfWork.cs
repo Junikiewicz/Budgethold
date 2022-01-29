@@ -18,7 +18,6 @@ namespace Budgethold.Persistance
             _context = context;
         }
 
-
         public ITransactionRepository TransactionRepository
         {
             get
@@ -31,6 +30,7 @@ namespace Budgethold.Persistance
                 return _transactionRepository;
             }
         }
+
         public IWalletsRepository WalletsRepository
         {
             get

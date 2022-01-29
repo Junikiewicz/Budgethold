@@ -20,10 +20,11 @@ namespace Budgethold.Domain.Models
         public User(string name)
         {
             Name = name;
-            UserWallets = new();
+            UserWallets = new ();
         }
 
         public int Id { get; private set; }
+
         public string Name { get; private set; }
 
         public virtual HashSet<UserWallet> UserWallets { get; private set; }

@@ -12,6 +12,7 @@ namespace Budgethold.Security.Commands.SignIn
         }
 
         public string Email { get; init; }
+
         public string Password { get; init; }
     }
 }

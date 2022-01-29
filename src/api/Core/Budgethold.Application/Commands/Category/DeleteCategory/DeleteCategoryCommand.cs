@@ -12,6 +12,7 @@ namespace Budgethold.Application.Commands.Category.DeleteCategory
         }
 
         public int CategoryId { get; init; }
+
         public int UserId { get; init; }
     }
 }

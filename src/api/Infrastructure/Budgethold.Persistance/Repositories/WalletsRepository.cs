@@ -12,14 +12,14 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<Wallet?> GetWalletWithUserWalletsOrDefaultAsync(int walletId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await Context.Wallets
                 .Where(x => x.Id == walletId).Include(i => i.UserWallets)
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await Context.Wallets
                 .Where(x => x.UserWallets.Any(y => y.UserId == userId))
                 .Select(x => new WalletResponse
                 {
@@ -37,7 +37,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<SingleWalletResponse?> GetWalletForViewOrDefaultAsync(int walletId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await Context.Wallets
                 .Where(x => x.Id == walletId)
                 .Select(x => new SingleWalletResponse
                 {
@@ -55,7 +55,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<Wallet?> GetWalletOrDefaultAsync(int walletId, CancellationToken cancellationToken)
         {
-            return await _context.Wallets
+            return await Context.Wallets
                .Where(x => x.Id == walletId)
                .SingleOrDefaultAsync(cancellationToken);
         }

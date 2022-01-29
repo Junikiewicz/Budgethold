@@ -5,18 +5,16 @@ namespace Budgethold.Domain.Common
 {
     public class Result
     {
-        protected readonly Error? _error;
-
         public Result() { }
 
         public Result(Error error)
         {
-            _error = error;
+            Error = error;
         }
 
-        public bool Succeeded => _error == default;
+        public Error? Error { get; init; }
 
-        public Error? Error => _error;
+        public bool Succeeded => Error == default;
     }
 
     public class Result<T> : Result
@@ -37,9 +35,9 @@ namespace Budgethold.Domain.Common
         {
             get
             {
-                if (_error != default)
+                if (Error != default)
                 {
-                    throw new UnhandledErrorResultException($"Unhandled error result: {_error.Message}");
+                    throw new UnhandledErrorResultException($"Unhandled error result: {Error.Message}");
                 }
 
                 return _value!;

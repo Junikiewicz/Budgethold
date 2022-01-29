@@ -2,9 +2,6 @@
 {
     internal class UnhandledErrorResultException : Exception
     {
-        public UnhandledErrorResultException(string message) : base(message)
-        {
-
-        }
+        public UnhandledErrorResultException(string message) : base(message) { }
     }
 }

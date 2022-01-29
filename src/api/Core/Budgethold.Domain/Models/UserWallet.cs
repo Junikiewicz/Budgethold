@@ -10,6 +10,7 @@ namespace Budgethold.Domain.Models
             Wallet = null!;
             User = null!;
         }
+
         public UserWallet(int userId, int walletId)
         {
             UserId = userId;
@@ -19,10 +20,13 @@ namespace Budgethold.Domain.Models
         }
 
         public int UserId { get; private set; }
+
         public int WalletId { get; private set; }
+
         public bool IsOwner { get; private set; }
 
         public virtual Wallet Wallet { get; private set; }
+
         public virtual User User { get; private set; }
 
         public void SetOwnership(bool isOwner)

@@ -44,7 +44,7 @@ namespace Budgethold.API
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Budgethold");
-                    c.RoutePrefix = "";
+                    c.RoutePrefix = string.Empty;
                 });
             }
 

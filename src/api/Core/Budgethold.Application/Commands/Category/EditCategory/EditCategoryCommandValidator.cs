@@ -6,9 +6,9 @@ namespace Budgethold.Application.Commands.Category.EditCategory
     {
         public EditCategoryCommandValidator()
         {
-            RuleFor(x => x.UserId).GreaterThan(0).WithMessage("The field {PropertyName} must be greater than 0.");
-            RuleFor(x => x.CategoryId).GreaterThan(0).WithMessage("The field {PropertyName} must be greater than 0.");
-            RuleFor(x => x.Name).NotEmpty().WithMessage("The field {PropertyName} is required.").MaximumLength(100);
+            RuleFor(x => x.UserId).GreaterThan(0);
+            RuleFor(x => x.CategoryId).GreaterThan(0);
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.ParentCategoryId).GreaterThan(0).When(x => x.ParentCategoryId.HasValue);
         }
     }

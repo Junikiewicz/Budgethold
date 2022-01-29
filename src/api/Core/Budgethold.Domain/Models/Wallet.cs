@@ -80,8 +80,7 @@ namespace Budgethold.Domain.Models
         public bool CheckIfUserIsWalletOwner(int userId)
         {
             var user = UserWallets.SingleOrDefault(x => x.UserId == userId);
-            return user.IsOwner;
+            return user is not null ? user.IsOwner : false;
         }
-
     }
 }

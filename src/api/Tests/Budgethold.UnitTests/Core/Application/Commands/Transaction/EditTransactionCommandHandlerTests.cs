@@ -99,11 +99,6 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletOrDefaultAsync(2, It.IsAny<CancellationToken>())).ReturnsAsync(new Domain.Models.Wallet());
 
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(2, It.IsAny<CancellationToken>())).ReturnsAsync(2);
-
-
-
-
 
             var commandHandler = new EditTransactionCommandHandler(mockedUnitOfWork.Object);
             var command = new EditTransactionCommand(1, 1, "name", "desc", 1, 200, DateTime.Parse("2011-03-21 13:26"), 1);
@@ -133,12 +128,8 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(1);
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(2, It.IsAny<CancellationToken>())).ReturnsAsync(2);
 
-
-
-
-
             var commandHandler = new EditTransactionCommandHandler(mockedUnitOfWork.Object);
-            var command = new EditTransactionCommand(1, 1, "name", "desc", 1, -200, DateTime.Parse("2011-03-21 13:26"), 1);
+            var command = new EditTransactionCommand(1, 1, "name", "desc", 2, -200, DateTime.Parse("2011-03-21 13:26"), 1);
 
             // Act
             var result = await commandHandler.Handle(command, CancellationToken.None);
@@ -162,11 +153,7 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
                 .ReturnsAsync(true);
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletOrDefaultAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(new Domain.Models.Wallet("name", 100, 1, Enumerable.Empty<int>()));
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletOrDefaultAsync(2, It.IsAny<CancellationToken>())).ReturnsAsync(null as Domain.Models.Wallet);
-
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(2, It.IsAny<CancellationToken>())).ReturnsAsync(2);
-
-
 
             var commandHandler = new EditTransactionCommandHandler(mockedUnitOfWork.Object);
             var command = new EditTransactionCommand(1, 1, "name", "desc", 1, 200, DateTime.Parse("2011-03-21 13:26"), 2);
@@ -194,12 +181,7 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
                 .ReturnsAsync(true);
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletOrDefaultAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(null as Domain.Models.Wallet);
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletOrDefaultAsync(2, It.IsAny<CancellationToken>())).ReturnsAsync(new Domain.Models.Wallet("name", 100, 1, Enumerable.Empty<int>()));
-
-
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryTransactionTypeAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(2);
-
-
 
             var commandHandler = new EditTransactionCommandHandler(mockedUnitOfWork.Object);
             var command = new EditTransactionCommand(1, 1, "name", "desc", 1, 200, DateTime.Parse("2011-03-21 13:26"), 2);
@@ -213,6 +195,4 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             mockedUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
         }
     }
-
-
 }

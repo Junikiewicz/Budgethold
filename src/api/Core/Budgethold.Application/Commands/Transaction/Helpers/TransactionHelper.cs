@@ -1,5 +1,5 @@
-﻿using Budgethold.Domain.Enums;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Budgethold.Domain.Enums;
 
 namespace Budgethold.Application.Commands.Transaction.Helpers
 {
@@ -9,8 +9,8 @@ namespace Budgethold.Application.Commands.Transaction.Helpers
         {
             return transactionTypeId switch
             {
-                ((int)TransactionType.Income) => amount,
-                ((int)TransactionType.Expense) => amount * (-1),
+                (int)TransactionType.Income => amount,
+                (int)TransactionType.Expense => amount * (-1),
                 _ => throw new InvalidEnumArgumentException("Transaction type is not correct")
             };
         }

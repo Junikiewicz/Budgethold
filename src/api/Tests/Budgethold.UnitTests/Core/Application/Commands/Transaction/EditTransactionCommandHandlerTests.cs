@@ -1,10 +1,10 @@
-﻿using Budgethold.Application.Commands.Transaction.EditTransaction;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Budgethold.Application.Commands.Transaction.EditTransaction;
 using Budgethold.Application.Contracts.Persistance;
 using Budgethold.Domain.Common.Errors;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Budgethold.UnitTests.Core.Application.Commands.Transaction

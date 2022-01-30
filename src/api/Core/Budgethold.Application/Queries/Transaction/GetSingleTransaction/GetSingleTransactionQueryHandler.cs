@@ -13,6 +13,7 @@ namespace Budgethold.Application.Queries.Transaction.GetSingleTransaction
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Result<TransactionResponse>> Handle(GetSingleTransactionQuery request, CancellationToken cancellationToken)
         {
             var transaction = await _unitOfWork.TransactionRepository.GetSingleTransactionResponseAsync(request.TransactionId, cancellationToken);

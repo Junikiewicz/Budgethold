@@ -10,7 +10,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<bool> CheckIfUserIsAssignedToWalletAsync(int walletId, int userId, CancellationToken cancellationToken)
         {
-            return await _context.UserWallets.Where(x => x.WalletId == walletId)
+            return await Context.UserWallets.Where(x => x.WalletId == walletId)
                 .Select(x => x.UserId).ContainsAsync(userId, cancellationToken);
         }
     }

@@ -14,10 +14,11 @@ namespace Budgethold.Domain.Models
         {
             Id = (int)transactionType;
             Name = transactionType.ToString();
-            Categories = new();
+            Categories = new ();
         }
 
         public int Id { get; private set; }
+
         public string Name { get; private set; }
 
         public virtual HashSet<Category> Categories { get; private set; }

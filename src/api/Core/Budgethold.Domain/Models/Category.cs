@@ -19,22 +19,30 @@ namespace Budgethold.Domain.Models
             ParentCategoryId = parentCategoryId;
             TransactionTypeId = transactionTypeId;
             WalletId = walletId;
-            ChildCategories = new();
+            ChildCategories = new ();
             Wallet = null!;
             TransactionType = null!;
             Transactions = null!;
         }
 
         public int Id { get; private set; }
+
         public string Name { get; private set; }
+
         public int? ParentCategoryId { get; private set; }
+
         public int TransactionTypeId { get; private set; }
+
         public int WalletId { get; private set; }
 
         public virtual Category? ParentCategory { get; private set; }
+
         public virtual Wallet Wallet { get; private set; }
+
         public virtual TransactionType TransactionType { get; private set; }
+
         public virtual HashSet<Category> ChildCategories { get; private set; }
+
         public virtual HashSet<Transaction> Transactions { get; private set; }
 
         public void Update(int? parentCategoryId, string name)

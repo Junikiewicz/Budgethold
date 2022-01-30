@@ -2,7 +2,6 @@
 using Budgethold.Application.Contracts.Persistance;
 using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
-using Budgethold.Domain.Enums;
 using MediatR;
 using DomainModel = Budgethold.Domain.Models;
 

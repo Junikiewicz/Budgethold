@@ -44,4 +44,32 @@ namespace Budgethold.Domain.Common
             }
         }
     }
+
+    public class CreatedResult<T> : Result
+    {
+        private readonly T? _value;
+
+        public CreatedResult(T value)
+        {
+            _value = value;
+        }
+
+        public CreatedResult(Error error) : base(error)
+        {
+            _value = default;
+        }
+
+        public T Value
+        {
+            get
+            {
+                if (Error != default)
+                {
+                    throw new UnhandledErrorResultException($"Unhandled error result: {Error.Message}");
+                }
+
+                return _value!;
+            }
+        }
+    }
 }

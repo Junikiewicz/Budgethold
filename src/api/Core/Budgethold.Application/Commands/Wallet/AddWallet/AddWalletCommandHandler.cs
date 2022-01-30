@@ -22,7 +22,7 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return new Result<int>(wallet.Id);
+            return new CreatedResult<int>(wallet.Id);
         }
     }
 }

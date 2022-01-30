@@ -7,7 +7,7 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
         public EditTransactionCommandValidator()
         {
             RuleFor(x => x.CategoryId).GreaterThan(0);
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.UserId).GreaterThan(0);
         }
     }

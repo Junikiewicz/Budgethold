@@ -42,7 +42,7 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return new Result<int>(transaction.Id);
+            return new CreatedResult<int>(transaction.Id);
         }
     }
 }

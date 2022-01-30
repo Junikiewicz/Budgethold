@@ -10,7 +10,7 @@ namespace Budgethold.Application.Commands.Category.AddCategory
         {
             RuleFor(x => x.UserId).GreaterThan(0);
             RuleFor(x => x.WalletId).GreaterThan(0);
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.ParentCategoryId).GreaterThan(0).When(x => x.ParentCategoryId.HasValue);
             RuleFor(x => x.TransactionTypeId).GreaterThan(0).CanBeCastedToEnum(typeof(TransactionType));
         }

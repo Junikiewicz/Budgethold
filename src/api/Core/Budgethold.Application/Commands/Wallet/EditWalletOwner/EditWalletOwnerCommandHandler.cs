@@ -22,6 +22,7 @@ namespace Budgethold.Application.Commands.Wallet.EditWalletOwner
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist, this user doesn't have access to it or new owner doesnt belong to this wallet"));
             }
+
             wallet.ChangeWalletOwner(command.NewOwnerId);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);

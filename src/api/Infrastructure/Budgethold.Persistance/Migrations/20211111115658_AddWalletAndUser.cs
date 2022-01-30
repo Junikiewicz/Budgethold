@@ -6,6 +6,7 @@ namespace Budgethold.Persistance.Migrations
 {
     public partial class AddWalletAndUser : Migration
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1122:Use string.Empty for empty strings", Justification = "Auto generated code")]
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(

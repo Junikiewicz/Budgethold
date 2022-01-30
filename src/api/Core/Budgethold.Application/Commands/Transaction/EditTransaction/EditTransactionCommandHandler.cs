@@ -29,7 +29,7 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
                 if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken))
                 {
                     return new Result(new NotFoundError("Specified wallet does not exist or is not assigned to this user."));
-                }        
+                }
             }
 
             if (request.CategoryId != transaction.CategoryId)
@@ -37,7 +37,7 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
                 if (!await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, transaction.WalletId, cancellationToken))
                 {
                     return new Result(new NotFoundError("Specified category does not exist or is not assigned to this user."));
-                }        
+                }
             }
 
             var currentWallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(transaction.WalletId, cancellationToken);

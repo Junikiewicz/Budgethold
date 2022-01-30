@@ -1,10 +1,9 @@
-﻿using Budgethold.API.Extensions;
+﻿using System;
+using Budgethold.API.Extensions;
 using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using Xunit;
-using static Budgethold.UnitTests.App.Extensions.ControllerBaseExtensionsTests;
 
 namespace Budgethold.UnitTests.App.Extensions
 {

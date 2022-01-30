@@ -1,11 +1,11 @@
-﻿using Budgethold.Domain.Common;
+﻿using System.Security.Claims;
+using Budgethold.Domain.Common;
 using Budgethold.Security.Common.Errors;
 using Budgethold.Security.Constants;
 using Budgethold.Security.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 
 namespace Budgethold.Security.Commands.SignIn
 {

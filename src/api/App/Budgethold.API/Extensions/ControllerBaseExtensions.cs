@@ -8,13 +8,23 @@ namespace Budgethold.API.Extensions
 {
     public static class ControllerBaseExtensions
     {
-        public static IActionResult GetResponseFromResult(this ControllerBase controllerBase, Result result)
+        public static IActionResult GetResponseFromResult(this ControllerBase controllerBase, Result result, string? methodName = null)
         {
             if (result.Succeeded)
             {
                 var type = result.GetType();
 
                 var property = type.GetProperty(nameof(Result<object>.Value));
+
+                var createdProperty = type.GetProperty(nameof(CreatedResult<object>.Value));
+
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(CreatedResult<>) && createdProperty is not null && methodName is not null)
+                {
+                    var routeValues = new { id = createdProperty.GetValue(result) };
+                    var createdResource = new { Id = routeValues.id };
+
+                    return controllerBase.CreatedAtAction(methodName, routeValues, createdResource);
+                }
 
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Result<>) && property is not null)
                 {

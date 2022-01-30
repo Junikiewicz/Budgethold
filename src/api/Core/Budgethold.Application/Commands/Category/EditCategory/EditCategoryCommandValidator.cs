@@ -8,7 +8,7 @@ namespace Budgethold.Application.Commands.Category.EditCategory
         {
             RuleFor(x => x.UserId).GreaterThan(0);
             RuleFor(x => x.CategoryId).GreaterThan(0);
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.ParentCategoryId).GreaterThan(0).When(x => x.ParentCategoryId.HasValue);
         }
     }

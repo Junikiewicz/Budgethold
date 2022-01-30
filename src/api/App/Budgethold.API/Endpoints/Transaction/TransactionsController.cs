@@ -23,10 +23,10 @@ namespace Budgethold.API.Endpoints.Transaction
             _mediator = mediator;
         }
 
-        [HttpGet("{transactionId:int}")]
-        public async Task<IActionResult> GetTransaction(int transactionId, CancellationToken cancellationToken)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetTransaction(int id, CancellationToken cancellationToken)
         {
-            var query = new GetSingleTransactionQuery(User.GetUserId(), transactionId);
+            var query = new GetSingleTransactionQuery(User.GetUserId(), id);
 
             var result = await _mediator.Send(query, cancellationToken);
 
@@ -50,10 +50,10 @@ namespace Budgethold.API.Endpoints.Transaction
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result);
+            return this.GetResponseFromResult(result, nameof(GetTransaction));
         }
 
-        [HttpPut("{transactionId:int}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> EditTransaction(EditTransactionRequest request, int transactionId, CancellationToken cancellationToken)
         {
             var command = new EditTransactionCommand(transactionId, User.GetUserId(), request.Name, request.Description, request.CategoryId, request.Amount, request.Date, request.WalletId);
@@ -63,7 +63,7 @@ namespace Budgethold.API.Endpoints.Transaction
             return this.GetResponseFromResult(result);
         }
 
-        [HttpDelete("{transactionId:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteTransaction(int transactionId, CancellationToken cancellationToken)
         {
             var command = new DeleteTransactionCommand(User.GetUserId(), transactionId);

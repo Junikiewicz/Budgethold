@@ -1,4 +1,5 @@
 ﻿using Budgethold.Application.Models.Category;
+using Budgethold.Application.Queries.Category.GetWalletCategory;
 using Budgethold.Domain.Models;
 
 namespace Budgethold.Application.Contracts.Persistance.Repositories
@@ -16,5 +17,7 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
         Task<bool> CheckIfCategoryBelongsToWalletAsync(int categoryId, int walletId, CancellationToken cancellationToken);
 
         Task<int> GetCategoryTransactionTypeAsync(int categoryId, CancellationToken cancellationToken);
+
+        Task<CategoryResponse?> GetSingleCategoryResponseAsync(int categoryId, CancellationToken cancellationToken);
     }
 }

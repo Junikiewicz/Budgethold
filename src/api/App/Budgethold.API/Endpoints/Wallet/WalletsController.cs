@@ -50,10 +50,10 @@ namespace Budgethold.API.Endpoints.Wallet
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result);
+            return this.GetResponseFromResult(result, nameof(GetSingleWallet));
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditWallet(EditWalletRequest request, int id, CancellationToken cancellationToken)
         {
             var command = new EditWalletCommand(id, request.Name, request.StartingValue, User.GetUserId(), request.UsersId);

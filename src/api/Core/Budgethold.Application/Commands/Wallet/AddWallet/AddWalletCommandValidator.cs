@@ -6,8 +6,7 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
     {
         public AddWalletCommandValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty();
+            RuleFor(x => x.Name).NotEmpty();
             RuleForEach(x => x.UserIds).GreaterThan(0);
         }
     }

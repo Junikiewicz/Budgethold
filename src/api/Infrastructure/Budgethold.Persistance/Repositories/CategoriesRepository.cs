@@ -1,5 +1,6 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
 using Budgethold.Application.Models.Category;
+using Budgethold.Application.Queries.Category.GetWalletCategory;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,14 @@ namespace Budgethold.Persistance.Repositories
         {
             return await Context.Categories.Include(x => x.ChildCategories)
                 .SingleOrDefaultAsync(x => x.Id == categoryId, cancellationToken);
+        }
+
+        public async Task<CategoryResponse?> GetSingleCategoryResponseAsync(int categoryId, CancellationToken cancellationToken)
+        {
+            return await Context.Categories
+                .Where(x => x.Id == categoryId)
+                .Select(x => new CategoryResponse(x.Id, x.Name, x.ParentCategoryId, x.TransactionTypeId, x.WalletId))
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<CategoryForTreeViewModel>> GetWalletCategoriesForTreeViewAsync(int walletId, CancellationToken cancellationToken)

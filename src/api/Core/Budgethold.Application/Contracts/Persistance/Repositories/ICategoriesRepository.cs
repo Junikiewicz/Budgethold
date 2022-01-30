@@ -17,6 +17,7 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
         Task<bool> CheckIfCategoryBelongsToWalletAsync(int categoryId, int walletId, CancellationToken cancellationToken);
 
         Task<int> GetCategoryTransactionTypeAsync(int categoryId, CancellationToken cancellationToken);
+
         Task<CategoryResponse?> GetSingleCategoryResponseAsync(int categoryId, CancellationToken cancellationToken);
     }
 }

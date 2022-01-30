@@ -45,7 +45,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<CategoryResponse?> GetSingleCategoryResponseAsync(int categoryId, CancellationToken cancellationToken)
         {
-            return await _context.Categories
+            return await Context.Categories
                 .Where(x => x.Id == categoryId)
                 .Select(x => new CategoryResponse(x.Id, x.Name, x.ParentCategoryId, x.TransactionTypeId, x.WalletId))
                 .SingleOrDefaultAsync(cancellationToken);

@@ -63,9 +63,9 @@ namespace Budgethold.Domain.Common
         {
             get
             {
-                if (_error != default)
+                if (Error != default)
                 {
-                    throw new UnhandledErrorResultException($"Unhandled error result: {_error.Message}");
+                    throw new UnhandledErrorResultException($"Unhandled error result: {Error.Message}");
                 }
 
                 return _value!;

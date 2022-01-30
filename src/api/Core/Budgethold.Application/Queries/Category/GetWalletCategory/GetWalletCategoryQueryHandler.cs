@@ -13,6 +13,7 @@ namespace Budgethold.Application.Queries.Category.GetWalletCategory
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Result<CategoryResponse>> Handle(GetWalletCategoryQuery request, CancellationToken cancellationToken)
         {
             var category = await _unitOfWork.CategoriesRepository.GetSingleCategoryResponseAsync(request.CategoryId, cancellationToken);

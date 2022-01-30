@@ -1,5 +1,4 @@
 ﻿using Budgethold.Application.Queries.Transaction.GetSingleTransaction;
-using Budgethold.Application.Queries.Transaction.GetWalletTransactions;
 using Budgethold.Domain.Models;
 
 namespace Budgethold.Application.Contracts.Persistance.Repositories

@@ -190,6 +190,12 @@ dotnet_diagnostic.SA1201.severity = none
 # SA1649: File name should match first type name TEMP DUE TO ANALYZER EXCEPTION
 dotnet_diagnostic.SA1649.severity = none
 
+# IDE0002: Name can be simplified
+dotnet_diagnostic.IDE0002.severity = warning
+
+# IDE0005: Remove unnecessary imports
+dotnet_diagnostic.IDE0005.severity = warning
+
 [*.vb]
 # Modifier preferences
 visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public,Friend,NotOverridable,Overridable,MustOverride,Overloads,Overrides,MustInherit,NotInheritable,Static,Shared,Shadows,ReadOnly,WriteOnly,Dim,Const,WithEvents,Widening,Narrowing,Custom,Async:suggestion

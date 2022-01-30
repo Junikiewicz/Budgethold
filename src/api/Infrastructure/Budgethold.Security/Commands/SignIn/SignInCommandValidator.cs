@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Budgethold.Security.Commands.SignIn
 {
-    public class SignInCommandValidator : AbstractValidator<SignUpCommand>
+    public class SignInCommandValidator : AbstractValidator<SignInCommand>
     {
         public SignInCommandValidator()
         {

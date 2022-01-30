@@ -1,6 +1,6 @@
-﻿using Budgethold.Domain.Common.Errors;
+﻿using System.Text;
+using Budgethold.Domain.Common.Errors;
 using FluentValidation.Results;
-using System.Text;
 
 namespace Budgethold.API.Common.Validation
 {

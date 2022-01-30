@@ -6,8 +6,11 @@ namespace Budgethold.Application.Contracts.Persistance
     public interface IUnitOfWork
     {
         IWalletsRepository WalletsRepository { get; }
+
         IUserWalletsRepository UserWalletsRepository { get; }
+
         ICategoriesRepository CategoriesRepository { get; }
+
         ITransactionRepository TransactionRepository { get; }
 
         public Task<Result> SaveChangesAsync(CancellationToken cancellationToken);

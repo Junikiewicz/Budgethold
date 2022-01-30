@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+
 namespace Budgethold.Application.Commands.Wallet.EditWallet
 {
     public class EditWalletCommandValidator : AbstractValidator<EditWalletCommand>

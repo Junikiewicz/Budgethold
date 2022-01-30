@@ -14,6 +14,7 @@ namespace Budgethold.Application.Queries.Transaction.GetWalletTransactions
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Result<IEnumerable<TransactionResponse>>> Handle(GetWalletTransactionsQuery request, CancellationToken cancellationToken)
         {
             if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken))

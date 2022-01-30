@@ -1,5 +1,5 @@
-﻿using Budgethold.Security.Constants;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Budgethold.Security.Constants;
 
 namespace Budgethold.API.Extensions
 {

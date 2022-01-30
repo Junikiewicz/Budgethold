@@ -13,11 +13,15 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
             StartingValue = startingValue;
             UserId = userId;
         }
+
         public int UserId { get; init; }
+
         public int WalletId { get; init; }
+
         public IEnumerable<int> UserIds { get; init; }
+
         public string Name { get; init; }
+
         public decimal StartingValue { get; init; }
     }
 }
-

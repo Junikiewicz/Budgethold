@@ -14,7 +14,7 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<TransactionResponse?> GetSingleTransactionResponseAsync(int transactionId, CancellationToken cancellationToken)
         {
-            return await _context.Transactions.Where(x => x.Id == transactionId).Select(x => new TransactionResponse
+            return await Context.Transactions.Where(x => x.Id == transactionId).Select(x => new TransactionResponse
             {
                 Amount = x.Amount,
                 Description = x.Description,
@@ -28,12 +28,12 @@ namespace Budgethold.Persistance.Repositories
 
         public async Task<Transaction?> GetTransactionAsync(int transactionId, CancellationToken cancellationToken)
         {
-            return await _context.Transactions.Where(x => x.Id == transactionId).SingleOrDefaultAsync(cancellationToken);
+            return await Context.Transactions.Where(x => x.Id == transactionId).SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<TransactionResponse>> GetWalletTransactionsResponseAsync(int walletId, CancellationToken cancellationToken)
         {
-            return await _context.Transactions.Where(x => x.WalletId == walletId).Select(x => new TransactionResponse
+            return await Context.Transactions.Where(x => x.WalletId == walletId).Select(x => new TransactionResponse
             {
                 Amount = x.Amount,
                 Description = x.Description,

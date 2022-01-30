@@ -1,9 +1,9 @@
-﻿using Budgethold.API.Common.Validation;
+﻿using System.Reflection;
+using Budgethold.API.Common.Validation;
 using Budgethold.Application.Commands.Category.AddCategory;
 using Budgethold.Security.Commands.SignIn;
 using FluentValidation;
 using MediatR;
-using System.Reflection;
 
 namespace Budgethold.API.Extensions
 {

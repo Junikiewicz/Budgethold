@@ -6,20 +6,21 @@ namespace Budgethold.Persistance.Repositories
 {
     internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
-        protected DataContext _context;
         public GenericRepository(DataContext context)
         {
-            _context = context;
+            Context = context;
         }
+
+        protected DataContext Context { get; init; }
 
         public virtual void Add(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
+            Context.Set<TEntity>().Add(entity);
         }
 
         public virtual void AddRange(IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().AddRange(entities);
+            Context.Set<TEntity>().AddRange(entities);
         }
 
         public virtual void Remove(TEntity entity)
@@ -34,7 +35,7 @@ namespace Budgethold.Persistance.Repositories
 
         public virtual void Update(TEntity entity)
         {
-            _context.Set<TEntity>().Update(entity);
+            Context.Set<TEntity>().Update(entity);
         }
     }
 }

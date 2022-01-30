@@ -72,6 +72,5 @@ namespace Budgethold.API.Endpoints.Wallet
 
             return this.GetResponseFromResult(result);
         }
-
     }
 }

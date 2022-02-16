@@ -11,6 +11,8 @@ namespace Budgethold.API
 {
     public class Startup
     {
+        private const string AllowFrontendAppPolicyName = "AllowFrontendAppPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +33,12 @@ namespace Budgethold.API
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    name: AllowFrontendAppPolicyName,
+                    builder => builder.WithOrigins(Configuration.GetSection("Frontend:Url").Value).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
@@ -50,6 +58,7 @@ namespace Budgethold.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors(AllowFrontendAppPolicyName);
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -23,7 +23,7 @@ namespace Budgethold.API.Endpoints.Transaction
             _mediator = mediator;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetTransaction(int id, CancellationToken cancellationToken)
         {
             var query = new GetSingleTransactionQuery(User.GetUserId(), id);
@@ -34,7 +34,7 @@ namespace Budgethold.API.Endpoints.Transaction
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWalletTransactionsList([FromQuery] int walletId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetWalletTransactions([FromQuery] int walletId, CancellationToken cancellationToken)
         {
             var query = new GetWalletTransactionsQuery(walletId, User.GetUserId());
 
@@ -53,20 +53,20 @@ namespace Budgethold.API.Endpoints.Transaction
             return this.GetResponseFromResult(result, nameof(GetTransaction));
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> EditTransaction(EditTransactionRequest request, int transactionId, CancellationToken cancellationToken)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditTransaction(int id, EditTransactionRequest request, CancellationToken cancellationToken)
         {
-            var command = new EditTransactionCommand(transactionId, User.GetUserId(), request.Name, request.Description, request.CategoryId, request.Amount, request.Date, request.WalletId);
+            var command = new EditTransactionCommand(id, User.GetUserId(), request.Name, request.Description, request.CategoryId, request.Amount, request.Date, request.WalletId);
 
             var result = await _mediator.Send(command, cancellationToken);
 
             return this.GetResponseFromResult(result);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteTransaction(int transactionId, CancellationToken cancellationToken)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTransaction(int id, CancellationToken cancellationToken)
         {
-            var command = new DeleteTransactionCommand(User.GetUserId(), transactionId);
+            var command = new DeleteTransactionCommand(User.GetUserId(), id);
 
             var result = await _mediator.Send(command, cancellationToken);
 

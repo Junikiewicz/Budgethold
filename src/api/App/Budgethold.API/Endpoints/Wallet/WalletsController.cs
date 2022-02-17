@@ -54,7 +54,7 @@ namespace Budgethold.API.Endpoints.Wallet
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditWallet(EditWalletRequest request, int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditWallet(int id, EditWalletRequest request, CancellationToken cancellationToken)
         {
             var command = new EditWalletCommand(id, request.Name, request.StartingValue, User.GetUserId(), request.UsersId);
 
@@ -64,7 +64,7 @@ namespace Budgethold.API.Endpoints.Wallet
         }
 
         [HttpPatch("{id}/owner")]
-        public async Task<IActionResult> EditWalletOwner(EditWalletOwnerRequest request, int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditWalletOwner(int id, EditWalletOwnerRequest request, CancellationToken cancellationToken)
         {
             var command = new EditWalletOwnerCommand(request.NewOwnerId, User.GetUserId(), id);
 

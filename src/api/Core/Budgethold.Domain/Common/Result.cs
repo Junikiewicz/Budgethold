@@ -12,7 +12,7 @@ namespace Budgethold.Domain.Common
             Error = error;
         }
 
-        public Error? Error { get; init; }
+        public Error? Error { get; set; }
 
         public bool Succeeded => Error == default;
     }
@@ -20,6 +20,8 @@ namespace Budgethold.Domain.Common
     public class Result<T> : Result
     {
         private readonly T? _value;
+
+        public Result() { }
 
         public Result(T value)
         {
@@ -45,31 +47,16 @@ namespace Budgethold.Domain.Common
         }
     }
 
-    public class CreatedResult<T> : Result
+    public class CreatedResult<T> : Result<T>
     {
-        private readonly T? _value;
+        public CreatedResult() { }
 
-        public CreatedResult(T value)
+        public CreatedResult(T value) : base(value)
         {
-            _value = value;
         }
 
         public CreatedResult(Error error) : base(error)
         {
-            _value = default;
-        }
-
-        public T Value
-        {
-            get
-            {
-                if (Error != default)
-                {
-                    throw new UnhandledErrorResultException($"Unhandled error result: {Error.Message}");
-                }
-
-                return _value!;
-            }
         }
     }
 }

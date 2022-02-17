@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Budgethold.API.Common.Validation
 {
-    internal class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : Result
+    internal class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : Result, new()
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -23,7 +23,7 @@ namespace Budgethold.API.Common.Validation
 
             if (failures.Any())
             {
-                return Task.FromResult(new Result(new ValidationError(failures)) as TResponse)!;
+                return Task.FromResult(new TResponse() { Error = new ValidationError(failures) });
             }
 
             return next();

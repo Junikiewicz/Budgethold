@@ -42,10 +42,13 @@ namespace Budgethold.API
         {
             dataContext.Database.Migrate();
 
-            app.UseSwagger();
+            app.UseSwagger(c => {
+                c.RouteTemplate = "/api/swagger/{documentName}/swagger.json";
+            });
+
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Budgethold");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "Budgethold");
                 c.RoutePrefix = "api";
             });
 

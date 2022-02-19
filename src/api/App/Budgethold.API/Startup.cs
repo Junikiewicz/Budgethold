@@ -42,7 +42,8 @@ namespace Budgethold.API
         {
             dataContext.Database.Migrate();
 
-            app.UseSwagger(c => {
+            app.UseSwagger(c =>
+            {
                 c.RouteTemplate = "/api/swagger/{documentName}/swagger.json";
             });
 

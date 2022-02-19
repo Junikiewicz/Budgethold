@@ -27,6 +27,12 @@ namespace Budgethold.API.Endpoints.Auth
 
             var result = await _mediator.Send(command, cancellationToken);
 
+            if (result.Succeeded)
+            {
+                var signInCommand = new SignInCommand(request.Email, request.Password);
+                result = await _mediator.Send(signInCommand, cancellationToken);
+            }
+
             return this.GetResponseFromResult(result);
         }
 
@@ -49,6 +55,13 @@ namespace Budgethold.API.Endpoints.Auth
             var result = await _mediator.Send(command, cancellationToken);
 
             return this.GetResponseFromResult(result);
+        }
+
+        [Authorize]
+        [HttpGet("is-logged")]
+        public IActionResult CheckIfUserIsLogged()
+        {
+            return NoContent();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetSingleCategory(int id, CancellationToken cancellationToken)
         {
             var command = new GetWalletCategoryQuery(id, User.GetUserId());
@@ -53,7 +53,7 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result, nameof(GetSingleCategory));
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(int id, EditCategoryRequest request, CancellationToken cancellationToken)
         {
             var command = new EditCategoryCommand(id, User.GetUserId(), request.Name, request.ParentCategoryId);
@@ -63,7 +63,7 @@ namespace Budgethold.API.Endpoints.Category
             return this.GetResponseFromResult(result);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id, CancellationToken cancellationToken)
         {
             var command = new DeleteCategoryCommand(id, User.GetUserId());

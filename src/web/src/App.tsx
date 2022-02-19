@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import "./App.css";
+import LoadingElement from "./components/LoadingElement/LoadingElement";
+import AuthPage from "./pages/Auth/AuthPage";
+import MainAppFrame from "./pages/MainApp/MainAppFrame/MainAppFrame";
+import { useAppDispatch } from "./store/hooks";
+import { login, logout } from "./store/slices/authSlice";
+import { apiClient } from "./utils/apiClient";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const dispatch = useAppDispatch();
+  const [isAuthStatusChecked, setIsAuthStatusChecked] = useState(false);
+
+  useEffect(() => {
+    apiClient
+      .get("/auth/is-logged")
+      .then(() => {
+        dispatch(login());
+      })
+      .catch(() => {
+        dispatch(logout());
+      })
+      .finally(() => {
+        setIsAuthStatusChecked(true);
+      });
+  }, [dispatch]);
+
+  if (isAuthStatusChecked) {
+    return (
+      <Routes>
+        <Route path="/app/*" element={<MainAppFrame />} />
+        <Route path="/auth/*" element={<AuthPage />} />
+        <Route path="*" element={<Navigate to="auth" />} />
+      </Routes>
+    );
+  } else {
+    return <LoadingElement />;
+  }
 }
 
 export default App;

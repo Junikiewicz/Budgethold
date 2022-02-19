@@ -31,25 +31,37 @@ namespace Budgethold.API
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder => builder.WithOrigins(Configuration.GetSection("Frontend:Url").Value).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
             dataContext.Database.Migrate();
 
-            if (env.IsDevelopment())
+            app.UseSwagger(c =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Budgethold");
-                    c.RoutePrefix = string.Empty;
-                });
-            }
+                c.RouteTemplate = "/api/swagger/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "Budgethold");
+                c.RoutePrefix = "api";
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors();
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseAuthentication();
             app.UseAuthorization();
 

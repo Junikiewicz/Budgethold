@@ -24,7 +24,7 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
                 return new Result(new NotFoundError("Specified category or wallet doesn't exist or is not assigned to this user."));
             }
 
-            var transaction = new DomainModel.Transaction(request.Name, request.Description, request.WalletId, request.CategoryId, request.Amount);
+            var transaction = new DomainModel.Transaction(request.Name, request.Description, request.WalletId, request.CategoryId, request.Amount, request.Date);
 
             var wallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(request.WalletId, cancellationToken);
 

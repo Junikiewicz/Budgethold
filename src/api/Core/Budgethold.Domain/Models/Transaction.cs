@@ -12,7 +12,7 @@ namespace Budgethold.Domain.Models
             Category = null!;
         }
 
-        public Transaction(string name, string description, int walletId, int categoryId, decimal amount)
+        public Transaction(string name, string description, int walletId, int categoryId, decimal amount, DateTime date)
         {
             Name = name;
             Description = description;
@@ -21,6 +21,7 @@ namespace Budgethold.Domain.Models
             Amount = amount;
             Wallet = null!;
             Category = null!;
+            Date = date;
         }
 
         public int Id { get; private set; }

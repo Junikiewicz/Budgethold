@@ -11,8 +11,6 @@ namespace Budgethold.API
 {
     public class Startup
     {
-        private const string AllowFrontendAppPolicyName = "AllowFrontendAppPolicy";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,8 +33,7 @@ namespace Budgethold.API
             services.AddSwaggerGen();
             services.AddCors(options =>
             {
-                options.AddPolicy(
-                    name: AllowFrontendAppPolicyName,
+                options.AddDefaultPolicy(
                     builder => builder.WithOrigins(Configuration.GetSection("Frontend:Url").Value).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             });
         }
@@ -45,20 +42,22 @@ namespace Budgethold.API
         {
             dataContext.Database.Migrate();
 
-            if (env.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Budgethold");
-                    c.RoutePrefix = string.Empty;
-                });
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Budgethold");
+                c.RoutePrefix = "api";
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors(AllowFrontendAppPolicyName);
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors();
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseAuthentication();
             app.UseAuthorization();
 

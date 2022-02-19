@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     apiClient
-      .get("/api/auth/is-logged")
+      .get("/auth/is-logged")
       .then(() => {
         dispatch(login());
       })

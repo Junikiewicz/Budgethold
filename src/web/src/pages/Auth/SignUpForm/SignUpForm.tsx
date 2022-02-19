@@ -27,7 +27,7 @@ export default function SignUpForm() {
       setError("");
       setIsLoading(true);
       apiClient
-        .post("/api/auth/sign-up", values)
+        .post("/auth/sign-up", values)
         .then(() => {
           dispatch(login());
           navigate("/app");

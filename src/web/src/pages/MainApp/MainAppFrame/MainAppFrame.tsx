@@ -94,7 +94,7 @@ export default function MainAppFrame() {
 
   const handleLogoutClick = () => {
     apiClient
-      .post("/api/auth/sign-out")
+      .post("/auth/sign-out")
       .then(() => {
         dispatch(logout());
         navigate("/auth");

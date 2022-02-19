@@ -32,7 +32,7 @@ export default function SignInForm() {
       setError("");
       setIsLoading(true);
       apiClient
-        .post("/api/auth/sign-in", values)
+        .post("/auth/sign-in", values)
         .then(() => {
           dispatch(login());
           navigate("/app");

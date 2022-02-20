@@ -40,7 +40,7 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             var mockedUnitOfWork = new Mock<IUnitOfWork>();
 
             mockedUnitOfWork.Setup(x => x.TransactionRepository.GetTransactionOrDefaultAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-               .ReturnsAsync(new Domain.Models.Transaction("name", "description", 1, 1, 1));
+               .ReturnsAsync(new Domain.Models.Transaction("name", "description", 1, 1, 1, DateTime.Parse("2011-03-21 13:26")));
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Wallet("name", 1, 2));
 
@@ -88,7 +88,7 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             var mockedUnitOfWork = new Mock<IUnitOfWork>();
 
             mockedUnitOfWork.Setup(x => x.TransactionRepository.GetTransactionOrDefaultAsync(1, It.IsAny<CancellationToken>()))
-               .ReturnsAsync(new Domain.Models.Transaction("name", "desc", 1, 1, 100));
+               .ReturnsAsync(new Domain.Models.Transaction("name", "desc", 1, 1, 100, DateTime.Parse("2011-03-21 13:26")));
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Wallet("name", 1, 1));
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
@@ -116,7 +116,7 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             var mockedUnitOfWork = new Mock<IUnitOfWork>();
 
             mockedUnitOfWork.Setup(x => x.TransactionRepository.GetTransactionOrDefaultAsync(1, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Domain.Models.Transaction("name", "desc", 1, 2, 100));
+                .ReturnsAsync(new Domain.Models.Transaction("name", "desc", 1, 2, 100, DateTime.Parse("2011-03-21 13:26")));
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Wallet("name", 1, 1));
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
@@ -144,7 +144,7 @@ namespace Budgethold.UnitTests.Core.Application.Commands.Transaction
             var mockedUnitOfWork = new Mock<IUnitOfWork>();
 
             mockedUnitOfWork.Setup(x => x.TransactionRepository.GetTransactionOrDefaultAsync(1, It.IsAny<CancellationToken>()))
-               .ReturnsAsync(new Domain.Models.Transaction("name", "desc", 1, 1, 100));
+               .ReturnsAsync(new Domain.Models.Transaction("name", "desc", 1, 1, 100, DateTime.Parse("2011-03-21 13:26")));
             mockedUnitOfWork.Setup(x => x.WalletsRepository.GetWalletAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                .ReturnsAsync(new Wallet("name", 1, 1));
             mockedUnitOfWork.Setup(x => x.CategoriesRepository.GetCategoryAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))

@@ -26,7 +26,7 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
 
             if (category is null || category.UserId != request.UserId) return new Result(new NotFoundError("Specified category doesn't exist or is not assigned to this user"));
 
-            var transaction = new DomainModel.Transaction(request.Name, request.Description, request.WalletId, request.CategoryId, request.Amount);
+            var transaction = new DomainModel.Transaction(request.Name, request.Description, request.WalletId, request.CategoryId, request.Amount, request.Date);
 
             wallet.ApplyNewTransaction(TransactionHelper.GetTransactionValue(category.TransactionTypeId, transaction.Amount));
 

@@ -46,7 +46,10 @@ namespace Budgethold.Persistance.Migrations
                     b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WalletId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WalletId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -54,6 +57,8 @@ namespace Budgethold.Persistance.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.HasIndex("TransactionTypeId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("WalletId");
 
@@ -161,29 +166,6 @@ namespace Budgethold.Persistance.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Budgethold.Domain.Models.UserWallet", b =>
-                {
-                    b.Property<int>("WalletId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
-                    b.HasKey("WalletId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserWallets");
-                });
-
             modelBuilder.Entity("Budgethold.Domain.Models.Wallet", b =>
                 {
                     b.Property<int>("Id")
@@ -209,7 +191,12 @@ namespace Budgethold.Persistance.Migrations
                         .HasPrecision(19, 4)
                         .HasColumnType("decimal(19,4)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Wallets");
                 });
@@ -445,17 +432,21 @@ namespace Budgethold.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Budgethold.Domain.Models.Wallet", "Wallet")
+                    b.HasOne("Budgethold.Domain.Models.User", "User")
                         .WithMany("Categories")
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Budgethold.Domain.Models.Wallet", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("WalletId");
 
                     b.Navigation("ParentCategory");
 
                     b.Navigation("TransactionType");
 
-                    b.Navigation("Wallet");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Budgethold.Domain.Models.Transaction", b =>
@@ -486,23 +477,15 @@ namespace Budgethold.Persistance.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Budgethold.Domain.Models.UserWallet", b =>
+            modelBuilder.Entity("Budgethold.Domain.Models.Wallet", b =>
                 {
                     b.HasOne("Budgethold.Domain.Models.User", "User")
-                        .WithMany("UserWallets")
+                        .WithMany("Wallets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Budgethold.Domain.Models.Wallet", "Wallet")
-                        .WithMany("UserWallets")
-                        .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("User");
-
-                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Budgethold.Security.Models.AspNetUserRole", b =>
@@ -574,11 +557,8 @@ namespace Budgethold.Persistance.Migrations
 
             modelBuilder.Entity("Budgethold.Domain.Models.User", b =>
                 {
-                    b.Navigation("UserWallets");
-                });
+                    b.Navigation("Categories");
 
-            modelBuilder.Entity("Budgethold.Domain.Models.User", b =>
-                {
                     b.Navigation("Wallets");
                 });
 
@@ -587,8 +567,6 @@ namespace Budgethold.Persistance.Migrations
                     b.Navigation("Categories");
 
                     b.Navigation("Transactions");
-
-                    b.Navigation("UserWallets");
                 });
 
             modelBuilder.Entity("Budgethold.Security.Models.AspNetRole", b =>

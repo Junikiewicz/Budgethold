@@ -10,7 +10,7 @@ namespace Budgethold.Application.Commands.Transaction.Helpers
             return transactionTypeId switch
             {
                 (int)TransactionType.Income => amount,
-                (int)TransactionType.Expense => amount * (-1),
+                (int)TransactionType.Expense => -amount,
                 _ => throw new InvalidEnumArgumentException("Transaction type is not correct")
             };
         }

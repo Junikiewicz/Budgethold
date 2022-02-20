@@ -16,14 +16,14 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
 
         public async Task<Result> Handle(EditWalletCommand command, CancellationToken cancellationToken)
         {
-            var wallet = await _unitOfWork.WalletsRepository.GetWalletWithUserWalletsOrDefaultAsync(command.WalletId, cancellationToken);
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(command.WalletId, cancellationToken);
 
-            if (wallet is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(wallet.Id, command.UserId, cancellationToken))
+            if (wallet is null || wallet.UserId != command.UserId)
             {
                 return new Result(new NotFoundError("Specified wallet doesn't exist or this user doesn't have access to it."));
             }
 
-            wallet.Update(command.Name, command.StartingValue, command.UserIds);
+            wallet.Update(command.Name, command.StartingValue);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

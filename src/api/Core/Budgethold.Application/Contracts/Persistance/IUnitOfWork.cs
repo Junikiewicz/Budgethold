@@ -7,8 +7,6 @@ namespace Budgethold.Application.Contracts.Persistance
     {
         IWalletsRepository WalletsRepository { get; }
 
-        IUserWalletsRepository UserWalletsRepository { get; }
-
         ICategoriesRepository CategoriesRepository { get; }
 
         ITransactionRepository TransactionRepository { get; }

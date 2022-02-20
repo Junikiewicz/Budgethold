@@ -1,14 +1,14 @@
-﻿using Budgethold.Application.Queries.Transaction.GetSingleTransaction;
+﻿using Budgethold.Application.Queries.Transaction.Common;
 using Budgethold.Domain.Models;
 
 namespace Budgethold.Application.Contracts.Persistance.Repositories
 {
     public interface ITransactionRepository : IGenericRepository<Transaction>
     {
-        public Task<Transaction?> GetTransactionAsync(int transactionId, CancellationToken cancellationToken);
+        public Task<Transaction?> GetTransactionOrDefaultAsync(int transactionId, CancellationToken cancellationToken);
 
-        public Task<TransactionResponse?> GetSingleTransactionResponseAsync(int transactionId, CancellationToken cancellationToken);
+        public Task<TransactionResponse> GetTransactionResponseAsync(int transactionId, CancellationToken cancellationToken);
 
-        public Task<IEnumerable<TransactionResponse>> GetWalletTransactionsResponseAsync(int walletId, CancellationToken cancellationToken);
+        public Task<IEnumerable<TransactionResponse>> GetUserTransactionsResponseAsync(int userId, CancellationToken cancellationToken);
     }
 }

@@ -25,9 +25,9 @@ namespace Budgethold.Persistance.EntitiesConfiguration
                 .HasForeignKey(x => x.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.Wallet)
+            builder.HasOne(x => x.User)
                 .WithMany(x => x.Categories)
-                .HasForeignKey(x => x.WalletId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

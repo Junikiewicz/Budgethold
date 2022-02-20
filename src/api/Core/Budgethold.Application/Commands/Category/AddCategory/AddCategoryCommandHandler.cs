@@ -17,23 +17,18 @@ namespace Budgethold.Application.Commands.Category.AddCategory
 
         public async Task<Result> Handle(AddCategoryCommand command, CancellationToken cancellationToken)
         {
-            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(command.WalletId, command.UserId, cancellationToken))
-            {
-                return new Result(new NotFoundError("Specified wallet doesn't exist or is not assigned to this user."));
-            }
-
             if (command.ParentCategoryId.HasValue)
             {
                 var parentCategory = await _unitOfWork.CategoriesRepository.GetCategoryForOwnershipVerificationAsync(command.ParentCategoryId.Value, cancellationToken);
 
-                if (parentCategory is null || parentCategory.WalletId != command.WalletId)
+                if (parentCategory is null || parentCategory.UserId != command.UserId)
                     return new Result(new NotFoundError("Specified parent category doesn't exist or is not assigned to this wallet."));
 
                 if (parentCategory.TransactionTypeId != command.TransactionTypeId)
                     return new Result(new InvalidOperationError("Specified parent category has different transaction type."));
             }
 
-            var category = new DomainModel.Category(command.Name, command.ParentCategoryId, command.TransactionTypeId, command.WalletId);
+            var category = new DomainModel.Category(command.Name, command.ParentCategoryId, command.TransactionTypeId, command.UserId);
 
             _unitOfWork.CategoriesRepository.Add(category);
 

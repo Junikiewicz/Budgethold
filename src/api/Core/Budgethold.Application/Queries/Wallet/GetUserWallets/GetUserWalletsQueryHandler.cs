@@ -1,4 +1,5 @@
 ﻿using Budgethold.Application.Contracts.Persistance;
+using Budgethold.Application.Queries.Wallet.Common;
 using Budgethold.Domain.Common;
 using MediatR;
 

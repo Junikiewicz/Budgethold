@@ -3,6 +3,7 @@ using Budgethold.Application.Contracts.Persistance;
 using Budgethold.Domain.Common;
 using Budgethold.Domain.Common.Errors;
 using MediatR;
+using DomainModel = Budgethold.Domain.Models;
 
 namespace Budgethold.Application.Commands.Transaction.EditTransaction
 {
@@ -17,32 +18,32 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
 
         public async Task<Result> Handle(EditTransactionCommand request, CancellationToken cancellationToken)
         {
-            var transaction = await _unitOfWork.TransactionRepository.GetTransactionAsync(request.TransactionId, cancellationToken);
+            var transaction = await _unitOfWork.TransactionRepository.GetTransactionOrDefaultAsync(request.TransactionId, cancellationToken);
 
-            if (transaction is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
-            {
-                return new Result(new NotFoundError("Specified transaction, category or wallet does not exist or is not assigned to this user."));
-            }
-
-            if (request.WalletId != transaction.WalletId)
-            {
-                if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken))
-                {
-                    return new Result(new NotFoundError("Specified wallet does not exist or is not assigned to this user."));
-                }
-            }
+            if (transaction is null) return new Result(new NotFoundError("Specified transaction does not exist or is not assigned to this user."));
 
             if (request.CategoryId != transaction.CategoryId)
             {
-                if (!await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, transaction.WalletId, cancellationToken))
-                {
-                    return new Result(new NotFoundError("Specified category does not exist or is not assigned to this user."));
-                }
+                var newCategory = await _unitOfWork.CategoriesRepository.GetCategoryOrDefaultAsync(request.CategoryId, cancellationToken);
+
+                if (newCategory is null || newCategory.UserId != request.UserId) return new Result(new NotFoundError("Specified transaction doesn't exist or is not assigned to this user"));
             }
 
-            var currentWallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(transaction.WalletId, cancellationToken);
+            var updateWalletsResult = await UpdateWallets(request, transaction, cancellationToken);
 
-            if (currentWallet is null) return new Result(new NotFoundError("Specified wallet doesn't exist"));
+            if (!updateWalletsResult.Succeeded) return updateWalletsResult;
+
+            transaction.EditTransaction(request.Name, request.Description, request.Date, request.Amount, request.CategoryId, request.WalletId);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return new Result();
+        }
+
+        public async Task<Result> UpdateWallets(EditTransactionCommand request, DomainModel.Transaction transaction, CancellationToken cancellationToken)
+        {
+            var oldWallet = await _unitOfWork.WalletsRepository.GetWalletAsync(transaction.WalletId, cancellationToken);
+
+            if (oldWallet.UserId != request.UserId) return new Result(new NotFoundError("Specified transaction doesn't exist or is not assigned to this user"));
 
             var oldCategoryTransactionType = await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(transaction.CategoryId, cancellationToken);
@@ -50,27 +51,25 @@ namespace Budgethold.Application.Commands.Transaction.EditTransaction
             var newCategoryTransactionType = request.CategoryId != transaction.CategoryId ? await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(request.CategoryId, cancellationToken) : oldCategoryTransactionType;
 
-            decimal oldTransactionAmount = TransactionHelper.GetTransactionValue(oldCategoryTransactionType, transaction.Amount);
+            var oldTransactionAmount = TransactionHelper.GetTransactionValue(oldCategoryTransactionType, transaction.Amount);
 
-            decimal newTransactionAmount = TransactionHelper.GetTransactionValue(newCategoryTransactionType, request.Amount);
+            var newTransactionAmount = TransactionHelper.GetTransactionValue(newCategoryTransactionType, request.Amount);
 
             if (request.WalletId != transaction.WalletId)
             {
                 var newWallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(request.WalletId, cancellationToken);
 
+                if (newWallet is null || newWallet.UserId != request.UserId) return new Result(new NotFoundError("Specified wallet does not exist or is not assigned to this user."));
+
                 if (newWallet is null) return new Result(new NotFoundError("Specified wallet doesn't exist"));
 
-                currentWallet.RevertTransactionValueChange(oldTransactionAmount);
+                oldWallet.RevertTransactionValueChange(oldTransactionAmount);
                 newWallet.ApplyNewTransaction(newTransactionAmount);
             }
             else
             {
-                currentWallet.EditTransactionValueChange(oldTransactionAmount, newTransactionAmount);
+                oldWallet.EditTransactionValueChange(oldTransactionAmount, newTransactionAmount);
             }
-
-            transaction.EditTransaction(request.Name, request.Description, request.Date, request.Amount, request.CategoryId, request.WalletId);
-
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new Result();
         }

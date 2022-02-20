@@ -3,8 +3,8 @@ using Budgethold.API.Extensions;
 using Budgethold.Application.Commands.Category.AddCategory;
 using Budgethold.Application.Commands.Category.DeleteCategory;
 using Budgethold.Application.Commands.Category.EditCategory;
-using Budgethold.Application.Queries.Category.GetWalletCategories;
-using Budgethold.Application.Queries.Category.GetWalletCategory;
+using Budgethold.Application.Queries.Category.GetCategory;
+using Budgethold.Application.Queries.Category.GetUserCategories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +24,9 @@ namespace Budgethold.API.Endpoints.Category
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWalletCategories(int walletId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserCategories(CancellationToken cancellationToken)
         {
-            var command = new GetWalletCategoriesQuery(User.GetUserId(), walletId);
+            var command = new GetUserCategoriesQuery(User.GetUserId());
 
             var result = await _mediator.Send(command, cancellationToken);
 
@@ -34,9 +34,9 @@ namespace Budgethold.API.Endpoints.Category
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSingleCategory(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetCategory(int id, CancellationToken cancellationToken)
         {
-            var command = new GetWalletCategoryQuery(id, User.GetUserId());
+            var command = new GetCategoryQuery(id, User.GetUserId());
 
             var result = await _mediator.Send(command, cancellationToken);
 
@@ -46,11 +46,11 @@ namespace Budgethold.API.Endpoints.Category
         [HttpPost]
         public async Task<IActionResult> AddCategory(AddCategoryRequest request, CancellationToken cancellationToken)
         {
-            var command = new AddCategoryCommand(User.GetUserId(), request.Name, request.ParentCategoryId, request.TransactionTypeId, request.WalletId);
+            var command = new AddCategoryCommand(User.GetUserId(), request.Name, request.ParentCategoryId, request.TransactionTypeId);
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            return this.GetResponseFromResult(result, nameof(GetSingleCategory));
+            return this.GetResponseFromResult(result, nameof(GetCategory));
         }
 
         [HttpPut("{id}")]

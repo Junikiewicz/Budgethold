@@ -1,8 +1,7 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
-using Budgethold.Application.Queries.Wallet.GetSingleWalletQuery;
+using Budgethold.Application.Queries.Wallet.Common;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using WalletResponse = Budgethold.Application.Queries.Wallet.GetUserWallets.WalletResponse;
 
 namespace Budgethold.Persistance.Repositories
 {
@@ -10,47 +9,37 @@ namespace Budgethold.Persistance.Repositories
     {
         public WalletsRepository(DataContext context) : base(context) { }
 
-        public async Task<Wallet?> GetWalletWithUserWalletsOrDefaultAsync(int walletId, CancellationToken cancellationToken)
-        {
-            return await Context.Wallets
-                .Where(x => x.Id == walletId).Include(i => i.UserWallets)
-                .SingleOrDefaultAsync(cancellationToken);
-        }
-
         public async Task<IEnumerable<WalletResponse>> GetUserWalletsAsync(int userId, CancellationToken cancellationToken)
         {
             return await Context.Wallets
-                .Where(x => x.UserWallets.Any(y => y.UserId == userId))
+                .Where(x => x.UserId == userId)
                 .Select(x => new WalletResponse
                 {
                     Id = x.Id,
                     Name = x.Name,
                     CurrentValue = x.CurrentValue,
                     StartingValue = x.StartingValue,
-                    OwningUsers = x.UserWallets.Select(y => new WalletResponse.OwningUser
-                    {
-                        Id = y.UserId,
-                        Name = y.User.Name
-                    })
                 }).ToListAsync(cancellationToken);
         }
 
-        public async Task<SingleWalletResponse?> GetWalletForViewOrDefaultAsync(int walletId, CancellationToken cancellationToken)
+        public async Task<WalletResponse> GetWalletResponseAsync(int walletId, CancellationToken cancellationToken)
         {
             return await Context.Wallets
                 .Where(x => x.Id == walletId)
-                .Select(x => new SingleWalletResponse
+                .Select(x => new WalletResponse
                 {
                     Id = x.Id,
                     Name = x.Name,
                     CurrentValue = x.CurrentValue,
-                    StartingValue = x.StartingValue,
-                    OwningUsers = x.UserWallets.Select(y => new SingleWalletResponse.OwningUser
-                    {
-                        Id = y.UserId,
-                        Name = y.User.Name
-                    })
-                }).SingleOrDefaultAsync(cancellationToken);
+                    StartingValue = x.StartingValue
+                }).SingleAsync(cancellationToken);
+        }
+
+        public async Task<Wallet> GetWalletAsync(int walletId, CancellationToken cancellationToken)
+        {
+            return await Context.Wallets
+               .Where(x => x.Id == walletId)
+               .SingleAsync(cancellationToken);
         }
 
         public async Task<Wallet?> GetWalletOrDefaultAsync(int walletId, CancellationToken cancellationToken)
@@ -58,6 +47,11 @@ namespace Budgethold.Persistance.Repositories
             return await Context.Wallets
                .Where(x => x.Id == walletId)
                .SingleOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<bool> IsWalletAssignedToUserAsync(int walletId, int userId, CancellationToken cancellationToken)
+        {
+            return await Context.Wallets.AnyAsync(x => x.Id == walletId && x.UserId == userId, cancellationToken);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
 using Budgethold.Application.Models.Category;
-using Budgethold.Application.Queries.Category.GetWalletCategory;
+using Budgethold.Application.Queries.Category.GetCategory;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,20 +10,17 @@ namespace Budgethold.Persistance.Repositories
     {
         public CategoriesRepository(DataContext context) : base(context) { }
 
-        public async Task<bool> CheckIfCategoryBelongsToWalletAsync(int categoryId, int walletId, CancellationToken cancellationToken)
-        {
-            var category = await Context.Categories
-                .AnyAsync(x => x.Id == categoryId && x.WalletId == walletId, cancellationToken);
-
-            return category;
-        }
-
         public async Task<CategoryForOwnershipVerificationModel?> GetCategoryForOwnershipVerificationAsync(int categoryId, CancellationToken cancellationToken)
         {
             return await Context.Categories
                 .Where(x => x.Id == categoryId)
-                .Select(x => new CategoryForOwnershipVerificationModel(x.TransactionTypeId, x.WalletId))
+                .Select(x => new CategoryForOwnershipVerificationModel(x.TransactionTypeId, x.UserId))
                 .SingleOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<Category> GetCategoryAsync(int categoryId, CancellationToken cancellationToken)
+        {
+            return await Context.Categories.SingleAsync(x => x.Id == categoryId, cancellationToken);
         }
 
         public async Task<Category?> GetCategoryOrDefaultAsync(int categoryId, CancellationToken cancellationToken)
@@ -43,20 +40,25 @@ namespace Budgethold.Persistance.Repositories
                 .SingleOrDefaultAsync(x => x.Id == categoryId, cancellationToken);
         }
 
-        public async Task<CategoryResponse?> GetSingleCategoryResponseAsync(int categoryId, CancellationToken cancellationToken)
+        public async Task<CategoryResponse> GetCategoryResponseAsync(int categoryId, CancellationToken cancellationToken)
         {
             return await Context.Categories
                 .Where(x => x.Id == categoryId)
-                .Select(x => new CategoryResponse(x.Id, x.Name, x.ParentCategoryId, x.TransactionTypeId, x.WalletId))
-                .SingleOrDefaultAsync(cancellationToken);
+                .Select(x => new CategoryResponse(x.Id, x.Name, x.ParentCategoryId, x.TransactionTypeId))
+                .SingleAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<CategoryForTreeViewModel>> GetWalletCategoriesForTreeViewAsync(int walletId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<CategoryForTreeViewModel>> GetUserCategoriesForTreeViewAsync(int userId, CancellationToken cancellationToken)
         {
             return await Context.Categories
-                .Where(x => x.WalletId == walletId)
+                .Where(x => x.UserId == userId)
                 .Select(x => new CategoryForTreeViewModel(x.Id, x.ParentCategoryId, x.Name))
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<bool> IsCategoryAssignedToUserAsync(int categoryId, int userId, CancellationToken cancellationToken)
+        {
+            return await Context.Categories.AnyAsync(x => x.Id == categoryId && x.UserId == userId, cancellationToken);
         }
     }
 }

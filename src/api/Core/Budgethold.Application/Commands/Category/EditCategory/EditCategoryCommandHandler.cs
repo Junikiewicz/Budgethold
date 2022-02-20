@@ -18,16 +18,16 @@ namespace Budgethold.Application.Commands.Category.EditCategory
         {
             var category = await _unitOfWork.CategoriesRepository.GetCategoryOrDefaultAsync(command.CategoryId, cancellationToken);
 
-            if (category is null || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(category.WalletId, command.UserId, cancellationToken))
+            if (category is null || category.UserId != command.UserId)
             {
                 return new Result(new NotFoundError("Specified category doesn't exist or this user doesn't have access to it."));
             }
 
-            if (command.ParentCategoryId.HasValue)
+            if (command.ParentCategoryId.HasValue && command.ParentCategoryId != category.ParentCategoryId)
             {
                 var parentCategory = await _unitOfWork.CategoriesRepository.GetCategoryForOwnershipVerificationAsync(command.ParentCategoryId.Value, cancellationToken);
 
-                if (parentCategory is null || parentCategory.WalletId != category.WalletId)
+                if (parentCategory is null || parentCategory.UserId != category.UserId)
                     return new Result(new NotFoundError("Specified parent category doesn't exist or is not assigned to this wallet."));
 
                 if (parentCategory.TransactionTypeId != category.TransactionTypeId)

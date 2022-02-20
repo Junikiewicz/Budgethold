@@ -17,17 +17,16 @@ namespace Budgethold.Application.Commands.Transaction.DeleteTransaction
 
         public async Task<Result> Handle(DeleteTransactionCommand request, CancellationToken cancellationToken)
         {
-            var transaction = await _unitOfWork.TransactionRepository.GetTransactionAsync(request.TransactionId, cancellationToken);
+            var transaction = await _unitOfWork.TransactionRepository.GetTransactionOrDefaultAsync(request.TransactionId, cancellationToken);
 
-            if (transaction is null
-                || !await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(transaction.WalletId, request.UserId, cancellationToken))
+            if (transaction is null)
             {
-                return new Result(new NotFoundError("Specified transaction doesn't exist or wallet is not assigned to this user."));
+                return new Result(new NotFoundError("Specified transaction doesn't exist or is not created by this user."));
             }
 
-            var wallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(transaction.WalletId, cancellationToken);
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletAsync(transaction.WalletId, cancellationToken);
 
-            if (wallet is null) return new Result(new NotFoundError("Specified wallet doesn't exist"));
+            if (wallet.UserId != request.UserId) return new Result(new NotFoundError("Specified transaction doesn't exist or is not created by this user."));
 
             var categoryTransactionType = await _unitOfWork.CategoriesRepository
                 .GetCategoryTransactionTypeAsync(transaction.CategoryId, cancellationToken);

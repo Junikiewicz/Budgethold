@@ -18,24 +18,17 @@ namespace Budgethold.Application.Commands.Transaction.AddTransaction
 
         public async Task<Result> Handle(AddTransactionCommand request, CancellationToken cancellationToken)
         {
-            if (!await _unitOfWork.UserWalletsRepository.CheckIfUserIsAssignedToWalletAsync(request.WalletId, request.UserId, cancellationToken)
-                || !await _unitOfWork.CategoriesRepository.CheckIfCategoryBelongsToWalletAsync(request.CategoryId, request.WalletId, cancellationToken))
-            {
-                return new Result(new NotFoundError("Specified category or wallet doesn't exist or is not assigned to this user."));
-            }
+            var wallet = await _unitOfWork.WalletsRepository.GetWalletAsync(request.WalletId, cancellationToken);
+
+            if (wallet is null || wallet.UserId != request.UserId) return new Result(new NotFoundError("Specified wallet doesn't exist or is not assigned to this user"));
+
+            var category = await _unitOfWork.CategoriesRepository.GetCategoryOrDefaultAsync(request.CategoryId, cancellationToken);
+
+            if (category is null || category.UserId != request.UserId) return new Result(new NotFoundError("Specified category doesn't exist or is not assigned to this user"));
 
             var transaction = new DomainModel.Transaction(request.Name, request.Description, request.WalletId, request.CategoryId, request.Amount, request.Date);
 
-            var wallet = await _unitOfWork.WalletsRepository.GetWalletOrDefaultAsync(request.WalletId, cancellationToken);
-
-            if (wallet is null) return new Result(new NotFoundError("Specified wallet doesn't exist"));
-
-            var categoryTransactionType = await _unitOfWork.CategoriesRepository
-                .GetCategoryTransactionTypeAsync(request.CategoryId, cancellationToken);
-
-            var transactionAmount = TransactionHelper.GetTransactionValue(categoryTransactionType, transaction.Amount);
-
-            wallet.ApplyNewTransaction(transactionAmount);
+            wallet.ApplyNewTransaction(TransactionHelper.GetTransactionValue(category.TransactionTypeId, transaction.Amount));
 
             _unitOfWork.TransactionRepository.Add(transaction);
 

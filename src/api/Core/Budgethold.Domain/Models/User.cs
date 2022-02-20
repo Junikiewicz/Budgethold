@@ -7,26 +7,31 @@ namespace Budgethold.Domain.Models
         public User()
         {
             Name = null!;
-            UserWallets = null!;
+            Wallets = null!;
+            Categories = null!;
         }
 
         public User(int id)
         {
             Id = id;
             Name = null!;
-            UserWallets = null!;
+            Wallets = null!;
+            Categories = null!;
         }
 
         public User(string name)
         {
             Name = name;
-            UserWallets = new ();
+            Wallets = new ();
+            Categories = new ();
         }
 
         public int Id { get; private set; }
 
         public string Name { get; private set; }
 
-        public virtual HashSet<UserWallet> UserWallets { get; private set; }
+        public virtual HashSet<Wallet> Wallets { get; private set; }
+
+        public virtual HashSet<Category> Categories { get; private set; }
     }
 }

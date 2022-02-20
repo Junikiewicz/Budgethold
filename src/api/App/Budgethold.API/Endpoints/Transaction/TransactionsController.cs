@@ -3,7 +3,7 @@ using Budgethold.API.Extensions;
 using Budgethold.Application.Commands.Transaction.AddTransaction;
 using Budgethold.Application.Commands.Transaction.DeleteTransaction;
 using Budgethold.Application.Commands.Transaction.EditTransaction;
-using Budgethold.Application.Queries.Transaction.GetSingleTransaction;
+using Budgethold.Application.Queries.Transaction.GetTransaction;
 using Budgethold.Application.Queries.Transaction.GetWalletTransactions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,20 +23,20 @@ namespace Budgethold.API.Endpoints.Transaction
             _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetTransaction(int id, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetUserTransactions(CancellationToken cancellationToken)
         {
-            var query = new GetSingleTransactionQuery(User.GetUserId(), id);
+            var query = new GetUserTransactionsQuery(User.GetUserId());
 
             var result = await _mediator.Send(query, cancellationToken);
 
             return this.GetResponseFromResult(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetWalletTransactions([FromQuery] int walletId, CancellationToken cancellationToken)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTransaction(int id, CancellationToken cancellationToken)
         {
-            var query = new GetWalletTransactionsQuery(walletId, User.GetUserId());
+            var query = new GetTransactionQuery(User.GetUserId(), id);
 
             var result = await _mediator.Send(query, cancellationToken);
 

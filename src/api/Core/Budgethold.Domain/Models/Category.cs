@@ -7,20 +7,20 @@ namespace Budgethold.Domain.Models
         public Category()
         {
             TransactionType = null!;
-            Wallet = null!;
+            User = null!;
             ChildCategories = null!;
             Name = null!;
             Transactions = null!;
         }
 
-        public Category(string name, int? parentCategoryId, int transactionTypeId, int walletId)
+        public Category(string name, int? parentCategoryId, int transactionTypeId, int userId)
         {
             Name = name;
             ParentCategoryId = parentCategoryId;
             TransactionTypeId = transactionTypeId;
-            WalletId = walletId;
+            UserId = userId;
             ChildCategories = new ();
-            Wallet = null!;
+            User = null!;
             TransactionType = null!;
             Transactions = null!;
         }
@@ -33,11 +33,11 @@ namespace Budgethold.Domain.Models
 
         public int TransactionTypeId { get; private set; }
 
-        public int WalletId { get; private set; }
+        public int UserId { get; private set; }
 
         public virtual Category? ParentCategory { get; private set; }
 
-        public virtual Wallet Wallet { get; private set; }
+        public virtual User User { get; private set; }
 
         public virtual TransactionType TransactionType { get; private set; }
 

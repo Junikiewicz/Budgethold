@@ -5,17 +5,14 @@ namespace Budgethold.Application.Commands.Wallet.AddWallet
 {
     public record AddWalletCommand : IRequest<Result>
     {
-        public AddWalletCommand(IEnumerable<int> ids, string name, decimal startingValue, int ownerId)
+        public AddWalletCommand(string name, decimal startingValue, int ownerId)
         {
-            UserIds = ids;
             Name = name;
             StartingValue = startingValue;
-            OwnerId = ownerId;
+            UserId = ownerId;
         }
 
-        public int OwnerId { get; init; }
-
-        public IEnumerable<int> UserIds { get; init; }
+        public int UserId { get; init; }
 
         public string Name { get; init; }
 

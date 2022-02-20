@@ -1,4 +1,5 @@
-﻿using Budgethold.Domain.Common;
+﻿using Budgethold.Application.Queries.Wallet.Common;
+using Budgethold.Domain.Common;
 using MediatR;
 
 namespace Budgethold.Application.Queries.Wallet.GetUserWallets

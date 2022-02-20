@@ -1,5 +1,4 @@
-﻿using Budgethold.Common.Extensions;
-using Budgethold.Domain.Common;
+﻿using Budgethold.Domain.Common;
 
 namespace Budgethold.Domain.Models
 {
@@ -7,21 +6,20 @@ namespace Budgethold.Domain.Models
     {
         public Wallet()
         {
-            UserWallets = null!;
+            User = null!;
             Name = null!;
             Categories = null!;
             Transactions = null!;
         }
 
-        public Wallet(string name, decimal startingValue, int creatingUserId, IEnumerable<int> userIds)
+        public Wallet(string name, decimal startingValue, int userId)
         {
             Name = name;
             StartingValue = startingValue;
             CurrentValue = startingValue;
-            UserWallets = new HashSet<UserWallet>(userIds.Select(x => new UserWallet(x)));
-            AddUserToWallet(creatingUserId);
-            ChangeWalletOwner(creatingUserId);
+            UserId = userId;
             Categories = new ();
+            User = null!;
             Transactions = null!;
         }
 
@@ -33,18 +31,19 @@ namespace Budgethold.Domain.Models
 
         public string Name { get; private set; }
 
-        public virtual HashSet<UserWallet> UserWallets { get; private set; }
+        public int UserId { get; private set; }
+
+        public virtual User User { get; private set; }
 
         public virtual HashSet<Category> Categories { get; private set; }
 
         public virtual HashSet<Transaction> Transactions { get; private set; }
 
-        public void Update(string name, decimal startingValue, IEnumerable<int> userIds)
+        public void Update(string name, decimal startingValue)
         {
             Name = name;
             CurrentValue = CurrentValue - StartingValue + startingValue;
             StartingValue = startingValue;
-            UpdateUsers(userIds);
         }
 
         public void ApplyNewTransaction(decimal newTransactionValue)
@@ -60,35 +59,6 @@ namespace Budgethold.Domain.Models
         public void RevertTransactionValueChange(decimal oldTransactionValue)
         {
             EditTransactionValueChange(oldTransactionValue, 0);
-        }
-
-        public void UpdateUsers(IEnumerable<int> userIds)
-        {
-            var currentUsersId = UserWallets.Select(x => x.UserId);
-            var newUsersId = userIds.Except(currentUsersId);
-            var usersToAdd = newUsersId.Select(x => new UserWallet(x, Id));
-
-            UserWallets.RemoveWhere(x => !userIds.Contains(x.UserId) && !x.IsOwner);
-            UserWallets.AddRange(usersToAdd);
-        }
-
-        public void ChangeWalletOwner(int newOwnerId)
-        {
-            foreach (var userWallet in UserWallets)
-            {
-                userWallet.SetOwnership(userWallet.UserId == newOwnerId);
-            }
-        }
-
-        public void AddUserToWallet(int userId)
-        {
-            if (!UserWallets.Select(x => x.UserId).Contains(userId)) UserWallets.Add(new UserWallet(userId, Id));
-        }
-
-        public bool CheckIfUserIsWalletOwner(int userId)
-        {
-            var user = UserWallets.SingleOrDefault(x => x.UserId == userId);
-            return user is not null && user.IsOwner;
         }
     }
 }

@@ -2,13 +2,13 @@
 {
     public record CategoryForOwnershipVerificationModel
     {
-        public CategoryForOwnershipVerificationModel(int transactionTypeId, int walletId)
+        public CategoryForOwnershipVerificationModel(int transactionTypeId, int userId)
         {
             TransactionTypeId = transactionTypeId;
-            WalletId = walletId;
+            UserId = userId;
         }
 
         public int TransactionTypeId { get; init; }
-        public int WalletId { get; init; }
+        public int UserId { get; init; }
     }
 }

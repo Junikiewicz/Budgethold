@@ -5,10 +5,9 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
 {
     public record EditWalletCommand : IRequest<Result>
     {
-        public EditWalletCommand(int walletId, string name, decimal startingValue, int userId, IEnumerable<int> usersId)
+        public EditWalletCommand(int walletId, string name, decimal startingValue, int userId)
         {
             WalletId = walletId;
-            UserIds = usersId;
             Name = name;
             StartingValue = startingValue;
             UserId = userId;
@@ -17,8 +16,6 @@ namespace Budgethold.Application.Commands.Wallet.EditWallet
         public int UserId { get; init; }
 
         public int WalletId { get; init; }
-
-        public IEnumerable<int> UserIds { get; init; }
 
         public string Name { get; init; }
 

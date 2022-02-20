@@ -1,5 +1,5 @@
 ﻿using Budgethold.Application.Models.Category;
-using Budgethold.Application.Queries.Category.GetWalletCategory;
+using Budgethold.Application.Queries.Category.GetCategory;
 using Budgethold.Domain.Models;
 
 namespace Budgethold.Application.Contracts.Persistance.Repositories
@@ -12,12 +12,14 @@ namespace Budgethold.Application.Contracts.Persistance.Repositories
 
         Task<Category?> GetCategoryWithChildrensOrDefaultAsync(int categoryId, CancellationToken cancellationToken);
 
-        Task<IEnumerable<CategoryForTreeViewModel>> GetWalletCategoriesForTreeViewAsync(int walletId, CancellationToken cancellationToken);
-
-        Task<bool> CheckIfCategoryBelongsToWalletAsync(int categoryId, int walletId, CancellationToken cancellationToken);
+        Task<IEnumerable<CategoryForTreeViewModel>> GetUserCategoriesForTreeViewAsync(int userId, CancellationToken cancellationToken);
 
         Task<int> GetCategoryTransactionTypeAsync(int categoryId, CancellationToken cancellationToken);
 
-        Task<CategoryResponse?> GetSingleCategoryResponseAsync(int categoryId, CancellationToken cancellationToken);
+        Task<CategoryResponse> GetCategoryResponseAsync(int categoryId, CancellationToken cancellationToken);
+
+        Task<Category> GetCategoryAsync(int categoryId, CancellationToken cancellationToken);
+
+        Task<bool> IsCategoryAssignedToUserAsync(int categoryId, int userId, CancellationToken cancellationToken);
     }
 }

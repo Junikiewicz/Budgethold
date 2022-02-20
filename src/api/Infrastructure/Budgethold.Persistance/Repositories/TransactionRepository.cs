@@ -1,5 +1,5 @@
 ﻿using Budgethold.Application.Contracts.Persistance.Repositories;
-using Budgethold.Application.Queries.Transaction.GetSingleTransaction;
+using Budgethold.Application.Queries.Transaction.Common;
 using Budgethold.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +11,12 @@ namespace Budgethold.Persistance.Repositories
         {
         }
 
-        public async Task<TransactionResponse?> GetSingleTransactionResponseAsync(int transactionId, CancellationToken cancellationToken)
+        public async Task<Transaction?> GetTransactionOrDefaultAsync(int transactionId, CancellationToken cancellationToken)
+        {
+            return await Context.Transactions.Where(x => x.Id == transactionId).SingleOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<TransactionResponse> GetTransactionResponseAsync(int transactionId, CancellationToken cancellationToken)
         {
             return await Context.Transactions.Where(x => x.Id == transactionId).Select(x => new TransactionResponse
             {
@@ -22,17 +27,12 @@ namespace Budgethold.Persistance.Repositories
                 Date = x.Date,
                 Id = x.Id,
                 WalletId = x.WalletId
-            }).SingleOrDefaultAsync(cancellationToken);
+            }).SingleAsync(cancellationToken);
         }
 
-        public async Task<Transaction?> GetTransactionAsync(int transactionId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<TransactionResponse>> GetUserTransactionsResponseAsync(int userId, CancellationToken cancellationToken)
         {
-            return await Context.Transactions.Where(x => x.Id == transactionId).SingleOrDefaultAsync(cancellationToken);
-        }
-
-        public async Task<IEnumerable<TransactionResponse>> GetWalletTransactionsResponseAsync(int walletId, CancellationToken cancellationToken)
-        {
-            return await Context.Transactions.Where(x => x.WalletId == walletId).Select(x => new TransactionResponse
+            return await Context.Transactions.Where(x => x.Category.UserId == userId).Select(x => new TransactionResponse
             {
                 Amount = x.Amount,
                 Description = x.Description,

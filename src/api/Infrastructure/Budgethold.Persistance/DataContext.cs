@@ -21,8 +21,6 @@ namespace Budgethold.Persistance
 
         public DbSet<Category> Categories => Set<Category>();
 
-        public DbSet<UserWallet> UserWallets => Set<UserWallet>();
-
         public DbSet<TransactionType> TransactionTypes => Set<TransactionType>();
 
         protected override void OnModelCreating(ModelBuilder builder)

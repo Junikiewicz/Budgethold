@@ -1,17 +1,14 @@
-# Getting Started with Create React App
+## Getting started
+To run the project you will need [Node.js](https://nodejs.org/en/) installed.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+If running on Windows machine additionally download and install [Git](https://git-scm.com/downloads) and then run command:
 
-## Available Scripts
+```npm config set script-shell "C:\\Program Files\\git\\bin\\bash.exe"```
 
-In the project directory, you can run:
+Before starting the project for the first time run command:
 
-### `npm config set script-shell "C:\\Program Files\\git\\bin\\bash.exe"`
+```npm install```
 
-### `npm start`
+To start the project run command:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```npm start```
